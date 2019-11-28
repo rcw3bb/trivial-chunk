@@ -62,3 +62,9 @@ gradlew jar
 ```
 
 > The preceding command must be run from the location where you've cloned the repository.
+>
+> You can find the actual package in the following location:
+>
+> ```
+> build\lib
+> ```
