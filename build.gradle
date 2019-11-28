@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "org.javamodularity.moduleplugin" version "1.6.0"
+    id "com.bmuschko.nexus" version "2.3.1"
 }
 
 group 'xyz.ronella.casual'
@@ -16,6 +17,49 @@ repositories {
             password "${artifactoryPassword}"
         }
     }
+}
+
+modifyPom {
+    project {
+        name 'Trivial Chunk'
+        description 'A library of trivial codes.'
+        url 'https://github.com/rcw3bb/trivial-chunk'
+        inceptionYear '2019'
+
+        scm {
+            url 'https://github.com/rcw3bb/trivial-chunk'
+            connection 'https://github.com/rcw3bb/trivial-chunk.git'
+            developerConnection 'https://github.com/rcw3bb/trivial-chunk.git'
+        }
+
+        licenses {
+            license {
+                name 'MIT License'
+                url 'https://github.com/rcw3bb/trivial-chunk/blob/master/LICENSE.md'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'rcw3bb'
+                name 'Ronaldo Webb'
+                email 'ronaldo.c.webb@gmail.com'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = true
+    tests = true
+    javadoc = true
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 
 dependencies {
