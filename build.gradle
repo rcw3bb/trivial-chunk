@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id "org.javamodularity.moduleplugin" version "1.6.0"
     id "com.bmuschko.nexus" version "2.3.1"
+    id "io.codearte.nexus-staging" version "0.21.1"
 }
 
 group 'xyz.ronella.casual'
@@ -60,6 +61,10 @@ nexus {
     sign = true
     repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
     snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
+
+nexusStaging {
+    stagingProfileId = "142f3cca5418da"
 }
 
 dependencies {
