@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 /**
  * A collection of logic implementation.
  *
- * @Ron Webb
+ * @author Ron Webb
  * @since 2019-11-30
  */
 public class Conditions {
