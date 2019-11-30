@@ -1,20 +1,19 @@
 package xyz.ronella.trivial.handy;
 
-import static xyz.ronella.trivial.handy.Conditions.or;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.ronella.trivial.handy.Conditions.and;
 
-public class ConditionsORTest {
+public class ConditionsANDTest {
 
     @Test
     public void nullConditions() {
         var builder = new StringBuilder();
-        or(null, () -> {
+        and(null, () -> {
             builder.append("In");
         });
         assertEquals("", builder.toString());
@@ -23,7 +22,7 @@ public class ConditionsORTest {
     @Test
     public void nullTrueFalseLogics() {
         var builder = new StringBuilder();
-        or(null, () -> {
+        and(null, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
@@ -35,17 +34,17 @@ public class ConditionsORTest {
     public void emptyConditions() {
         var builder = new StringBuilder();
         var conditions = new ArrayList<Supplier<Boolean>>();
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         });
         assertEquals("", builder.toString());
     }
 
     @Test
-    public void singleTrueFalseLogics() {
+    public void emptyTrueFalseLogics() {
         var builder = new StringBuilder();
         var conditions = new ArrayList<Supplier<Boolean>>();
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
@@ -59,18 +58,18 @@ public class ConditionsORTest {
         var builder = new StringBuilder();
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.FALSE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         });
         assertEquals("", builder.toString());
     }
 
     @Test
-    public void singleFalseTrueFalseLogics() {
+    public void singleTrueFalseLogics() {
         var builder = new StringBuilder();
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.FALSE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
@@ -84,7 +83,7 @@ public class ConditionsORTest {
         var builder = new StringBuilder();
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.TRUE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         });
         assertEquals("In", builder.toString());
@@ -95,7 +94,7 @@ public class ConditionsORTest {
         var builder = new StringBuilder();
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.TRUE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
@@ -109,12 +108,12 @@ public class ConditionsORTest {
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.FALSE);
         conditions.add(() -> Boolean.TRUE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
         });
-        assertEquals("In", builder.toString());
+        assertEquals("Out", builder.toString());
     }
 
     @Test
@@ -123,7 +122,7 @@ public class ConditionsORTest {
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.FALSE);
         conditions.add(() -> Boolean.FALSE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
@@ -137,7 +136,7 @@ public class ConditionsORTest {
         var conditions = new ArrayList<Supplier<Boolean>>();
         conditions.add(() -> Boolean.TRUE);
         conditions.add(() -> Boolean.TRUE);
-        or(conditions, () -> {
+        and(conditions, () -> {
             builder.append("In");
         }, () -> {
             builder.append("Out");
