@@ -1,4 +1,4 @@
-package xyz.ronella.trivial.handy;
+package xyz.ronella.trivial.command;
 
 import xyz.ronella.trivial.command.Sink;
 
