@@ -23,18 +23,6 @@ public class LogicMapper {
     }
 
     /**
-     * Add a logic to the collection.
-     *
-     * @param condition A Boolean Supplier.
-     * @param logic The logic to be executed if the condition is evaluated to true.
-     * @return The current instance.
-     */
-    public LogicMapper addLogic(Supplier<Boolean> condition, Sink logic) {
-        logicMap.put(condition, logic);
-        return this;
-    }
-
-    /**
      * Executes the collection of logic
      */
     public void execute() {
@@ -46,12 +34,49 @@ public class LogicMapper {
     }
 
     /**
+     * A class that can build an instance of LogicMapper.
+     */
+    public static class LogicMapperBuilder {
+
+        private Map<Supplier<Boolean>, Sink> logicMap = null;
+
+        /**
+         * Creates an instance that can build a LogicMapper instance.
+         */
+        public LogicMapperBuilder() {
+            this.logicMap = new LinkedHashMap<>();
+        }
+
+        /**
+         * Add a logic to the collection.
+         *
+         * @param condition A Boolean Supplier.
+         * @param logic The logic to be executed if the condition is evaluated to true.
+         * @return The builder instance.
+         */
+        public LogicMapperBuilder addLogic(Supplier<Boolean> condition, Sink logic) {
+            logicMap.put(condition, logic);
+            return this;
+        }
+
+        /**
+         * Builds an instance of LogicMapper.
+         *
+         * @return An instance of LogicMapper.
+         */
+        public LogicMapper build() {
+            return new LogicMapper(logicMap);
+        }
+
+    }
+
+    /**
      * Build an instance of LogicMapper.
      *
      * @return An instance of LogicMapper.
      */
-    public static LogicMapper build() {
-        return new LogicMapper(new LinkedHashMap<>());
+    public static LogicMapperBuilder getBuilder() {
+        return new LogicMapperBuilder();
     }
 
 }
