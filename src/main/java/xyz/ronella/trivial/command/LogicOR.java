@@ -1,8 +1,5 @@
 package xyz.ronella.trivial.command;
 
-import xyz.ronella.trivial.command.Invoker;
-import xyz.ronella.trivial.command.Sink;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * A class that accepts multiple conditions if at least one condition is true it will pass control to the truthLogic
+ * A class that accepts multiple conditions and if at least one condition is true it will pass control to the truthLogic
  * otherwise the falseLogic will take it.
  *
  * @author Ron Webb

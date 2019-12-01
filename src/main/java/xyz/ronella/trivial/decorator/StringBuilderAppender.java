@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 /**
- * A decorator for StringBuilder that gives you chance to add pre-append and post-append logic.
+ * A decorator for StringBuilder that gives you a chance to add pre-append and post-append logic.
  *
  * @author Ron Webb
  * @since 2019-12-01

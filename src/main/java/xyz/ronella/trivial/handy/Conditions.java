@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * A collection of logic implementation.
+ * A collection of logic implementations.
  *
  * @author Ron Webb
  * @since 2019-11-30

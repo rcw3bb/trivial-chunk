@@ -8,8 +8,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * Create a map of conditions and logic where all the conditions that evaluated to true will perform its
- * the corresponding logic.
+ * Creates a map of conditions and logic where all the conditions that evaluated to true will perform its
+ * corresponding logic.
  *
  * @author Ron Webb
  * @since 2019-12-01
