@@ -28,7 +28,7 @@ A library of trivial codes.
    requires xyz.ronella.trivial.command;
    ```
 
-## [User Guide](docs\USER_GUIDE_TOC.md)
+## [User Guide](docs/USER_GUIDE_TOC.md)
 
 ## License
 
