@@ -2,7 +2,7 @@
 
 ## Pre-requisite
 
-* Java 12
+* Java 11
 
 * Create or update **<USER_HOME>\\.gradle\\gradle.properties** to have the following properties:
 
