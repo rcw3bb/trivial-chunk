@@ -11,40 +11,61 @@ import java.util.function.Supplier;
  * Creates a map of conditions and logic where all the conditions that evaluated to true will perform its
  * corresponding logic.
  *
+ * @param <TYPE_OUTPUT> Specifies the actual type of the output method.
+ *
  * @author Ron Webb
  * @since 2019-12-01
  */
-public class LogicMapper {
+public class LogicMapper<TYPE_OUTPUT> {
 
     private Map<Supplier<Boolean>, Sink> logicMap = null;
+    private Sink initialLogic = null;
+    private Supplier<TYPE_OUTPUT> finalLogic = null;
 
-    private LogicMapper(Map<Supplier<Boolean>, Sink> logicMap) {
-        this.logicMap = Optional.ofNullable(logicMap).orElse(new LinkedHashMap<>());
+    private LogicMapper(LogicMapperBuilder<TYPE_OUTPUT> builder) {
+        this.logicMap = Optional.ofNullable(builder.logicMap).orElse(new LinkedHashMap<>());
+        this.initialLogic = Optional.ofNullable(builder.initialLogic).orElse(()->{});
+        this.finalLogic = Optional.ofNullable(builder.finalLogic).orElse(()-> null);
+    }
+
+    /**
+     * Executes the collection of logic with return the finalLogic output.
+     *
+     * return An instance of TYPE_OUTPUT
+     *
+     * @since 1.3.0
+     */
+    public Optional<TYPE_OUTPUT> output() {
+        initialLogic.plummet();
+        logicMap.forEach((___condition, ___logic) -> {
+            if (Optional.ofNullable(___condition).orElse(()->Boolean.FALSE).get()) {
+                ___logic.plummet();
+            }
+        });
+        return Optional.ofNullable(finalLogic.get());
     }
 
     /**
      * Executes the collection of logic
      */
     public void execute() {
-        logicMap.forEach((___condition, ___logic) -> {
-            if (Optional.ofNullable(___condition).orElse(()->Boolean.FALSE).get()) {
-                ___logic.plummet();
-            }
-        });
+        output();
     }
 
     /**
      * A class that can build an instance of LogicMapper.
      */
-    public static class LogicMapperBuilder {
+    public static class LogicMapperBuilder<TYPE_OUTPUT> {
 
         private Map<Supplier<Boolean>, Sink> logicMap = null;
+        private Sink initialLogic = null;
+        private Supplier<TYPE_OUTPUT> finalLogic = null;
 
         /**
          * Creates an instance that can build a LogicMapper instance.
          */
         public LogicMapperBuilder() {
-            this.logicMap = new LinkedHashMap<>();
+            logicMap = new LinkedHashMap<>();
         }
 
         /**
@@ -54,8 +75,34 @@ public class LogicMapper {
          * @param logic The logic to be executed if the condition is evaluated to true.
          * @return The builder instance.
          */
-        public LogicMapperBuilder addLogic(Supplier<Boolean> condition, Sink logic) {
+        public LogicMapperBuilder<TYPE_OUTPUT> addLogic(Supplier<Boolean> condition, Sink logic) {
             logicMap.put(condition, logic);
+            return this;
+        }
+
+        /**
+         * The very first logic to execute before the first addLogic execution.
+         *
+         * @param logic The very first  logic.
+         * @return The builder instance
+         *
+         * @since 1.3.0
+         */
+        public LogicMapperBuilder<TYPE_OUTPUT> addInitialLogic(Sink logic) {
+            this.initialLogic = logic;
+            return this;
+        }
+
+        /**
+         * The very last logic to execute after the last addLogic execution.
+         *
+         * @param logic The very first  logic.
+         * @return The builder instance
+         *
+         * @since 1.3.0
+         */
+        public LogicMapperBuilder<TYPE_OUTPUT> addFinalLogic(Supplier<TYPE_OUTPUT> logic) {
+            this.finalLogic = logic;
             return this;
         }
 
@@ -64,8 +111,8 @@ public class LogicMapper {
          *
          * @return An instance of LogicMapper.
          */
-        public LogicMapper build() {
-            return new LogicMapper(logicMap);
+        public LogicMapper<TYPE_OUTPUT> build() {
+            return new LogicMapper<>(this);
         }
 
     }
@@ -75,8 +122,8 @@ public class LogicMapper {
      *
      * @return An instance of LogicMapper.
      */
-    public static LogicMapperBuilder getBuilder() {
-        return new LogicMapperBuilder();
+    public static <TYPE_OUTPUT> LogicMapperBuilder<TYPE_OUTPUT> getBuilder() {
+        return new LogicMapperBuilder<>();
     }
 
 }
