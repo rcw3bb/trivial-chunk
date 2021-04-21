@@ -22,7 +22,7 @@ System.out.println(OSType.identify());
 **Expected Output**
 
 ```
-OSType.Windows
+Windows
 ```
 
 > Assuming you run the print command on windows OS.
