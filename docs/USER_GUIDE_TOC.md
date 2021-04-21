@@ -8,3 +8,4 @@
 ### Handy Tools
 * [Conditions](HDY_CONDITIONS.md)
 * [LogicMapper](HDY_LOGIC_MAPPER.md)
+* [OSType](HDY_OSTYPE.md)
