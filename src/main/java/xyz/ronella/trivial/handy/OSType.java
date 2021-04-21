@@ -12,6 +12,11 @@ public enum OSType {
     Mac,
     Unknown;
 
+    /**
+     * Identifies the current OS where the code is running.
+     *
+     * @return An instance of OSType.
+     */
     public static OSType identify() {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {

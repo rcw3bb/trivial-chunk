@@ -16,7 +16,7 @@ A convenience method that identifies the current OS where the current code is be
 **Sample Usage**
 
 ```java
-System.out.println(OSType.identify())
+System.out.println(OSType.identify());
 ```
 
 **Expected Output**
