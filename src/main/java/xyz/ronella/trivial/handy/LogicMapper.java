@@ -31,7 +31,7 @@ public class LogicMapper<TYPE_OUTPUT> {
     /**
      * Executes the collection of logic with return the finalLogic output.
      *
-     * return An instance of TYPE_OUTPUT
+     * @return An instance of TYPE_OUTPUT
      *
      * @since 1.3.0
      */
@@ -119,6 +119,8 @@ public class LogicMapper<TYPE_OUTPUT> {
 
     /**
      * Build an instance of LogicMapper.
+     *
+     * @param <TYPE_OUTPUT> Identifies the type of the output method.
      *
      * @return An instance of LogicMapper.
      */
