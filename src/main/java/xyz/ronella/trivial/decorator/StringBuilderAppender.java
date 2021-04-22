@@ -114,4 +114,14 @@ public class StringBuilderAppender {
     public StringBuilderAppender append(String text) {
         return append(text, null);
     }
+
+    /**
+     * String representation of the target StringBuilder.
+     *
+     * @return The string representation.
+     */
+    public String toString() {
+        return builder.toString();
+    }
+
 }

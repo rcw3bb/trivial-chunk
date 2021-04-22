@@ -88,4 +88,10 @@ public class StringBuilderAppenderTest {
         assertEquals("+Test", builder.toString());
     }
 
+
+    @Test
+    public void toStringTest() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append("Test", ___builder -> ___builder.append("+"));
+        assertEquals("+Test", builder.toString());
+    }
 }
