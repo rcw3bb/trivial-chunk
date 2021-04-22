@@ -83,4 +83,33 @@ public class LogicMapperTest {
                 .build();
         assertEquals("[B", mapper.output().orElse(""));
     }
+
+    @Test
+    public void inlineLogic() {
+        var builder = new StringBuilder();
+        var mapper= LogicMapper.<String>getBuilder()
+                .addInitialLogic(()-> builder.append("["))
+                .addFinalLogic(builder::toString)
+                .addInlineLogic(()-> builder.append("A"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("B"))
+                .addLogic(()->Boolean.FALSE, ()-> builder.append("C"))
+                .addInlineLogic(()-> builder.append("D"))
+                .build();
+        assertEquals("[ABD", mapper.output().orElse(""));
+    }
+
+    @Test
+    public void allTrue() {
+        var builder = new StringBuilder();
+        var mapper= LogicMapper.<String>getBuilder()
+                .addInitialLogic(()-> builder.append("["))
+                .addFinalLogic(builder::toString)
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("A"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("B"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("C"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("D"))
+                .build();
+        assertEquals("[ABCD", mapper.output().orElse(""));
+    }
+
 }

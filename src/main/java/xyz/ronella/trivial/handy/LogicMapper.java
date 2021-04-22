@@ -5,6 +5,8 @@ import xyz.ronella.trivial.command.Sink;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -60,11 +62,13 @@ public class LogicMapper<TYPE_OUTPUT> {
         private Map<Supplier<Boolean>, Sink> logicMap = null;
         private Sink initialLogic = null;
         private Supplier<TYPE_OUTPUT> finalLogic = null;
+        private AtomicInteger inlineIdx = null;
 
         /**
          * Creates an instance that can build a LogicMapper instance.
          */
         public LogicMapperBuilder() {
+            inlineIdx = new AtomicInteger();
             logicMap = new LinkedHashMap<>();
         }
 
@@ -77,6 +81,14 @@ public class LogicMapper<TYPE_OUTPUT> {
          */
         public LogicMapperBuilder<TYPE_OUTPUT> addLogic(Supplier<Boolean> condition, Sink logic) {
             logicMap.put(condition, logic);
+            return this;
+        }
+
+        public LogicMapperBuilder<TYPE_OUTPUT> addInlineLogic(Sink logic) {
+            logicMap.put(()-> {
+                Predicate<Integer> dummy = __ -> Boolean.TRUE;
+                return dummy.test(inlineIdx.incrementAndGet());
+            }, logic);
             return this;
         }
 
