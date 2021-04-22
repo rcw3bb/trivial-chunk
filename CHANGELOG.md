@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0 : 2021-04-22
+
+### Added
+
+* LogicMapper now has initial and final logic.
+
 ## 1.2.0 : 2021-04-21
 
 ### Added
