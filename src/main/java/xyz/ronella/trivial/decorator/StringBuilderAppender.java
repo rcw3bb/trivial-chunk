@@ -1,5 +1,6 @@
 package xyz.ronella.trivial.decorator;
 
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
@@ -11,10 +12,10 @@ import java.util.function.Consumer;
  * @since 2019-12-01
  */
 public class StringBuilderAppender {
-    private StringBuilder builder;
-    private Consumer<StringBuilder> defaultBeforeAppend;
-    private Consumer<StringBuilder> defaultAfterAppend;
-    private Lock INSTANCE_LOCK = new ReentrantLock();
+    final private StringBuilder builder;
+    final private Consumer<StringBuilder> defaultBeforeAppend;
+    final private Consumer<StringBuilder> defaultAfterAppend;
+    final private Lock INSTANCE_LOCK = new ReentrantLock();
     private boolean threadSafe;
 
     /**
@@ -27,7 +28,7 @@ public class StringBuilderAppender {
     public StringBuilderAppender(StringBuilder builder,
                                  Consumer<StringBuilder> defaultBeforeAppend,
                                  Consumer<StringBuilder> defaultAfterAppend) {
-        this.builder = builder;
+        this.builder = Optional.ofNullable(builder).orElseThrow();
         this.defaultBeforeAppend = defaultBeforeAppend;
         this.defaultAfterAppend = defaultAfterAppend;
     }
@@ -75,13 +76,13 @@ public class StringBuilderAppender {
             }
             if (null != beforeAppend) {
                 beforeAppend.accept(builder);
-            } else if (null == beforeAppend && null != defaultBeforeAppend) {
+            } else if (null != defaultBeforeAppend) {
                 defaultBeforeAppend.accept(builder);
             }
             builder.append(text);
             if (null != afterAppend) {
                 afterAppend.accept(builder);
-            } else if (null == afterAppend && null != defaultAfterAppend) {
+            } else if (null != defaultAfterAppend) {
                 defaultAfterAppend.accept(builder);
             }
         }
@@ -116,7 +117,8 @@ public class StringBuilderAppender {
     }
 
     /**
-     * String representation of the target StringBuilder.
+     * String representation of the internal StringBuilder that the decorator is holding.
+     * The one that passed in the constructor or the one generated automatically.
      *
      * @return The string representation.
      */
@@ -124,4 +126,31 @@ public class StringBuilderAppender {
         return builder.toString();
     }
 
+    /**
+     * Access the internal StringBuilder that the decorator is holding.
+     *
+     * @return An instance of StringBuilder
+     *
+     * @since 1.4.0
+     */
+    public StringBuilder getStringBuilder() {
+        return builder;
+    }
+
+    /**
+     * Ability to append using your own custom logic that this decorator cannot handle.
+     *
+     * @param updateLogic Must hold the custom logic for appending.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 1.4.0
+     */
+    public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) {
+        Optional.ofNullable(updateLogic).ifPresent(logic -> {
+            logic.accept(builder);
+        });
+
+        return this;
+    }
 }

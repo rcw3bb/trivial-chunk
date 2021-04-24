@@ -2,7 +2,7 @@ package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StringBuilderAppenderTest {
 
@@ -93,5 +93,19 @@ public class StringBuilderAppenderTest {
     public void toStringTest() {
         var builder = new StringBuilderAppender(new StringBuilder()).append("Test", ___builder -> ___builder.append("+"));
         assertEquals("+Test", builder.toString());
+    }
+
+    @Test
+    public void customAppendTest() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append("Test", ___builder -> ___builder.append("+"));
+        builder.append(sb -> sb.append("+"));
+        assertEquals("+Test+", builder.toString());
+    }
+
+    @Test
+    public void retrieveStringBuilderTest() {
+        var sbStringBuilder = new StringBuilder();
+        var builder = new StringBuilderAppender(sbStringBuilder).append("Test", ___builder -> ___builder.append("+"));
+        assertSame(sbStringBuilder, builder.getStringBuilder());
     }
 }
