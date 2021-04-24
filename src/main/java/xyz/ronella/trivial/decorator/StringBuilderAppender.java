@@ -137,7 +137,7 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilder
      *
-     * @since 1.4.0
+     * @since 2.0.0
      */
     public StringBuilder getStringBuilder() {
         return builder;
@@ -152,7 +152,7 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilderAppender.
      *
-     * @since 1.4.0
+     * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,
                                         Consumer<StringBuilder> afterAppend) {
@@ -174,7 +174,7 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilderAppender.
      *
-     * @since 1.4.0
+     * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
         append(updateLogic, beforeAppend, null);
@@ -188,7 +188,7 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilderAppender.
      *
-     * @since 1.4.0
+     * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) {
         append(updateLogic, null);
