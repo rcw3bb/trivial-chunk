@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * A class that accepts multiple conditions and if at least one condition is true it will pass control to the truthLogic
@@ -16,9 +16,9 @@ import java.util.function.Supplier;
  */
 public class LogicOR implements Consumer<Sink>, BiConsumer<Sink, Sink> {
 
-    private List<Supplier<Boolean>> conditions;
+    private List<BooleanSupplier> conditions;
 
-    public LogicOR(List<Supplier<Boolean>> conditions) {
+    public LogicOR(List<BooleanSupplier> conditions) {
         this.conditions = Optional.ofNullable(conditions).orElse(new ArrayList<>());
     }
 
@@ -29,7 +29,7 @@ public class LogicOR implements Consumer<Sink>, BiConsumer<Sink, Sink> {
 
     @Override
     public void accept(Sink truthLogic, Sink falseLogic) {
-        if (conditions.stream().anyMatch(Supplier::get)) {
+        if (conditions.stream().anyMatch(BooleanSupplier::getAsBoolean)) {
             Optional.ofNullable(truthLogic).orElse(() -> {}).plummet();
         }
         else {

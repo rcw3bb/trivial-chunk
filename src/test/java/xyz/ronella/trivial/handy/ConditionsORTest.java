@@ -5,7 +5,7 @@ import static xyz.ronella.trivial.handy.Conditions.or;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,7 +34,7 @@ public class ConditionsORTest {
     @Test
     public void emptyConditions() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         or(conditions, () -> {
             builder.append("In");
         });
@@ -44,7 +44,7 @@ public class ConditionsORTest {
     @Test
     public void singleTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         or(conditions, () -> {
             builder.append("In");
         }, () -> {
@@ -57,7 +57,7 @@ public class ConditionsORTest {
     @Test
     public void singleFalseConditions() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         or(conditions, () -> {
             builder.append("In");
@@ -68,7 +68,7 @@ public class ConditionsORTest {
     @Test
     public void singleFalseTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         or(conditions, () -> {
             builder.append("In");
@@ -82,7 +82,7 @@ public class ConditionsORTest {
     @Test
     public void singleTrueConditions() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.TRUE);
         or(conditions, () -> {
             builder.append("In");
@@ -93,7 +93,7 @@ public class ConditionsORTest {
     @Test
     public void singleTrueTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.TRUE);
         or(conditions, () -> {
             builder.append("In");
@@ -106,7 +106,7 @@ public class ConditionsORTest {
     @Test
     public void multiFaLseTrueTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         conditions.add(() -> Boolean.TRUE);
         or(conditions, () -> {
@@ -120,7 +120,7 @@ public class ConditionsORTest {
     @Test
     public void multiFaLseFalseTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         conditions.add(() -> Boolean.FALSE);
         or(conditions, () -> {
@@ -134,7 +134,7 @@ public class ConditionsORTest {
     @Test
     public void multiTrueTrueTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.TRUE);
         conditions.add(() -> Boolean.TRUE);
         or(conditions, () -> {

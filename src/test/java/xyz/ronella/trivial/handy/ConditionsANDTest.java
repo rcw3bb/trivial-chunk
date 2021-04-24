@@ -3,7 +3,7 @@ package xyz.ronella.trivial.handy;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static xyz.ronella.trivial.handy.Conditions.and;
@@ -33,7 +33,7 @@ public class ConditionsANDTest {
     @Test
     public void emptyConditions() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         and(conditions, () -> {
             builder.append("In");
         });
@@ -43,7 +43,7 @@ public class ConditionsANDTest {
     @Test
     public void emptyTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         and(conditions, () -> {
             builder.append("In");
         }, () -> {
@@ -56,7 +56,7 @@ public class ConditionsANDTest {
     @Test
     public void singleFalseConditions() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         and(conditions, () -> {
             builder.append("In");
@@ -67,7 +67,7 @@ public class ConditionsANDTest {
     @Test
     public void singleTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         and(conditions, () -> {
             builder.append("In");
@@ -81,7 +81,7 @@ public class ConditionsANDTest {
     @Test
     public void singleTrueConditions() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.TRUE);
         and(conditions, () -> {
             builder.append("In");
@@ -92,7 +92,7 @@ public class ConditionsANDTest {
     @Test
     public void singleTrueTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.TRUE);
         and(conditions, () -> {
             builder.append("In");
@@ -105,7 +105,7 @@ public class ConditionsANDTest {
     @Test
     public void multiFaLseTrueTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         conditions.add(() -> Boolean.TRUE);
         and(conditions, () -> {
@@ -119,7 +119,7 @@ public class ConditionsANDTest {
     @Test
     public void multiFaLseFalseTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.FALSE);
         conditions.add(() -> Boolean.FALSE);
         and(conditions, () -> {
@@ -133,7 +133,7 @@ public class ConditionsANDTest {
     @Test
     public void multiTrueTrueTrueFalseLogics() {
         var builder = new StringBuilder();
-        var conditions = new ArrayList<Supplier<Boolean>>();
+        var conditions = new ArrayList<BooleanSupplier>();
         conditions.add(() -> Boolean.TRUE);
         conditions.add(() -> Boolean.TRUE);
         and(conditions, () -> {
