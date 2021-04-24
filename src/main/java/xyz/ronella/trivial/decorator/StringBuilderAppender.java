@@ -58,6 +58,31 @@ public class StringBuilderAppender {
         return this;
     }
 
+    private void beforeAndAfterAppendLogic(Consumer<StringBuilder> logic, Consumer<StringBuilder> beforeAppend,
+                                           Consumer<StringBuilder> afterAppend) {
+        try {
+            if (threadSafe) {
+                INSTANCE_LOCK.lock();
+            }
+            if (null != beforeAppend) {
+                beforeAppend.accept(builder);
+            } else if (null != defaultBeforeAppend) {
+                defaultBeforeAppend.accept(builder);
+            }
+            logic.accept(builder);
+            if (null != afterAppend) {
+                afterAppend.accept(builder);
+            } else if (null != defaultAfterAppend) {
+                defaultAfterAppend.accept(builder);
+            }
+        }
+        finally {
+            if (threadSafe) {
+                INSTANCE_LOCK.unlock();
+            }
+        }
+    }
+
     /**
      * Perform an append operation with pre-append and post-append logic.
      * This will override the default pre-append and post-append logic.
@@ -70,27 +95,8 @@ public class StringBuilderAppender {
     public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend,
                                         Consumer<StringBuilder> afterAppend) {
 
-        try {
-            if (threadSafe) {
-                INSTANCE_LOCK.lock();
-            }
-            if (null != beforeAppend) {
-                beforeAppend.accept(builder);
-            } else if (null != defaultBeforeAppend) {
-                defaultBeforeAppend.accept(builder);
-            }
-            builder.append(text);
-            if (null != afterAppend) {
-                afterAppend.accept(builder);
-            } else if (null != defaultAfterAppend) {
-                defaultAfterAppend.accept(builder);
-            }
-        }
-        finally {
-            if (threadSafe) {
-                INSTANCE_LOCK.unlock();
-            }
-        }
+        Optional.ofNullable(text).ifPresent( ___text ->
+                beforeAndAfterAppendLogic(sb -> sb.append(___text), beforeAppend, afterAppend));
         return this;
     }
 
@@ -141,16 +147,51 @@ public class StringBuilderAppender {
      * Ability to append using your own custom logic that this decorator cannot handle.
      *
      * @param updateLogic Must hold the custom logic for appending.
+     * @param beforeAppend The logic to perform before an append.
+     * @param afterAppend The logic to perform after an append.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 1.4.0
+     */
+    public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,
+                                        Consumer<StringBuilder> afterAppend) {
+
+        Optional.ofNullable(updateLogic).ifPresent(logic -> {
+            beforeAndAfterAppendLogic(sb -> {
+                logic.accept(builder);
+            }, beforeAppend, afterAppend);
+        });
+
+        return this;
+    }
+
+    /**
+     * Ability to append using your own custom logic that this decorator cannot handle.
+     *
+     * @param updateLogic Must hold the custom logic for appending.
+     * @param beforeAppend The logic to perform before an append.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 1.4.0
+     */
+    public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
+        append(updateLogic, beforeAppend, null);
+        return this;
+    }
+
+    /**
+     * Ability to append using your own custom logic that this decorator cannot handle.
+     *
+     * @param updateLogic Must hold the custom logic for appending.
      *
      * @return An instance of StringBuilderAppender.
      *
      * @since 1.4.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) {
-        Optional.ofNullable(updateLogic).ifPresent(logic -> {
-            logic.accept(builder);
-        });
-
+        append(updateLogic, null);
         return this;
     }
 }

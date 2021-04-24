@@ -2,6 +2,8 @@ package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Consumer;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StringBuilderAppenderTest {
@@ -88,7 +90,6 @@ public class StringBuilderAppenderTest {
         assertEquals("+Test", builder.toString());
     }
 
-
     @Test
     public void toStringTest() {
         var builder = new StringBuilderAppender(new StringBuilder()).append("Test", ___builder -> ___builder.append("+"));
@@ -97,9 +98,39 @@ public class StringBuilderAppenderTest {
 
     @Test
     public void customAppendTest() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append("Test", ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder());
         builder.append(sb -> sb.append("+"));
-        assertEquals("+Test+", builder.toString());
+        assertEquals("+", builder.toString());
+    }
+
+    @Test
+    public void customAppendWithBeforeLogicTest() {
+        var builder = new StringBuilderAppender(new StringBuilder());
+        builder.append(sb -> sb.append("+"), ___builder -> ___builder.append("-"));
+        assertEquals("-+", builder.toString());
+    }
+
+    @Test
+    public void customAppendWithBeforeAndLogicTest() {
+        var builder = new StringBuilderAppender(new StringBuilder());
+        builder.append(sb -> sb.append("+"), ___builder -> ___builder.append("-"), ___builder -> ___builder.append("!"));
+        assertEquals("-+!", builder.toString());
+    }
+
+    @Test
+    public void nullCustomAppendWithBeforeAndLogicTest() {
+        var builder = new StringBuilderAppender(new StringBuilder());
+        Consumer<StringBuilder> sbLogic = null;
+        builder.append(sbLogic, ___builder -> ___builder.append("-"), ___builder -> ___builder.append("!"));
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void nullAppendWithBeforeAndLogicTest() {
+        var builder = new StringBuilderAppender(new StringBuilder());
+        String text = null;
+        builder.append(text, ___builder -> ___builder.append("-"), ___builder -> ___builder.append("!"));
+        assertEquals("", builder.toString());
     }
 
     @Test
