@@ -1,8 +1,8 @@
 package xyz.ronella.trivial.handy;
 
 import xyz.ronella.trivial.command.Invoker;
-import xyz.ronella.trivial.command.LogicAND;
-import xyz.ronella.trivial.command.LogicOR;
+import xyz.ronella.trivial.command.logic.LogicAND;
+import xyz.ronella.trivial.command.logic.LogicOR;
 import xyz.ronella.trivial.command.Sink;
 
 import java.util.List;
