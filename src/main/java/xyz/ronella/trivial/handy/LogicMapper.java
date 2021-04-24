@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -20,7 +21,7 @@ import java.util.function.Supplier;
  */
 public class LogicMapper<TYPE_OUTPUT> {
 
-    private Map<Supplier<Boolean>, Sink> logicMap = null;
+    private Map<BooleanSupplier, Sink> logicMap = null;
     private Sink initialLogic = null;
     private Supplier<TYPE_OUTPUT> finalLogic = null;
 
@@ -40,7 +41,7 @@ public class LogicMapper<TYPE_OUTPUT> {
     public Optional<TYPE_OUTPUT> output() {
         initialLogic.plummet();
         logicMap.forEach((___condition, ___logic) -> {
-            if (Optional.ofNullable(___condition).orElse(()->Boolean.FALSE).get()) {
+            if (Optional.ofNullable(___condition).orElse(()->Boolean.FALSE).getAsBoolean()) {
                 ___logic.plummet();
             }
         });
@@ -59,7 +60,7 @@ public class LogicMapper<TYPE_OUTPUT> {
      */
     public static class LogicMapperBuilder<TYPE_OUTPUT> {
 
-        private Map<Supplier<Boolean>, Sink> logicMap = null;
+        private Map<BooleanSupplier, Sink> logicMap = null;
         private Sink initialLogic = null;
         private Supplier<TYPE_OUTPUT> finalLogic = null;
         private AtomicInteger inlineIdx = null;
@@ -79,7 +80,7 @@ public class LogicMapper<TYPE_OUTPUT> {
          * @param logic The logic to be executed if the condition is evaluated to true.
          * @return The builder instance.
          */
-        public LogicMapperBuilder<TYPE_OUTPUT> addLogic(Supplier<Boolean> condition, Sink logic) {
+        public LogicMapperBuilder<TYPE_OUTPUT> addLogic(BooleanSupplier condition, Sink logic) {
             logicMap.put(condition, logic);
             return this;
         }
