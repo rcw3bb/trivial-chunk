@@ -19,9 +19,7 @@ A class that accepts multiple conditions and if **all conditions are true** it w
 | public void accept(Sink **truthLogic**)                      | The method that accepts an implementation of **Sink** that will be evaluated when all the conditions are evaluated to true. <br /><br />Passing in null will invoke the **defaultTruthLogic** if available. |
 | public void accept(Sink **truthLogic**, Sink **falseLogic**) | The method that accepts two implementations of **Sinks**. The first implementation must hold the **truthLogic**. The second implementation must hold the implementation of the **falseLogic**. The truthLogic will be executed if and only if all the conditions are evaluated to true. Otherwise, the falseLogic will be executed.<br /><br />Passing in null to either of the parameters will invoke its corresponding default logic passed via constructor. |
 
-
-
-**Example Usage**
+**Sample Usage**
 
 ```java
 var builder = new StringBuilder();

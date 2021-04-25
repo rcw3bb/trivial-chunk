@@ -45,7 +45,7 @@ A decorator for StringBuilder that gives you a chance to add **pre-append** and 
 | beforeAppend | Must hold the pre-append logic that can override the default pre-append logic. |
 | afterAppend | Must hold the post-append logic that can override the default post-append logic. |
 | condition | Must be evaluated to true before the append can be done. |
-| updateLogic | Must be evaluated to something that can be appended. |
+| updateLogic | Must be evaluated to something that will perform an append. |
 
 **Sample Usage**
 

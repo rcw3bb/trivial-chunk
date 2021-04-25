@@ -10,7 +10,7 @@ A utility class that invokes an implementation of some standard functional inter
 | static void **execute**(BiConsumer<TYPE_ARG1, TYPE_ARG2> logic) | Executes an implementation of **BiConsumer** where all the arguments are null. |
 | static TYPE_RETURN **process**(BiFunction<TYPE_ARG1, TYPE_ARG2, TYPE_RETURN> logic, TYPE_ARG1 arg1, TYPE_ARG2 arg2) | Executes an implementation of **BiFunction**.                |
 | static void **execute**(Consumer<TYPE> logic, TYPE arg)      | Executes an implementation **Consumer**.                     |
-| static void **execute**(Consumer<TYPE> logic)                | Executes an implementation **Consumer** where all the argument is null. |
+| static void **execute**(Consumer<TYPE> logic)                | Executes an implementation **Consumer** where the argument is null. |
 | static TYPE_RETURN **process**(Function<TYPE_ARG, TYPE_RETURN> logic, TYPE_ARG arg) | Executes an implementation of **Function**.                  |
 | static TYPE_RETURN **generate**(Supplier<TYPE_RETURN> logic) | Executes an implementation of **Supplier**.                  |
 | static void **plunge**(Sink logic)                           | Executes an implementation of **Sink**.                      |
