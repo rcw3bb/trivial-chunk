@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.0.0 : 2021-04-26
+
+### Added
+
+* toString method to StringBuilderAppender.
+* addInlineLogic method to LogicMapper.
+* LogicAND and LogicOR now supports defaultTruthLogic and defaultFalseLogic via constructor.
+* StringBuilderAppender now support conditional append.
+* StringBuilderAppender now support custom logic for append.
+
+### Change
+
+* Supplier<Boolean> was replaced with BooleanSupplier.
+* Sink is now in the xyz.ronella.trivial.functional package.
+* LogicAND and LogicOR are now in xyz.ronella.trivial.command.logic package.
+* LogicAND and LogicOR are now related by ILogical interface.
+
 ## 1.3.0 : 2021-04-22
 
 ### Added
