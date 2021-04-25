@@ -85,6 +85,14 @@ public class LogicMapper<TYPE_OUTPUT> {
             return this;
         }
 
+        /**
+         * Add a logic that will definitely added.
+         * @param logic The logic to be executed.
+         *
+         * @return The builder instance.
+         *
+         * @since 2.0.0
+         */
         public LogicMapperBuilder<TYPE_OUTPUT> addInlineLogic(Sink logic) {
             logicMap.put(()-> {
                 Predicate<Integer> dummy = __ -> Boolean.TRUE;

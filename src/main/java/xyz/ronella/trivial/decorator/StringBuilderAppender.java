@@ -56,6 +56,11 @@ public class StringBuilderAppender {
         this(builder, null);
     }
 
+    /**
+     * Make the appending task thread safe.
+     *
+     * @return An instance of StringBuilderAppender.
+     */
     public StringBuilderAppender threadSafe() {
         this.threadSafe = true;
         return this;
