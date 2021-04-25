@@ -18,6 +18,27 @@ public class LogicOR extends AbstractLogical {
      * Creates an instance of LogicOR.
      *
      * @param conditions A list of BooleanSupplier.
+     * @param defaultTruthLogic The default truth logic.
+     * @param defaultFalseLogic The default false logic.
+     */
+    public LogicOR(List<BooleanSupplier> conditions, Sink defaultTruthLogic, Sink defaultFalseLogic) {
+        super(conditions, defaultTruthLogic, defaultFalseLogic);
+    }
+
+    /**
+     * Creates an instance of LogicOR.
+     *
+     * @param conditions A list of BooleanSupplier.
+     * @param defaultTruthLogic The default truth logic.
+     */
+    public LogicOR(List<BooleanSupplier> conditions, Sink defaultTruthLogic) {
+        super(conditions, defaultTruthLogic);
+    }
+
+    /**
+     * Creates an instance of LogicOR.
+     *
+     * @param conditions A list of BooleanSupplier.
      */
     public LogicOR(List<BooleanSupplier> conditions) {
         super(conditions);
@@ -26,27 +47,35 @@ public class LogicOR extends AbstractLogical {
     /**
      * Creates an instance of LogicOR.
      *
+     * @param defaultTruthLogic The default truth logic.
+     * @param defaultFalseLogic The default false logic.
      * @param conditions An array of BooleanSupplier.
+     */
+    public LogicOR(Sink defaultTruthLogic, Sink defaultFalseLogic, BooleanSupplier ... conditions) {
+        super(defaultTruthLogic, defaultFalseLogic, conditions);
+    }
+
+    /**
+     * Creates an instance of LogicOR.
      *
-     * @since 2.0.0
+     * @param defaultTruthLogic The default truth logic.
+     * @param conditions An array of BooleanSupplier.
+     */
+    public LogicOR(Sink defaultTruthLogic, BooleanSupplier ... conditions) {
+        super(defaultTruthLogic, conditions);
+    }
+
+    /**
+     * Creates an instance of LogicOR.
+     *
+     * @param conditions An array of BooleanSupplier.
      */
     public LogicOR(BooleanSupplier ... conditions) {
         super(conditions);
     }
 
-    /**
-     * The specific OR implementation.
-     *
-     * @param truthLogic The logic to be executed when at least one condition is true.
-     * @param falseLogic The logic to be executed when all the conditions are false.
-     */
     @Override
-    public void accept(Sink truthLogic, Sink falseLogic) {
-        if (conditions.stream().anyMatch(BooleanSupplier::getAsBoolean)) {
-            Optional.ofNullable(truthLogic).orElse(() -> {}).plummet();
-        }
-        else {
-            Optional.ofNullable(falseLogic).orElse(() -> {}).plummet();
-        }
+    public boolean getTruthCondition(List<BooleanSupplier> conditions) {
+        return conditions.stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 }

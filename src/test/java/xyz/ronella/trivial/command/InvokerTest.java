@@ -2,6 +2,8 @@ package xyz.ronella.trivial.command;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InvokerTest {
@@ -15,6 +17,17 @@ public class InvokerTest {
             ___arg2.append("arg2");
         }, arg1, arg2);
         assertEquals("arg1", arg1.toString());
+    }
+
+    @Test
+    public void executeWithBiConsumerNoArgs() {
+        var arg1 = new StringBuilder();
+        var arg2 = new StringBuilder();
+        Invoker.execute((StringBuilder ___arg1, StringBuilder ___arg2) -> {
+            Optional.ofNullable(___arg1).ifPresent(____arg1 -> ____arg1.append("arg1"));
+            Optional.ofNullable(___arg2).ifPresent(____arg2 -> ____arg2.append("arg2"));
+        });
+        assertEquals("", arg1.toString());
     }
 
     @Test
@@ -68,6 +81,15 @@ public class InvokerTest {
             ___arg.append("arg");
         }, arg);
         assertEquals("arg", arg.toString());
+    }
+
+    @Test
+    public void executeWithConsumerNoArg() {
+        var arg = new StringBuilder();
+        Invoker.execute((StringBuilder ___arg) -> {
+            Optional.ofNullable(___arg).ifPresent(____arg -> ____arg.append("arg"));
+        });
+        assertEquals("", arg.toString());
     }
 
     @Test

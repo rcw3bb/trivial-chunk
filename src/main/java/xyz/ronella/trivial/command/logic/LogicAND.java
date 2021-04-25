@@ -18,6 +18,27 @@ public class LogicAND extends AbstractLogical {
      * Creates an instance of LogicAND.
      *
      * @param conditions A list of BooleanSupplier.
+     * @param defaultTruthLogic The default truth logic.
+     * @param defaultFalseLogic The default false logic.
+     */
+    public LogicAND(List<BooleanSupplier> conditions, Sink defaultTruthLogic, Sink defaultFalseLogic) {
+        super(conditions, defaultTruthLogic, defaultFalseLogic);
+    }
+
+    /**
+     * Creates an instance of LogicAND.
+     *
+     * @param conditions A list of BooleanSupplier.
+     * @param defaultTruthLogic The default truth logic.
+     */
+    public LogicAND(List<BooleanSupplier> conditions, Sink defaultTruthLogic) {
+        super(conditions, defaultTruthLogic);
+    }
+
+    /**
+     * Creates an instance of LogicAND.
+     *
+     * @param conditions A list of BooleanSupplier.
      */
     public LogicAND(List<BooleanSupplier> conditions) {
         super(conditions);
@@ -26,27 +47,35 @@ public class LogicAND extends AbstractLogical {
     /**
      * Creates an instance of LogicAND.
      *
+     * @param defaultTruthLogic The default truth logic.
+     * @param defaultFalseLogic The default false logic.
      * @param conditions An array of BooleanSupplier.
+     */
+    public LogicAND(Sink defaultTruthLogic, Sink defaultFalseLogic, BooleanSupplier ... conditions) {
+        super(defaultTruthLogic, defaultFalseLogic, conditions);
+    }
+
+    /**
+     * Creates an instance of LogicAND.
      *
-     * @since 2.0.0
+     * @param defaultTruthLogic The default truth logic.
+     * @param conditions An array of BooleanSupplier.
+     */
+    public LogicAND(Sink defaultTruthLogic, BooleanSupplier ... conditions) {
+        super(defaultTruthLogic, conditions);
+    }
+
+    /**
+     * Creates an instance of LogicAND.
+     *
+     * @param conditions An array of BooleanSupplier.
      */
     public LogicAND(BooleanSupplier ... conditions) {
         super(conditions);
     }
 
-    /**
-     * The specific AND implementation.
-     *
-     * @param truthLogic The logic to be executed when all the conditions are true.
-     * @param falseLogic The logic to be executed when at least one condition is false.
-     */
     @Override
-    public void accept(Sink truthLogic, Sink falseLogic) {
-        if (!conditions.isEmpty() && conditions.stream().allMatch(BooleanSupplier::getAsBoolean)) {
-            Optional.ofNullable(truthLogic).orElse(() -> {}).plummet();
-        }
-        else {
-            Optional.ofNullable(falseLogic).orElse(() -> {}).plummet();
-        }
+    public boolean getTruthCondition(List<BooleanSupplier> conditions) {
+        return !conditions.isEmpty() && conditions.stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 }

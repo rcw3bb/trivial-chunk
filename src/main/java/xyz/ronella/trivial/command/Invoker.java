@@ -28,6 +28,21 @@ public class Invoker {
     }
 
     /**
+     * Executes an implementation BiConsumer but passed in nulls for the arguments.
+     *
+     * @param logic The BiConsumer implementation.
+     * @param <TYPE_ARG1> The type of the first parameter.
+     * @param <TYPE_ARG2> The type of the second parameter.
+     *
+     * @since 2.0.0
+     */
+    public static <TYPE_ARG1, TYPE_ARG2> void execute(
+            BiConsumer<TYPE_ARG1, TYPE_ARG2> logic)
+    {
+        logic.accept(null, null);
+    }
+
+    /**
      * Executes an implementation of BiFunction.
      *
      * @param logic The BiFunction implementation.
@@ -52,6 +67,18 @@ public class Invoker {
      */
     public static <TYPE> void execute(Consumer<TYPE> logic, TYPE arg) {
         logic.accept(arg);
+    }
+
+    /**
+     * Executes an implementation Consumer but passed in null to the argument.
+     *
+     * @param logic The Consumer implementation.
+     * @param <TYPE> The type of the parameter.
+     *
+     * @since 2.0.0
+     */
+    public static <TYPE> void execute(Consumer<TYPE> logic) {
+        logic.accept(null);
     }
 
     /**
