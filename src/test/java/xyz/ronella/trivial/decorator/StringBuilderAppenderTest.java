@@ -139,4 +139,97 @@ public class StringBuilderAppenderTest {
         var builder = new StringBuilderAppender(sbStringBuilder).append("Test", ___builder -> ___builder.append("+"));
         assertSame(sbStringBuilder, builder.getStringBuilder());
     }
+
+    @Test
+    public void truthConditionFullMethod() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE, "Test"
+                , ___builder -> ___builder.append("+")
+                , ___builder -> ___builder.append("-"));
+        assertEquals("+Test-", builder.toString());
+    }
+
+    @Test
+    public void falseConditionFullMethod() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE, "Test"
+                , ___builder -> ___builder.append("+")
+                , ___builder -> ___builder.append("-"));
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void truthConditionBeforeAppend() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE, "Test"
+                , ___builder -> ___builder.append("+"));
+        assertEquals("+Test", builder.toString());
+    }
+
+    @Test
+    public void falseConditionBeforeAppend() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE, "Test"
+                , ___builder -> ___builder.append("+"));
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void truthConditionAppendOnly() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE, "Test");
+        assertEquals("Test", builder.toString());
+    }
+
+    @Test
+    public void falseConditionAppendOnly() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE, "Test"
+                , ___builder -> ___builder.append("+"));
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void truthConditionCustomFullMethod() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE
+                , ___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+")
+                , ___builder -> ___builder.append("-"));
+        assertEquals("+Test-", builder.toString());
+    }
+
+    @Test
+    public void falseConditionCustomFullMethod() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE
+                , ___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+")
+                , ___builder -> ___builder.append("-"));
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void truthConditionBeforeCustomAppend() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE
+                , ___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+"));
+        assertEquals("+Test", builder.toString());
+    }
+
+    @Test
+    public void falseConditionBeforeCustomeAppend() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE
+                , ___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+"));
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void truthConditionCustomAppendOnly() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE
+                , ___builder-> ___builder.append("Test"));
+        assertEquals("Test", builder.toString());
+    }
+
+    @Test
+    public void falseConditionCustomAppendOnly() {
+        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE
+                , ___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+"));
+        assertEquals("", builder.toString());
+    }
+
 }

@@ -1,8 +1,11 @@
 package xyz.ronella.trivial.decorator;
 
+import xyz.ronella.trivial.command.Sink;
+
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 /**
@@ -90,6 +93,7 @@ public class StringBuilderAppender {
      * @param text The text to be appended.
      * @param beforeAppend The logic to perform before an append.
      * @param afterAppend The logic to perform after an append.
+     *
      * @return An instance of StringBuilderAppender.
      */
     public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend,
@@ -97,6 +101,34 @@ public class StringBuilderAppender {
 
         Optional.ofNullable(text).ifPresent( ___text ->
                 beforeAndAfterAppendLogic(sb -> sb.append(___text), beforeAppend, afterAppend));
+
+        return this;
+    }
+
+    private void conditionLogic(BooleanSupplier condition, Sink logic) {
+        Optional.ofNullable(condition).ifPresent(___condition -> {
+            if (___condition.getAsBoolean()) {
+                logic.plummet();
+            }
+        });
+    }
+
+    /**
+     * Perform an append operation with pre-append and post-append logic.
+     * This will override the default pre-append and post-append logic.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param text The text to be appended.
+     * @param beforeAppend The logic to perform before an append.
+     * @param afterAppend The logic to perform after an append.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.0.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, String text, Consumer<StringBuilder> beforeAppend,
+                                        Consumer<StringBuilder> afterAppend) {
+        conditionLogic(condition, ()-> append(text, beforeAppend, afterAppend));
         return this;
     }
 
@@ -106,16 +138,36 @@ public class StringBuilderAppender {
      *
      * @param text The text to be appended.
      * @param beforeAppend The logic to perform before an append.
+     *
      * @return An instance of StringBuilderAppender.
      */
     public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend) {
         return append(text, beforeAppend, null);
     }
 
+
+    /**
+     * Perform an append operation with pre-append logic.
+     * This will override the default pre-append logic.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param text The text to be appended.
+     * @param beforeAppend The logic to perform before an append.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.0.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, String text, Consumer<StringBuilder> beforeAppend) {
+        conditionLogic(condition, ()-> append(text, beforeAppend));
+        return this;
+    }
+
     /**
      * Perform a normal append without any pre-append or post-append logic.
      *
      * @param text The text to be appended.
+     *
      * @return An instance of StringBuilderAppender.
      */
     public StringBuilderAppender append(String text) {
@@ -123,11 +175,29 @@ public class StringBuilderAppender {
     }
 
     /**
+     * Perform a normal append without any pre-append or post-append logic.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param text The text to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.0.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, String text) {
+        conditionLogic(condition, ()-> append(text));
+        return this;
+    }
+
+    /**
      * String representation of the internal StringBuilder that the decorator is holding.
      * The one that passed in the constructor or the one generated automatically.
      *
      * @return The string representation.
+     *
+     * @since 2.0.0
      */
+    @Override
     public String toString() {
         return builder.toString();
     }
@@ -157,12 +227,27 @@ public class StringBuilderAppender {
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,
                                         Consumer<StringBuilder> afterAppend) {
 
-        Optional.ofNullable(updateLogic).ifPresent(logic -> {
-            beforeAndAfterAppendLogic(sb -> {
-                logic.accept(builder);
-            }, beforeAppend, afterAppend);
-        });
+        Optional.ofNullable(updateLogic).ifPresent(logic -> beforeAndAfterAppendLogic(sb -> logic.accept(builder), beforeAppend, afterAppend));
 
+        return this;
+    }
+
+    /**
+     * Ability to append using your own custom logic that this decorator cannot handle.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param updateLogic Must hold the custom logic for appending.
+     * @param beforeAppend The logic to perform before an append.
+     * @param afterAppend The logic to perform after an append.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.0.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,
+                                        Consumer<StringBuilder> afterAppend) {
+
+        conditionLogic(condition, ()-> append(updateLogic, beforeAppend, afterAppend));
         return this;
     }
 
@@ -177,9 +262,25 @@ public class StringBuilderAppender {
      * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
-        append(updateLogic, beforeAppend, null);
+        return append(updateLogic, beforeAppend, null);
+    }
+
+    /**
+     * Ability to append using your own custom logic that this decorator cannot handle.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param updateLogic Must hold the custom logic for appending.
+     * @param beforeAppend The logic to perform before an append.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.0.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
+        conditionLogic(condition, ()-> append(updateLogic, beforeAppend));
         return this;
     }
+
 
     /**
      * Ability to append using your own custom logic that this decorator cannot handle.
@@ -191,7 +292,21 @@ public class StringBuilderAppender {
      * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) {
-        append(updateLogic, null);
+        return append(updateLogic, null);
+    }
+
+    /**
+     * Ability to append using your own custom logic that this decorator cannot handle.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param updateLogic Must hold the custom logic for appending.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.0.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic) {
+        conditionLogic(condition, ()-> append(updateLogic));
         return this;
     }
 }
