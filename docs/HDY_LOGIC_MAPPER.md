@@ -49,7 +49,7 @@ Use this method to create a set of condition and logic.
 
 | Signature |
 |-------|
-| public LogicMapperBuilder addLogic(Supplier<Boolean> condition, Sink logic) |
+| public LogicMapperBuilder addLogic(BooleanSupplier condition, Sink logic) |
 
 **Parameters**
 
@@ -57,6 +57,20 @@ Use this method to create a set of condition and logic.
 | --------- | ------------------------------------------------------------ |
 | condition | An implementation of Boolean Supplier. The particular implementation must be evaluated to true to execute its corresponding logic. |
 | logic | The implementation that will be executed if the condition is evaluated to true. |
+
+##### addInlineLogic Method
+
+Use this method to add a logic unconditionally.
+
+| Signature |
+|-------|
+| public LogicMapperBuilder addInlineLogic(Sink logic) |
+
+**Parameters**
+
+| Parameter | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| logic | The implementation that will be executed. |
 
 ##### addFinalLogic Method
 
@@ -93,7 +107,7 @@ var mapper = LogicMapper.getBuilder()
     .addLogic(()->Boolean.TRUE, ()-> builder.append("C"))
     .build();
 mapper.execute();
-System.out.println(builder.toString());
+System.out.println(mapper.toString());
 ```
 
 **Expected Output**
