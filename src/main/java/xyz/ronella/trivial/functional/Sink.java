@@ -1,4 +1,4 @@
-package xyz.ronella.trivial.command;
+package xyz.ronella.trivial.functional;
 
 /**
  * Must hold a logic that doesn't expects an argument and a return value.

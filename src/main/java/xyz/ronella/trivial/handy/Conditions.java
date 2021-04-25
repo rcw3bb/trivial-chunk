@@ -3,7 +3,7 @@ package xyz.ronella.trivial.handy;
 import xyz.ronella.trivial.command.Invoker;
 import xyz.ronella.trivial.command.logic.LogicAND;
 import xyz.ronella.trivial.command.logic.LogicOR;
-import xyz.ronella.trivial.command.Sink;
+import xyz.ronella.trivial.functional.Sink;
 
 import java.util.List;
 import java.util.function.BooleanSupplier;

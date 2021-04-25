@@ -1,6 +1,6 @@
 package xyz.ronella.trivial.decorator;
 
-import xyz.ronella.trivial.command.Sink;
+import xyz.ronella.trivial.functional.Sink;
 
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;

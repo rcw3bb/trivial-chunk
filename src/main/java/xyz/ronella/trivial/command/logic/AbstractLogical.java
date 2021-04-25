@@ -1,6 +1,6 @@
 package xyz.ronella.trivial.command.logic;
 
-import xyz.ronella.trivial.command.Sink;
+import xyz.ronella.trivial.functional.Sink;
 
 import java.util.ArrayList;
 import java.util.Arrays;

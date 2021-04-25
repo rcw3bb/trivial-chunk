@@ -1,6 +1,6 @@
 package xyz.ronella.trivial.handy;
 
-import xyz.ronella.trivial.command.Sink;
+import xyz.ronella.trivial.functional.Sink;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,5 +1,7 @@
 package xyz.ronella.trivial.command;
 
+import xyz.ronella.trivial.functional.Sink;
+
 import java.util.function.*;
 
 /**

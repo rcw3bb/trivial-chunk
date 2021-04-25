@@ -2,8 +2,8 @@ package xyz.ronella.trivial.command;
 
 import org.junit.jupiter.api.Test;
 import xyz.ronella.trivial.command.logic.LogicAND;
+import xyz.ronella.trivial.functional.Sink;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
