@@ -83,9 +83,9 @@ public abstract class AbstractLogical implements ILogical {
     }
 
     /**
-     * The default implementation is just passing the BiConsumer implementation.
+     * The default implementation is just passing to the BiConsumer implementation.
      *
-     * @param truthLogic
+     * @param truthLogic Overrides the defaultTruthLogic if not null.
      */
     @Override
     public void accept(Sink truthLogic) {
