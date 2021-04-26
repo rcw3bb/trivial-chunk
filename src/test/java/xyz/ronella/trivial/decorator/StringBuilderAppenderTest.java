@@ -232,4 +232,12 @@ public class StringBuilderAppenderTest {
         assertEquals("", builder.toString());
     }
 
+    @Test
+    public void acceptingAString() {
+        var builder = new StringBuilderAppender("").append(()-> Boolean.TRUE
+                , "Test"
+                , ___builder -> ___builder.append("+"));
+        assertEquals("+Test", builder.toString());
+    }
+
 }
