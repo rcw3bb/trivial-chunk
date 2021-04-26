@@ -3,6 +3,7 @@ package xyz.ronella.trivial.decorator;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -238,6 +239,45 @@ public class StringBuilderAppenderTest {
                 , "Test"
                 , ___builder -> ___builder.append("+"));
         assertEquals("+Test", builder.toString());
+    }
+
+    @Test
+    public void multipleTextsWithBeforeAppend() {
+        var builder = new StringBuilderAppender("").append(___builder -> ___builder.append("+"),
+                "test1", "test2", "test3");
+        assertEquals("+test1+test2+test3", builder.toString());
+    }
+
+    @Test
+    public void multipleTexts() {
+        var builder = new StringBuilderAppender("").append("test1", "test2");
+        assertEquals("test1test2", builder.toString());
+    }
+
+    @Test
+    public void multipleTextsConditionalTrueWithBeforeAppend() {
+        var builder = new StringBuilderAppender("").append(()-> Boolean.TRUE, ___builder -> ___builder.append("+"),
+                "test1", "test2", "test3");
+        assertEquals("+test1+test2+test3", builder.toString());
+    }
+
+    @Test
+    public void multipleTextsConditionalFalseWithBeforeAppend() {
+        var builder = new StringBuilderAppender("").append(()-> Boolean.FALSE, ___builder -> ___builder.append("+"),
+                "test1", "test2", "test3");
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void multipleConditionalTrueTexts() {
+        var builder = new StringBuilderAppender("").append(()-> Boolean.TRUE, "test1", "test2");
+        assertEquals("test1test2", builder.toString());
+    }
+
+    @Test
+    public void multipleConditionalFalseTexts() {
+        var builder = new StringBuilderAppender("").append(()-> Boolean.FALSE, "test1", "test2");
+        assertEquals("", builder.toString());
     }
 
 }

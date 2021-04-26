@@ -2,6 +2,7 @@ package xyz.ronella.trivial.decorator;
 
 import xyz.ronella.trivial.functional.Sink;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -306,7 +307,7 @@ public class StringBuilderAppender {
      * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
-        return append(updateLogic, beforeAppend, null);
+        return append(updateLogic, beforeAppend, (Consumer<StringBuilder>) null);
     }
 
     /**
@@ -336,7 +337,7 @@ public class StringBuilderAppender {
      * @since 2.0.0
      */
     public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) {
-        return append(updateLogic, null);
+        return append(updateLogic, (Consumer<StringBuilder>) null);
     }
 
     /**
@@ -353,4 +354,110 @@ public class StringBuilderAppender {
         conditionLogic(condition, ()-> append(updateLogic));
         return this;
     }
+
+    /**
+     * Perform an append operation with pre-append and post-append logic.
+     * This will soverride the default pre-append and post-append logic.
+     *
+     * @param beforeAppend The logic to perform before an append.
+     * @param afterAppend The logic to perform after an append.
+     * @param texts The array of texts to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender append(Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend,
+                                        String ... texts) {
+        Optional.ofNullable(texts).ifPresent(___texts -> {
+            Arrays.asList(___texts).forEach(___text -> {
+                append(___text, beforeAppend, afterAppend);
+            });
+        });
+
+        return this;
+    }
+
+    /**
+     * Perform an append operation with pre-append logic.
+     * This will override the default pre-append logic.
+     *
+     * @param beforeAppend The logic to perform before an append.
+     * @param texts The array of texts to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender append(Consumer<StringBuilder> beforeAppend, String ... texts) {
+        return append(beforeAppend, null, texts);
+    }
+
+    /**
+     * Perform a normal append without any pre-append or post-append logic.
+     *
+     * @param texts The array of texts to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender append(String ... texts) {
+        return append((Consumer<StringBuilder>) null, texts);
+    }
+
+    /**
+     * Perform an append operation with pre-append and post-append logic.
+     * This will override the default pre-append and post-append logic.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param beforeAppend The logic to perform before an append.
+     * @param afterAppend The logic to perform after an append.
+     * @param texts The array of texts to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend,
+                                        String ... texts) {
+        Optional.ofNullable(texts).ifPresent(___texts -> {
+            Arrays.asList(___texts).forEach(___text -> {
+                append(condition, ___text, beforeAppend, afterAppend);
+            });
+        });
+
+        return this;
+    }
+
+    /**
+     * Perform an append operation with pre-append logic.
+     * This will override the default pre-append logic.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param beforeAppend The logic to perform before an append.
+     * @param texts The array of texts to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> beforeAppend, String ... texts) {
+        return append(condition, beforeAppend, null, texts);
+    }
+
+    /**
+     * Perform a normal append without any pre-append or post-append logic.
+     *
+     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
+     * @param texts The array of texts to be appended.
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender append(BooleanSupplier condition, String ... texts) {
+        return append(condition, null, texts);
+    }
+
 }
