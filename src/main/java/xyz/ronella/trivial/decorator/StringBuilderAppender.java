@@ -42,6 +42,8 @@ public class StringBuilderAppender {
      * @param string An instance of String.
      * @param defaultBeforeAppend The logic to perform before an append.
      * @param defaultAfterAppend The logic to perform after an append.
+     *
+     * @since 2.1.0
      */
     public StringBuilderAppender(String string,
                                  Consumer<StringBuilder> defaultBeforeAppend,
@@ -65,6 +67,8 @@ public class StringBuilderAppender {
      *
      * @param string An instance of String.
      * @param defaultBeforeAppend The logic to perform before an append.
+     *
+     * @since 2.1.0
      */
     public StringBuilderAppender(String string,
                                  Consumer<StringBuilder> defaultBeforeAppend) {
@@ -84,6 +88,8 @@ public class StringBuilderAppender {
      * Accepts a StringBuilder to decorate.
      *
      * @param string An instance of String.
+     *
+     * @since 2.1.0
      */
     public StringBuilderAppender(String string) {
         this(string, null);
@@ -314,11 +320,11 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
+    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic,
+                                        Consumer<StringBuilder> beforeAppend) {
         conditionLogic(condition, ()-> append(updateLogic, beforeAppend));
         return this;
     }
-
 
     /**
      * Ability to append using your own custom logic that this decorator cannot handle.
