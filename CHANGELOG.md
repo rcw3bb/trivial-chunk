@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0 : 2021-04-28
+
+### Added
+
+* StringBuilderAppender can now accepts String in the constructor.
+* StringBuilderAppender have a default internal StringBuilder if neither StringBuilder or String was passed in the contructor.
+* StringBuilderAppender can append now multiple texts in one method.
+
 ## 2.0.0 : 2021-04-26
 
 ### Added
