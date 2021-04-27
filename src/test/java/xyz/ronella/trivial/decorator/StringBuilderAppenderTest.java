@@ -280,4 +280,24 @@ public class StringBuilderAppenderTest {
         assertEquals("", builder.toString());
     }
 
+    @Test
+    public void usingDefaultStringBuilder() {
+        var builder = new StringBuilderAppender().append("Test");
+        assertEquals("Test", builder.toString());
+    }
+
+    @Test
+    public void usingDefaultStringBuilderBeforeAppend() {
+        var builder = new StringBuilderAppender().append("Test"
+                , ___builder -> ___builder.append("+"));
+        assertEquals("+Test", builder.toString());
+    }
+
+    @Test
+    public void usingDefaultStringBuilderBeforeAfterAppend() {
+        var builder = new StringBuilderAppender().append("Test",
+                ___builder -> ___builder.append("+"),
+                ___builder -> ___builder.append("-"));
+        assertEquals("+Test-", builder.toString());
+    }
 }

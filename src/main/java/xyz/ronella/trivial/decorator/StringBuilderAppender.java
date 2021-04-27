@@ -53,6 +53,19 @@ public class StringBuilderAppender {
     }
 
     /**
+     * Creates an instance of StringBuilderAppender with default StringBuilder.
+     *
+     * @param defaultBeforeAppend The logic to perform before an append.
+     * @param defaultAfterAppend The logic to perform after an append.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender(Consumer<StringBuilder> defaultBeforeAppend,
+                                 Consumer<StringBuilder> defaultAfterAppend) {
+        this(new StringBuilder(), defaultBeforeAppend, defaultAfterAppend);
+    }
+
+    /**
      * Decorate the StringBuilder to have a default pre-append logic.
      *
      * @param builder An instance of StringBuilder.
@@ -77,6 +90,17 @@ public class StringBuilderAppender {
     }
 
     /**
+     * Creates an instance of StringBuilderAppender with default StringBuilder.
+     *
+     * @param defaultBeforeAppend The logic to perform before an append.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender(Consumer<StringBuilder> defaultBeforeAppend) {
+        this(defaultBeforeAppend, null);
+    }
+
+    /**
      * Accepts a StringBuilder to decorate.
      *
      * @param builder An instance of StringBuilder.
@@ -94,6 +118,15 @@ public class StringBuilderAppender {
      */
     public StringBuilderAppender(String string) {
         this(string, null);
+    }
+
+    /**
+     * Creates an instance of StringBuilderAppender with default StringBuilder.
+     *
+     * @since 2.1.0
+     */
+    public StringBuilderAppender() {
+        this((Consumer<StringBuilder>) null);
     }
 
     /**
