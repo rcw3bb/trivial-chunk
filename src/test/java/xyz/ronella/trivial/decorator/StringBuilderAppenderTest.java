@@ -1,10 +1,9 @@
 package xyz.ronella.trivial.decorator;
 
-import org.junit.jupiter.api.Test;
-
+import xyz.ronella.trivial.functional.NoOperation;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StringBuilderAppenderTest {
@@ -300,4 +299,12 @@ public class StringBuilderAppenderTest {
                 ___builder -> ___builder.append("-"));
         assertEquals("+Test-", builder.toString());
     }
+
+    @Test
+    public void noOpTest() {
+        var builder = new StringBuilderAppender(___builder -> ___builder.append("+"),
+                ___builder -> ___builder.append("-")).append("Test", NoOperation.consumer(), NoOperation.consumer());
+        assertEquals("Test", builder.toString());
+    }
+
 }

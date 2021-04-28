@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.command;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.functional.NoOperation;
+import xyz.ronella.trivial.functional.Sink;
 
 import java.util.Optional;
 
@@ -118,5 +120,4 @@ public class InvokerTest {
         Invoker.plunge(() -> arg.append("arg"));
         assertEquals("arg", arg.toString());
     }
-
 }
