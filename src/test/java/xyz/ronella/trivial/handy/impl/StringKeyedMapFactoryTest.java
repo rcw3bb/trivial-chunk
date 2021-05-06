@@ -1,9 +1,6 @@
-package xyz.ronella.trivial.handy;
-
+package xyz.ronella.trivial.handy.impl;
 
 import org.junit.jupiter.api.Test;
-import xyz.ronella.trivial.handy.impl.StringKeyedMapFactory;
-
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
