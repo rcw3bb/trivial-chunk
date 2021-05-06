@@ -5,6 +5,8 @@ import xyz.ronella.trivial.decorator.StringBuilderAppender;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,5 +42,22 @@ public class NoOperationTest {
         assertEquals("", sb.toString());
     }
 
+    @Test
+    public void noopSupplierTest() {
+        Supplier<String> supplier = NoOperation.supplier();
+        assertNull(supplier.get());
+    }
+
+    @Test
+    public void noopPredicateTrueTest() {
+        Predicate<String> predicate = NoOperation.predicate(Boolean.TRUE);
+        assertTrue(predicate.test("test"));
+    }
+
+    @Test
+    public void noopPredicateFalseTest() {
+        Predicate<String> predicate = NoOperation.predicate(Boolean.FALSE);
+        assertFalse(predicate.test("test"));
+    }
 
 }

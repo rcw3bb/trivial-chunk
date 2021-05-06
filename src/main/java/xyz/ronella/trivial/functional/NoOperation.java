@@ -2,6 +2,8 @@ package xyz.ronella.trivial.functional;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * A do nothing implementation of some functional interfaces.
@@ -44,6 +46,29 @@ public class NoOperation {
      */
     public static Sink sink() {
         return () -> {};
+    }
+
+    /**
+     * An implementation of Supplier that does nothing.
+     *
+     * @param <T> The type of output that the supplier will generate.
+     *
+     * @return Always return null.
+     */
+    public static <T> Supplier<T> supplier() {
+        return () -> null;
+    }
+
+    /**
+     * An implementation of Predicate that does nothing but must have a specific boolean output.
+     *
+     * @param output The desired output of the do nothing.
+     * @param <T> The type if argument that the predicate will work on.
+     *
+     * @return The value of the output parameter.
+     */
+    public static <T> Predicate<T> predicate(Boolean output) {
+        return (T arg) -> output;
     }
 
 }
