@@ -3,10 +3,7 @@ package xyz.ronella.trivial.functional;
 import org.junit.jupiter.api.Test;
 import xyz.ronella.trivial.decorator.StringBuilderAppender;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,4 +57,27 @@ public class NoOperationTest {
         assertFalse(predicate.test("test"));
     }
 
+    @Test
+    public void noopFunctionTest() {
+        Function<String, String> function = NoOperation.function();
+        assertNull(function.apply("test"));
+    }
+
+    @Test
+    public void noopBiFunctionTest() {
+        BiFunction<String, String, String> biFunction = NoOperation.biFunction();
+        assertNull(biFunction.apply("test", "test2`"));
+    }
+
+    @Test
+    public void noopBiPredicateTrueTest() {
+        BiPredicate<String, String> biPredicate = NoOperation.biPredicate(Boolean.TRUE);
+        assertTrue(biPredicate.test("test", "test2"));
+    }
+
+    @Test
+    public void noopBiPredicateFalseTest() {
+        BiPredicate<String, String> biPredicate = NoOperation.biPredicate(Boolean.FALSE);
+        assertFalse(biPredicate.test("test", "test2"));
+    }
 }
