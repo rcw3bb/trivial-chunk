@@ -2,6 +2,7 @@ package xyz.ronella.trivial.handy;
 
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.handy.impl.StringKeyedMapFactory;
 
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class StringKeyedMapFactoryTest {
     @Test
     public void withDefaultNonExistingKey() {
         StringKeyedMapFactory<String> factory = new StringKeyedMapFactory<>(()-> "DEFAULT");
-        assertEquals("DEFAULT", factory.create("TEMP").get());
+        assertEquals("DEFAULT", factory.get("TEMP").get());
     }
 
     @Test
@@ -20,20 +21,20 @@ public class StringKeyedMapFactoryTest {
         StringKeyedMapFactory<String> factory = new StringKeyedMapFactory<>(()-> "DEFAULT",
                 Map.entry("TEST1", ()-> "TEST1"),
                 Map.entry("TEST2", ()-> "TEST2"));
-        assertEquals("TEST1", factory.create("TEST1").get());
+        assertEquals("TEST1", factory.get("TEST1").get());
     }
 
     @Test
     public void withoutDefaultNonExistingKey() {
         StringKeyedMapFactory<String> factory = new StringKeyedMapFactory<>(Map.entry("TEST1", ()-> "TEST1"));
-        assertTrue(factory.create("TEMP").isEmpty());
+        assertTrue(factory.get("TEMP").isEmpty());
     }
 
     @Test
     public void withoutDefaultExistingKey() {
         StringKeyedMapFactory<String> factory = new StringKeyedMapFactory<>(
                 Map.entry("TEST1", ()-> "TEST1"), Map.entry("TEST2", ()-> "TEST2"));
-        assertEquals("TEST2", factory.create("TEST2").get());
+        assertEquals("TEST2", factory.get("TEST2").get());
     }
 
 }
