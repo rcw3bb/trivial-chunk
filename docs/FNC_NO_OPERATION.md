@@ -15,3 +15,4 @@ The class that supplies a do nothing implementation of some of the functional in
 | public static Sink sink()                                    | Provides a do nothing implementation of Sink.                |
 | public static <T> Supplier<T> supplier()                     | Provides a do nothing implementation of Supplier. This will always return null. |
 
+[Table of Contents](USER_GUIDE_TOC.md)
