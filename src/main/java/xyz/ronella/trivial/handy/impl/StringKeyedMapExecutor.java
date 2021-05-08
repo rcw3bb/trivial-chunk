@@ -63,6 +63,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      */
     @Override
     public Optional<Object> get(String key) {
+        execute(key);
         return Optional.empty();
     }
 
