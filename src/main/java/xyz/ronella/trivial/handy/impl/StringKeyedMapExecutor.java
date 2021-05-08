@@ -7,6 +7,13 @@ import xyz.ronella.trivial.handy.AbstractStringKeyedMapLogic;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * A convenience class for creating a map as executor.
+ *
+ * @author Ron Webb
+ *
+ * @since 2.2.0
+ */
 public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Object> {
 
     /**

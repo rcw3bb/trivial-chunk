@@ -1,6 +1,10 @@
 package xyz.ronella.trivial.handy.impl;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.functional.Sink;
+import xyz.ronella.trivial.handy.AbstractStringKeyedMapLogic;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +17,15 @@ public class StringKeyedMapExecutorTest {
         StringKeyedMapExecutor executor = new StringKeyedMapExecutor(()-> sb.append("DEFAULT"));
         executor.execute("TEMP");
         assertEquals("DEFAULT", sb.toString());
+    }
+
+    @Test
+    public void withDefaultOnMapKey() {
+        var logics = new HashMap<String, Sink>();
+        var sb = new StringBuilder();
+        StringKeyedMapExecutor executor = new StringKeyedMapExecutor(logics, ()-> sb.append("DEFAULT"));
+        executor.execute("TEMP");
+        assertTrue(logics.containsKey(AbstractStringKeyedMapLogic.DEFAULT_LOGIC));
     }
 
     @Test

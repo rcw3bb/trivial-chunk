@@ -1,7 +1,12 @@
 package xyz.ronella.trivial.handy.impl;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.functional.Sink;
+import xyz.ronella.trivial.handy.AbstractStringKeyedMapLogic;
+
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +17,15 @@ public class StringKeyedMapFactoryTest {
         StringKeyedMapFactory<String> factory = new StringKeyedMapFactory<>(()-> "DEFAULT");
         assertEquals("DEFAULT", factory.get("TEMP").get());
     }
+
+    @Test
+    public void withDefaultOnMapKey() {
+        var logics = new HashMap<String, Supplier<String>>();
+        StringKeyedMapFactory<String> factory = new StringKeyedMapFactory<>(logics, ()-> "DEFAULT");
+        factory.get("TEMP");
+        assertTrue(logics.containsKey(AbstractStringKeyedMapLogic.DEFAULT_LOGIC));
+    }
+
 
     @Test
     public void withDefaultExistingKey() {

@@ -19,6 +19,8 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> {
     protected final Map<String, TYPE_LOGIC> internalMap;
     protected final TYPE_LOGIC defaultLogic;
 
+    public static final String DEFAULT_LOGIC = "___DEFAULT_LOGIC__";
+
     /**
      * Creates an instance of AbstractStringKeyedMapLogic
      *
@@ -30,6 +32,7 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> {
     public AbstractStringKeyedMapLogic(Map<String, TYPE_LOGIC> map, TYPE_LOGIC defaultLogic, Map.Entry<String, TYPE_LOGIC> ... logics) {
         this.internalMap = Optional.ofNullable(map).orElse(new HashMap<>());
         this.defaultLogic = handleDefaultLogicConstructorArgument(defaultLogic);
+        this.internalMap.put(DEFAULT_LOGIC, defaultLogic);
         Optional.ofNullable(logics).ifPresent(___logics -> Arrays.asList(___logics).forEach(___logic ->  internalMap.put(___logic.getKey(), ___logic.getValue())));
     }
 
