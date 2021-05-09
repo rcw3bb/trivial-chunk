@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0 : 2021-05-09
+
+### Added
+
+* NoOperation implementation of some core functional interfaces.
+* Sink interface now has default drainTo method.
+* StringKeyedMapExecutor and StringKeyedMapFactory logic mapper.
+
 ## 2.1.0 : 2021-04-28
 
 ### Added
