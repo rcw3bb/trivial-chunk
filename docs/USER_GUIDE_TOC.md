@@ -1,7 +1,7 @@
 # User Guide - Table of Contents
 
 ### Commands
-* [Invoker Class](INVOKER_CLASS.md)
+* [Invoker Class](CMD_INVOKER_CLASS.md)
 * [LogicAND](CMD_LOGIC_AND.md)
 * [LogicOR](CMD_LOGIC_OR.md)
 
