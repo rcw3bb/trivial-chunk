@@ -2,6 +2,7 @@ package xyz.ronella.trivial.handy;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static xyz.ronella.trivial.handy.NPESilencer.*;
 
 public class NPESilencerTest {
 
@@ -56,11 +57,25 @@ public class NPESilencerTest {
 
     @Test
     public void chainWithoutRootSupplierFields() {
-        var value = NPESilencer.<String, String>getBuilder()
+        var value = getBuilder()
                 .addExpr(() -> "Test")
                 .addExpr(arg -> ((String) arg).toUpperCase())
                 .build().evaluate();
         assertEquals("TEST", value);
+    }
+
+    @Test
+    public void silenceNullExpression() {
+        String nullStr = null;
+        var value = nullable(()-> nullStr.toString());
+        assertNull(value);
+    }
+
+    @Test
+    public void silenceNonNullExpression() {
+        String nonNullStr = "Test";
+        var value = nullable(()-> nonNullStr.toString());
+        assertEquals("Test", value);
     }
 
 }

@@ -36,20 +36,20 @@ public class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
 
     public static class NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
 
-        private List<Function> expressions = new ArrayList<>();
+        private final List<Function> expressions = new ArrayList<>();
         private TYPE_ROOT_OBJECT root;
 
-        public NPESilencerBuilder addRoot(TYPE_ROOT_OBJECT root) {
+        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addRoot(TYPE_ROOT_OBJECT root) {
             this.root = root;
             return this;
         }
 
-        public NPESilencerBuilder addExpr(Function expression) {
+        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addExpr(Function expression) {
             expressions.add(expression);
             return this;
         }
 
-        public NPESilencerBuilder addExpr(Supplier expression) {
+        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addExpr(Supplier expression) {
             Optional.ofNullable(expression).ifPresent(___expression -> {
                 expressions.add(___arg -> ___expression.get());
             });
@@ -60,5 +60,11 @@ public class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
         public NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> build() {
             return new NPESilencer<>(this);
         }
+    }
+
+    public static <TYPE_OUTPUT> TYPE_OUTPUT nullable(Supplier expression) {
+        var silencer = NPESilencer.<Object, TYPE_OUTPUT>getBuilder().addExpr(expression).build();
+        return silencer.evaluate();
+
     }
 }
