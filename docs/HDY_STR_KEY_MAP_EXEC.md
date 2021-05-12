@@ -41,6 +41,8 @@ var executor = new StringKeyedMapExecutor(()-> sb.append("DEFAULT"),
     Map.entry("TEST1", ()-> sb.append("TEST1")),
     Map.entry("TEST2", ()-> sb.append("TEST2")));
 
+executor.execute("TEST1");
+
 System.out.println(sb.toString());
 ```
 
