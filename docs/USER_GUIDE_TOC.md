@@ -15,6 +15,7 @@
 ### Handy Tools
 * [Conditions](HDY_CONDITIONS.md)
 * [LogicMapper](HDY_LOGIC_MAPPER.md)
+* [NPESilencer](HDY_NPE_SILENCER.md)
 * [OSType](HDY_OSTYPE.md)
 * [StringKeyedMapExecutor](HDY_STR_KEY_MAP_EXEC.md)
 * [StringKeyedMapFactory](HDY_STR_KEY_MAP_FACTORY.md)
