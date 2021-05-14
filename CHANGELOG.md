@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0 : 2021-05-14
+
+### Added
+
+* NPESilencer implementation.
+* Require implementation
+
 ## 2.2.0 : 2021-05-09
 
 ### Added
