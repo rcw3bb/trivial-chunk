@@ -10,13 +10,15 @@ import java.util.Objects;
  */
 public class Require {
 
+    private Require() {}
+
     /**
      * A method that checks if all the parameters were not null.
      *
      * @param param The required first parameter to check.
      * @param params The other parameters to check.
      *
-     * @throws RequireAllException This will be thrown with at least one of the parameters throws an NPE.
+     * @throws RequireAllException This will be thrown when at least one of the parameters has thrown an NPE.
      */
     public static void all(Object param, Object ... params) throws RequireAllException {
         try {
