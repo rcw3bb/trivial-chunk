@@ -32,6 +32,7 @@ A library of trivial codes.
    requires xyz.ronella.trivial.decorator;
    requires xyz.ronella.trivial.functional;
    requires xyz.ronella.trivial.handy;
+   requires xyz.ronella.trivial.handy.impl;
    ```
 
 ## [User Guide](docs/USER_GUIDE_TOC.md)
