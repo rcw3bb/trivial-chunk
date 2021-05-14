@@ -17,6 +17,7 @@
 * [LogicMapper](HDY_LOGIC_MAPPER.md)
 * [NPESilencer](HDY_NPE_SILENCER.md)
 * [OSType](HDY_OSTYPE.md)
+* [Require](HDY_REQUIRE_CLASS.md)
 * [StringKeyedMapExecutor](HDY_STR_KEY_MAP_EXEC.md)
 * [StringKeyedMapFactory](HDY_STR_KEY_MAP_FACTORY.md)
 
