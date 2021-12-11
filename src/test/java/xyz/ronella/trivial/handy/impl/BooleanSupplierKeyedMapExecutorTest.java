@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BooleanSupplierKeyedMapExecutorTest {
 
     @Test
-    public void withDefaultNonValidKey() {
+    public void withDefaultNoValidKey() {
         var sb = new StringBuilder();
         BooleanSupplierKeyedMapExecutor executor = new BooleanSupplierKeyedMapExecutor(()-> sb.append("DEFAULT"));
         executor.execute();
@@ -16,7 +16,7 @@ public class BooleanSupplierKeyedMapExecutorTest {
     }
 
     @Test
-    public void withDefaultExistingValidKey() {
+    public void withDefaultValidKey() {
         var sb = new StringBuilder();
         BooleanSupplierKeyedMapExecutor executor = new BooleanSupplierKeyedMapExecutor(()-> sb.append("DEFAULT"),
                 Map.entry(()-> Boolean.FALSE, ()-> sb.append("TEST1")),

@@ -36,7 +36,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      */
     @SafeVarargs
     public StringKeyedMapExecutor(Sink defaultLogic, Map.Entry<String, Sink> ... logics) {
-        super(defaultLogic, logics);
+        this(null, defaultLogic, logics);
     }
 
     /**
@@ -46,7 +46,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      */
     @SafeVarargs
     public StringKeyedMapExecutor(Map.Entry<String, Sink> ... logics) {
-        super(logics);
+        this(null, logics);
     }
 
     @Override

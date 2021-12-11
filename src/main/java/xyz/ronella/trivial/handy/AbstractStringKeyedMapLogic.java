@@ -30,27 +30,6 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> exten
     }
 
     /**
-     * Creates an instance of AbstractStringKeyedMapLogic
-     *
-     * @param defaultLogic The default create logic if the key used was not in the map.
-     * @param logics An arrays of create logic mapped to key.
-     */
-    @SafeVarargs
-    public AbstractStringKeyedMapLogic(TYPE_LOGIC defaultLogic, Map.Entry<String, TYPE_LOGIC> ... logics) {
-        this(null, defaultLogic, logics);
-    }
-
-    /**
-     * Creates an instance of AbstractStringKeyedMapLogic
-     *
-     * @param logics An arrays of create logic mapped to key.
-     */
-    @SafeVarargs
-    public AbstractStringKeyedMapLogic(Map.Entry<String, TYPE_LOGIC> ... logics) {
-        this(null, logics);
-    }
-
-    /**
      * Must have the implementation on how to get the logic based on a key and must be able to handle
      * if that key doesn't exists.
      *

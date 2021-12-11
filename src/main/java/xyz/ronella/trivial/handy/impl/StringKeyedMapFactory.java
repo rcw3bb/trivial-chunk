@@ -38,7 +38,7 @@ public class StringKeyedMapFactory<TYPE_OUTPUT> extends AbstractStringKeyedMapLo
      */
     @SafeVarargs
     public StringKeyedMapFactory(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
-        super(defaultLogic, logics);
+        this(null, defaultLogic, logics);
     }
 
     /**
@@ -48,9 +48,8 @@ public class StringKeyedMapFactory<TYPE_OUTPUT> extends AbstractStringKeyedMapLo
      */
     @SafeVarargs
     public StringKeyedMapFactory(Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
-        super(logics);
+        this(null, logics);
     }
-
 
     @Override
     protected Supplier<TYPE_OUTPUT> handleDefaultLogicConstructorArgument(Supplier<TYPE_OUTPUT> defaultLogic) {

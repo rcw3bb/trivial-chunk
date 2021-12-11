@@ -2,9 +2,8 @@ package xyz.ronella.trivial.handy.impl;
 
 import xyz.ronella.trivial.functional.NoOperation;
 import xyz.ronella.trivial.functional.Sink;
-import xyz.ronella.trivial.handy.AbstractKeyedMapLogic;
+import xyz.ronella.trivial.handy.AbstractBooleanSupplierKeyedMapLogic;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
@@ -16,15 +15,22 @@ import java.util.function.BooleanSupplier;
  *
  * @since 2.4.0
  */
-public class BooleanSupplierKeyedMapExecutor extends AbstractKeyedMapLogic<BooleanSupplier, Sink, Object> {
+public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeyedMapLogic<Sink, Object> {
 
+    /**
+     * Creates an instance of BooleanSupplierKeyedMapExecutor
+     *
+     * @param map An external map that will be used as storage of logics.
+     * @param defaultLogic The default create logic if the key used was not in the map.
+     * @param logics An arrays of create logic mapped to key.
+     */
     @SafeVarargs
     public BooleanSupplierKeyedMapExecutor(Map<BooleanSupplier, Sink> map, Sink defaultLogic, Map.Entry<BooleanSupplier, Sink> ... logics) {
-        super(map, defaultLogic, Arrays.asList(logics));
+        super(map, defaultLogic, logics);
     }
 
     /**
-     * Creates an instance of StringKeyedMapExecutor
+     * Creates an instance of BooleanSupplierKeyedMapExecutor
      *
      * @param defaultLogic The default create logic if the key used was not in the map.
      * @param logics An arrays of create logic mapped to key.
@@ -35,7 +41,7 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractKeyedMapLogic<Boole
     }
 
     /**
-     * Creates an instance of StringKeyedMapExecutor
+     * Creates an instance of BooleanSupplierKeyedMapExecutor
      *
      * @param logics An arrays of create logic mapped to key.
      */
@@ -61,5 +67,16 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractKeyedMapLogic<Boole
             }
         }
         logic.plummet();
+    }
+
+    /**
+     * This will always return empty values. Use the execute method instead to perform any logic.
+     *
+     * @return Always empty.
+     */
+    @Override
+    public Optional<Object> get() {
+        execute();
+        return Optional.empty();
     }
 }
