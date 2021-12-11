@@ -1,7 +1,6 @@
 package xyz.ronella.trivial.handy;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,11 +13,7 @@ import java.util.Optional;
  * @author Ron Webb
  * @since 2.2.0
  */
-public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> {
-
-    protected final Map<String, TYPE_LOGIC> internalMap;
-    protected final TYPE_LOGIC defaultLogic;
-
+public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> extends AbstractKeyedMapLogic<String, TYPE_LOGIC, TYPE_OUTPUT> {
     public static final String DEFAULT_LOGIC = "___DEFAULT_LOGIC__";
 
     /**
@@ -30,10 +25,8 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> {
      */
     @SafeVarargs
     public AbstractStringKeyedMapLogic(Map<String, TYPE_LOGIC> map, TYPE_LOGIC defaultLogic, Map.Entry<String, TYPE_LOGIC> ... logics) {
-        this.internalMap = Optional.ofNullable(map).orElse(new HashMap<>());
-        this.defaultLogic = handleDefaultLogicConstructorArgument(defaultLogic);
+        super(map, defaultLogic, Arrays.asList(logics));
         this.internalMap.put(DEFAULT_LOGIC, defaultLogic);
-        Optional.ofNullable(logics).ifPresent(___logics -> Arrays.asList(___logics).forEach(___logic ->  internalMap.put(___logic.getKey(), ___logic.getValue())));
     }
 
     /**
@@ -56,15 +49,6 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> {
     public AbstractStringKeyedMapLogic(Map.Entry<String, TYPE_LOGIC> ... logics) {
         this(null, logics);
     }
-
-    /**
-     * Must have the implementation to handle the null defaultLogic.
-     *
-     * @param defaultLogic The default argument received from the constructor.
-     *
-     * @return The initial value of the internal defaultLogic.
-     */
-    protected abstract TYPE_LOGIC handleDefaultLogicConstructorArgument(TYPE_LOGIC defaultLogic);
 
     /**
      * Must have the implementation on how to get the logic based on a key and must be able to handle
