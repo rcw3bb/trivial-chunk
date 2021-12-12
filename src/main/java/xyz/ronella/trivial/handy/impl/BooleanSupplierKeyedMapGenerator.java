@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  *
  * @since 2.4.0
  */
-public class BooleanSupplierKeyedMapFactory<TYPE_OUTPUT> extends AbstractBooleanSupplierKeyedMapLogic<Supplier<TYPE_OUTPUT>, TYPE_OUTPUT> {
+public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBooleanSupplierKeyedMapLogic<Supplier<TYPE_OUTPUT>, TYPE_OUTPUT> {
 
     /**
      * Creates an instance of BooleanSupplierKeyedMapFactory
@@ -27,7 +27,7 @@ public class BooleanSupplierKeyedMapFactory<TYPE_OUTPUT> extends AbstractBoolean
      * @param logics       An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapFactory(Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>> ... logics) {
+    public BooleanSupplierKeyedMapGenerator(Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>> ... logics) {
         super(map, defaultLogic, logics);
     }
 
@@ -38,7 +38,7 @@ public class BooleanSupplierKeyedMapFactory<TYPE_OUTPUT> extends AbstractBoolean
      * @param logics       An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapFactory(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
+    public BooleanSupplierKeyedMapGenerator(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
         this(null, defaultLogic, logics);
     }
 
@@ -48,8 +48,17 @@ public class BooleanSupplierKeyedMapFactory<TYPE_OUTPUT> extends AbstractBoolean
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapFactory(Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
+    public BooleanSupplierKeyedMapGenerator(Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
         this(null, logics);
+    }
+
+    /**
+     * Creates an instance of BooleanSupplierKeyedMapFactory
+     *
+     * @param map An external map that already contains logics.
+     */
+    public BooleanSupplierKeyedMapGenerator(Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map) {
+        this(map, null);
     }
 
     @Override

@@ -14,13 +14,9 @@ import java.util.function.Supplier;
  *
  * @author Ron Webb
  *
- * @since 2.2.0
- *
- * @deprecated
- * Use StringKeyedMapGenerator instead
+ * @since 2.4.0
  */
-@Deprecated
-public class StringKeyedMapFactory<TYPE_OUTPUT> extends AbstractStringKeyedMapLogic<Supplier<TYPE_OUTPUT>, TYPE_OUTPUT> {
+public class StringKeyedMapGenerator<TYPE_OUTPUT> extends AbstractStringKeyedMapLogic<Supplier<TYPE_OUTPUT>, TYPE_OUTPUT> {
 
     /**
      * Creates an instance of StringKeyedMapFactory
@@ -30,7 +26,7 @@ public class StringKeyedMapFactory<TYPE_OUTPUT> extends AbstractStringKeyedMapLo
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public StringKeyedMapFactory(Map<String, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
+    public StringKeyedMapGenerator(Map<String, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
         super(map, defaultLogic, logics);
     }
 
@@ -41,7 +37,7 @@ public class StringKeyedMapFactory<TYPE_OUTPUT> extends AbstractStringKeyedMapLo
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public StringKeyedMapFactory(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
+    public StringKeyedMapGenerator(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
         this(null, defaultLogic, logics);
     }
 
@@ -51,8 +47,17 @@ public class StringKeyedMapFactory<TYPE_OUTPUT> extends AbstractStringKeyedMapLo
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public StringKeyedMapFactory(Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
+    public StringKeyedMapGenerator(Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) {
         this(null, logics);
+    }
+
+    /**
+     * Creates an instance of StringKeyedMapFactory
+     *
+     * @param map An external map that already stores factories.
+     */
+    public StringKeyedMapGenerator(Map<String, Supplier<TYPE_OUTPUT>> map) {
+        this(map, null);
     }
 
     @Override

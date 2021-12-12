@@ -16,6 +16,7 @@ import java.util.function.Supplier;
  * @author Ron Webb
  * @since 2.3.0
  */
+@SuppressWarnings("unchecked")
 public class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
 
     private TYPE_ROOT_OBJECT root;

@@ -1,7 +1,11 @@
 package xyz.ronella.trivial.handy.impl;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.functional.Sink;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,6 +55,20 @@ public class BooleanSupplierKeyedMapExecutorTest {
                 Map.entry(()->Boolean.TRUE, () -> sb.append("TEST3")),
                 Map.entry(()->Boolean.TRUE, ()-> sb.append("TEST4"))
         );
+        executor.execute();
+        assertEquals("TEST3", sb.toString());
+    }
+
+    @Test
+    public void mapParamOnly() {
+        var sb = new StringBuilder();
+        var map = new LinkedHashMap<BooleanSupplier, Sink>();
+        map.put(()->Boolean.FALSE, () -> sb.append("TEST1"));
+        map.put(()->Boolean.FALSE, () -> sb.append("TEST2"));
+        map.put(()->Boolean.TRUE, () -> sb.append("TEST3"));
+        map.put(()->Boolean.TRUE, ()-> sb.append("TEST4"));
+
+        BooleanSupplierKeyedMapExecutor executor = new BooleanSupplierKeyedMapExecutor(map);
         executor.execute();
         assertEquals("TEST3", sb.toString());
     }

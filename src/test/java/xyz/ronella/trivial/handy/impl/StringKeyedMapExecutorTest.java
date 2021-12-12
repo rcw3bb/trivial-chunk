@@ -55,4 +55,16 @@ public class StringKeyedMapExecutorTest {
         assertEquals("TEST2", sb.toString());
     }
 
+    @Test
+    public void mapParamOnly() {
+        var sb = new StringBuilder();
+        var map = new HashMap<String, Sink>();
+        map.put("TEST1", () -> sb.append("TEST1"));
+        map.put("TEST2", ()-> sb.append("TEST2"));
+
+        StringKeyedMapExecutor executor = new StringKeyedMapExecutor(map);
+        executor.execute("TEST2");
+        assertEquals("TEST2", sb.toString());
+    }
+
 }

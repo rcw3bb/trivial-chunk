@@ -50,6 +50,15 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
         this(null, logics);
     }
 
+    /**
+     * Creates an instance of BooleanSupplierKeyedMapExecutor
+     *
+     * @param map An external map that already contains logics.
+     */
+    public BooleanSupplierKeyedMapExecutor(Map<BooleanSupplier, Sink> map) {
+        super(map, null);
+    }
+
     @Override
     protected Sink handleDefaultLogicConstructorArgument(Sink defaultLogic) {
         return Optional.ofNullable(defaultLogic).orElse(NoOperation.sink());

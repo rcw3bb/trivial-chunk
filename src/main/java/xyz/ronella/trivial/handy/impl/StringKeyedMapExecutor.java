@@ -49,6 +49,15 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
         this(null, logics);
     }
 
+    /**
+     * Creates an instance of StringKeyedMapExecutor
+     *
+     * @param map An external map that already contains logics.
+     */
+    public StringKeyedMapExecutor(Map<String, Sink> map) {
+        super(map, null);
+    }
+
     @Override
     protected Sink handleDefaultLogicConstructorArgument(Sink defaultLogic) {
         return Optional.ofNullable(defaultLogic).orElse(NoOperation.sink());
