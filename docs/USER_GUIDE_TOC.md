@@ -19,5 +19,6 @@
 * [OSType](HDY_OSTYPE.md)
 * [Require](HDY_REQUIRE_CLASS.md)
 * [StringKeyedMapExecutor](HDY_STR_KEY_MAP_EXEC.md)
-* [StringKeyedMapFactory](HDY_STR_KEY_MAP_FACTORY.md)
+* [StringKeyedMapFactory (Deprecated)](HDY_STR_KEY_MAP_FACTORY.md)
+* [StringKeyedMapGenerator](HDY_STR_KEY_MAP_GEN.md)
 

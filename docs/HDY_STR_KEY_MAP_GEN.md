@@ -1,16 +1,15 @@
-# StringKeyedMapFactory Class (Deprecated)
+# StringKeyedMapGenerator Class
 
 A group of logics that are contained in a map and **returns a value**.
-
-This is a deprecated class, use [StringKeyedMapGenerator](HDY_STR_KEY_MAP_GEN) instead
 
 #### Constructors
 
 | Signature                                                    |
 | ------------------------------------------------------------ |
-| public StringKeyedMapFactory(Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) |
-| public StringKeyedMapFactory(Map<String, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) |
-| public StringKeyedMapFactory(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) |
+| public StringKeyedMapGenerator(Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) |
+| public StringKeyedMapGenerator(Map<String, Supplier<TYPE_OUTPUT>> map) |
+| public StringKeyedMapGenerator(Map<String, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) |
+| public StringKeyedMapGenerator(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<String, Supplier<TYPE_OUTPUT>> ... logics) |
 
 **Parameters**
 
@@ -36,7 +35,7 @@ This is a deprecated class, use [StringKeyedMapGenerator](HDY_STR_KEY_MAP_GEN) i
 ##### Sample Usage
 
 ```
-var factory = new StringKeyedMapFactory<String>(()-> "DEFAULT",
+var factory = new StringKeyedMapGenerator<String>(()-> "DEFAULT",
     Map.entry("TEST1", ()-> "TEST1"),
     Map.entry("TEST2", ()-> "TEST2"));
 

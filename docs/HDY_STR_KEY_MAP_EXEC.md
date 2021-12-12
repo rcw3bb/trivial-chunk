@@ -7,6 +7,7 @@ A group of logics that are contained in a map and **doesn't return a value**.
 | Signature                                                    |
 | ------------------------------------------------------------ |
 | public StringKeyedMapExecutor(Map.Entry<String, Sink> ... logics) |
+| public StringKeyedMapExecutor(Map<String, Sink> map)         |
 | public StringKeyedMapExecutor(Map<String, Sink> map, Sink defaultLogic, Map.Entry<String, Sink> ... logics) |
 | public StringKeyedMapExecutor(Sink defaultLogic, Map.Entry<String, Sink> ... logics) |
 
