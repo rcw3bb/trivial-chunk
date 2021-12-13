@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0 : 2021-12-13
+
+### Added
+
+* BooleanSupplierKeyedMapExecutor and BooleanSupplierKeyedMapFactory logic mapper.
+
 ## 2.3.0 : 2021-05-14
 
 ### Added
