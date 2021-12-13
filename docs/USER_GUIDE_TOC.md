@@ -18,6 +18,8 @@
 * [NPESilencer](HDY_NPE_SILENCER.md)
 * [OSType](HDY_OSTYPE.md)
 * [Require](HDY_REQUIRE_CLASS.md)
+* [BooleanSupplierKeyedMapExecutor](HDY_BOOLEAN_KEY_MAP_EXEC.md)
+* [BooleanSupplierKeyedMapGenerator](HDY_BOOLEAN_KEY_MAP_GEN.md)
 * [StringKeyedMapExecutor](HDY_STR_KEY_MAP_EXEC.md)
 * [StringKeyedMapFactory (Deprecated)](HDY_STR_KEY_MAP_FACTORY.md)
 * [StringKeyedMapGenerator](HDY_STR_KEY_MAP_GEN.md)

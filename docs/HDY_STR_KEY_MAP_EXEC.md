@@ -1,6 +1,6 @@
 # StringKeyedMapExecutor Class
 
-A group of logics that are contained in a map and **doesn't return a value**.
+A group of logics that are contained in a map and **doesn't return a value**. The key must be a valid **String**.
 
 #### Constructors
 
@@ -36,7 +36,7 @@ A group of logics that are contained in a map and **doesn't return a value**.
 
 ##### Sample Usage
 
-```
+```java
 var sb = new StringBuilder();
 var executor = new StringKeyedMapExecutor(()-> sb.append("DEFAULT"),
     Map.entry("TEST1", ()-> sb.append("TEST1")),

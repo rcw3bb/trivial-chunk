@@ -1,6 +1,6 @@
 # StringKeyedMapGenerator Class
 
-A group of logics that are contained in a map and **returns a value**.
+A group of logics that are contained in a map and **returns a value**. The key must be a valid **String**.
 
 #### Constructors
 
@@ -34,12 +34,12 @@ A group of logics that are contained in a map and **returns a value**.
 
 ##### Sample Usage
 
-```
-var factory = new StringKeyedMapGenerator<String>(()-> "DEFAULT",
+```java
+var generator = new StringKeyedMapGenerator<String>(()-> "DEFAULT",
     Map.entry("TEST1", ()-> "TEST1"),
     Map.entry("TEST2", ()-> "TEST2"));
 
-System.out.println(factory.get("TEST1").get());
+System.out.println(generator.get("TEST1").get());
 ```
 
 **Expected Output**
