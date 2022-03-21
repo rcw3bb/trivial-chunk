@@ -27,12 +27,7 @@ A library of trivial codes.
 2. Include the following to your **module-info.java**:
 
    ```java
-   requires xyz.ronella.trivial.command;
-   requires xyz.ronella.trivial.command.logic;
-   requires xyz.ronella.trivial.decorator;
-   requires xyz.ronella.trivial.functional;
-   requires xyz.ronella.trivial.handy;
-   requires xyz.ronella.trivial.handy.impl;
+   requires xyz.ronella.casual.trivial;
    ```
 
 ## [User Guide](docs/USER_GUIDE_TOC.md)
