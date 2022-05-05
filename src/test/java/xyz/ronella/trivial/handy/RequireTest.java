@@ -9,7 +9,7 @@ public class RequireTest {
     public void onlyParameterNull() {
         String param = null;
         assertThrows(RequireAllException.class, ()-> {
-            Require.all(param);
+            Require.objects(param);
         });
     }
 
@@ -18,7 +18,7 @@ public class RequireTest {
         String param1 = null;
         String param2 = null;
         assertThrows(RequireAllException.class, ()-> {
-            Require.all(param1, param2);
+            Require.objects(param1, param2);
         });
     }
 
@@ -27,7 +27,7 @@ public class RequireTest {
         String param1 = "param1";
         String param2 = null;
         assertThrows(RequireAllException.class, ()-> {
-            Require.all(param1, param2);
+            Require.objects(param1, param2);
         });
     }
 
@@ -36,7 +36,7 @@ public class RequireTest {
         String param1 = "param1";
         String param2 = "param2";
         assertDoesNotThrow(()-> {
-            Require.all(param1, param2);
+            Require.objects(param1, param2);
         });
     }
 

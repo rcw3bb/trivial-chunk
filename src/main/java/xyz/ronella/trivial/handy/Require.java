@@ -22,6 +22,7 @@ public class Require {
      *
      * @deprecated Use the objects method instead.
      */
+    @Deprecated
     public static void all(Object param, Object ... params) throws RequireAllException {
         objects(param, params);
     }
