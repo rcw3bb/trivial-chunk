@@ -1,8 +1,9 @@
 plugins {
-    id 'java'
-    id "org.javamodularity.moduleplugin" version "1.6.0"
-    id "com.bmuschko.nexus" version "2.3.1"
-    id "io.codearte.nexus-staging" version "0.21.1"
+    id 'java-library'
+    id 'maven-publish'
+    id "org.javamodularity.moduleplugin" version "1.8.10"
+    id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
+    id 'signing'
 }
 
 group 'xyz.ronella.casual'
@@ -11,60 +12,98 @@ version '2.5.0-SNAPSHOT'
 sourceCompatibility = 1.11
 
 repositories {
-    maven {
-        url 'https://repo.ronella.xyz/artifactory/java-central'
-        credentials {
-            username "${artifactoryUsername}"
-            password "${artifactoryPassword}"
+    if (Boolean.valueOf(USE_PRIVATE_REPO)) {
+        println "Using Private Repository"
+
+        maven {
+            url 'https://repo.ronella.xyz/artifactory/java-central'
+            credentials {
+                username "${artifactoryUsername}"
+                password "${artifactoryPassword}"
+            }
+            mavenContent {
+                releasesOnly()
+            }
+        }
+        maven {
+            url 'https://repo.ronella.xyz/archiva/repository/snapshots/'
+            credentials {
+                username "${archivaUsername}"
+                password "${archivaPassword}"
+            }
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+    }
+    else {
+        println "Using mavenCentral Repository"
+        mavenCentral()
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        repositories.maven {
+            def publishingPath = version.toString().contains("SNAPSHOT") ? 'snapshots' : 'internal'
+            url "https://repo.ronella.xyz/archiva/repository/${publishingPath}/"
+            credentials {
+                username "${archivaUsername}"
+                password "${archivaPassword}"
+            }
+        }
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'Trivial Chunk'
+                description = 'A library of trivial codes.'
+                url = 'https://github.com/rcw3bb/trivial-chunk'
+                properties = [
+                        "inceptionYear": '2019'
+                ]
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/rcw3bb/trivial-chunk/blob/master/LICENSE.md'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'rcw3bb'
+                        name = 'Ronaldo Webb'
+                        email = 'ronaldo.c.webb@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/rcw3bb/trivial-chunk.git'
+                    developerConnection = 'https://github.com/rcw3bb/trivial-chunk.git'
+                    url = 'https://github.com/rcw3bb/trivial-chunk'
+                }
+            }
         }
     }
 }
 
-modifyPom {
-    project {
-        name 'Trivial Chunk'
-        description 'A library of trivial codes.'
-        url 'https://github.com/rcw3bb/trivial-chunk'
-        inceptionYear '2019'
+signing {
+    sign publishing.publications.mavenJava
+}
 
-        scm {
-            url 'https://github.com/rcw3bb/trivial-chunk'
-            connection 'https://github.com/rcw3bb/trivial-chunk.git'
-            developerConnection 'https://github.com/rcw3bb/trivial-chunk.git'
-        }
-
-        licenses {
-            license {
-                name 'MIT License'
-                url 'https://github.com/rcw3bb/trivial-chunk/blob/master/LICENSE.md'
-                distribution 'repo'
-            }
-        }
-
-        developers {
-            developer {
-                id 'rcw3bb'
-                name 'Ronaldo Webb'
-                email 'ronaldo.c.webb@gmail.com'
-            }
-        }
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
 
-extraArchive {
-    sources = true
-    tests = true
-    javadoc = true
-}
-
-nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
-}
-
-nexusStaging {
-    stagingProfileId = "142f3cca5418da"
+nexusPublishing {
+    repositories {
+        sonatype {
+            stagingProfileId = "142f3cca5418da"
+        }
+    }
 }
 
 dependencies {
