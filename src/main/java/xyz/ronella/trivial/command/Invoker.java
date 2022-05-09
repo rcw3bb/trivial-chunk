@@ -10,7 +10,7 @@ import java.util.function.*;
  * @author Ron Webb
  * @since 2019-11-28
  */
-public class Invoker {
+public final class Invoker {
 
     private Invoker() {}
 

@@ -14,7 +14,7 @@ import java.util.function.BooleanSupplier;
  * @author Ron Webb
  * @since 2019-11-30
  */
-public class Conditions {
+public final class Conditions {
 
     private Conditions() {}
 

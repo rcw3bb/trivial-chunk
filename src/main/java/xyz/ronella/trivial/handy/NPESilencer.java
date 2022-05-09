@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @since 2.3.0
  */
 @SuppressWarnings("unchecked")
-public class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
+public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
 
     private TYPE_ROOT_OBJECT root;
     private List<Function> expressions;

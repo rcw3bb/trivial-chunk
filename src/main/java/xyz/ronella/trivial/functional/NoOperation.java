@@ -9,7 +9,7 @@ import java.util.function.*;
  *
  * @since 2.2.0
  */
-public class NoOperation {
+public final class NoOperation {
 
     private NoOperation() {}
 

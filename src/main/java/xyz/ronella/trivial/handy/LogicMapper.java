@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  * @author Ron Webb
  * @since 2019-12-01
  */
-public class LogicMapper<TYPE_OUTPUT> {
+public final class LogicMapper<TYPE_OUTPUT> {
 
     private Map<BooleanSupplier, Sink> logicMap = null;
     private Sink initialLogic = null;

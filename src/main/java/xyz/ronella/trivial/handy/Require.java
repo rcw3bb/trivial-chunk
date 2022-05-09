@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Ron Webb
  * @since 2.3.0
  */
-public class Require {
+public final class Require {
 
     private Require() {}
 
