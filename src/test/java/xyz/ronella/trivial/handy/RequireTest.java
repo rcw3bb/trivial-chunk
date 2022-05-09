@@ -40,4 +40,12 @@ public class RequireTest {
         });
     }
 
+    @Test
+    public void allParametersNonNullUsingAll() {
+        String param1 = "param1";
+        String param2 = "param2";
+        assertDoesNotThrow(()-> {
+            Require.all(param1, param2);
+        });
+    }
 }

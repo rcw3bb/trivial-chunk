@@ -112,4 +112,18 @@ public class LogicMapperTest {
         assertEquals("[ABCD", mapper.output().orElse(""));
     }
 
+    @Test
+    public void nullCondition() {
+        var builder = new StringBuilder();
+        var mapper= LogicMapper.<String>getBuilder()
+                .addInitialLogic(()-> builder.append("["))
+                .addFinalLogic(builder::toString)
+                .addLogic(null, ()-> builder.append("A"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("B"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("C"))
+                .addLogic(()->Boolean.TRUE, ()-> builder.append("D"))
+                .build();
+        assertEquals("[BCD", mapper.output().orElse(""));
+    }
+
 }
