@@ -17,6 +17,27 @@ public class RegExMatcherTest {
     }
 
     @Test
+    public void matchLogicFoundOnly() {
+        var sbText = new StringBuilder();
+        RegExMatcher.findByRegex("Hello world", "(\\w*)\\s(\\w*)",
+                (___matcher) -> sbText.append(___matcher.group(1)));
+
+        assertEquals("Hello", sbText.toString());
+    }
+
+    @Test
+    public void matchLogicWithException() {
+        var sbText = new StringBuilder();
+        RegExMatcher.findByRegex("Hello world", "(\\w*)\\s(\\w*)",
+                (___matcher) -> {
+                    throw new RuntimeException("Exception");
+                },
+                (___exception) -> sbText.append("Exception"));
+
+        assertEquals("Exception", sbText.toString());
+    }
+
+    @Test
     public void noMatchLogicFound() {
         var sbText = new StringBuilder();
         RegExMatcher.findByRegex("Hello world", "test",
@@ -46,5 +67,6 @@ public class RegExMatcherTest {
         var matcher = RegExMatcher.findByRegex("Hello world", "(\\w*)\\s(\\w*)");
         assertEquals("Hello", matcher.group(1));
     }
+
 
 }
