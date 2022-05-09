@@ -46,8 +46,8 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommandsWithPB(Consumer<ProcessBuilder> initProcessBuilder, String... commands) throws NoCommandException {
-        return runCommandsWithPB(initProcessBuilder, NoOperation.biConsumer(), commands);
+    public static int runCommands(Consumer<ProcessBuilder> initProcessBuilder, String... commands) throws NoCommandException {
+        return runCommands(initProcessBuilder, NoOperation.biConsumer(), commands);
     }
     
     /**
@@ -72,8 +72,8 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommandsWithPB(Consumer<ProcessBuilder> initProcessBuilder,
-                                 BiConsumer<InputStream, InputStream> outputLogic, String... commands) throws
+    public static int runCommands(Consumer<ProcessBuilder> initProcessBuilder,
+                                  BiConsumer<InputStream, InputStream> outputLogic, String... commands) throws
             NoCommandException {
 
         return runCommands(() -> {

@@ -7,6 +7,7 @@ import xyz.ronella.trivial.functional.NoOperation;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -96,12 +97,13 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void withPB() throws NoCommandException {
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommandsWithPB(NoOperation.consumer(), "dummy"));
+    public void usingConsumer() throws NoCommandException {
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands(NoOperation.consumer(), "dummy"));
     }
 
     @Test
-    public void withPBWithOutputLogic() throws NoCommandException {
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommandsWithPB(NoOperation.consumer(), NoOperation.biConsumer(), "dummy"));
+    public void usingConsumerWithOutputLogic() throws NoCommandException {
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands((Supplier<ProcessBuilder>) ProcessBuilder::new,
+                NoOperation.biConsumer(), "dummy"));
     }
 }
