@@ -3,6 +3,7 @@ package xyz.ronella.trivial.handy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import xyz.ronella.trivial.functional.NoOperation;
 
 import java.io.*;
 import java.util.Scanner;
@@ -89,4 +90,18 @@ public class CommandRunnerTest {
         assertEquals("Mocked error", sbOutput.toString());
     }
 
+    @Test
+    public void ioException() throws NoCommandException {
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands("dummy"));
+    }
+
+    @Test
+    public void withPB() throws NoCommandException {
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommandsWithPB(NoOperation.consumer(), "dummy"));
+    }
+
+    @Test
+    public void withPBWithOutputLogic() throws NoCommandException {
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommandsWithPB(NoOperation.consumer(), NoOperation.biConsumer(), "dummy"));
+    }
 }

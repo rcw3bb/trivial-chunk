@@ -27,19 +27,6 @@ public final class CommandRunner {
     /**
      * Run the commands received.
      *
-     * @param outputLogic Must hold the logic on dealing with the output and error result.
-     * @param commands    The commands to be executed.
-     * @return The exit code after the completion of the process.
-     *
-     * @throws NoCommandException Thrown with no command was passed.
-     */
-    public static int runCommands(BiConsumer<InputStream, InputStream> outputLogic, String... commands) throws NoCommandException {
-        return runCommands(NoOperation.supplier(), outputLogic, commands);
-    }
-
-    /**
-     * Run the commands received.
-     *
      * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
      * @param commands             The commands to be executed.
      * @return The exit code after the completion of the process.
@@ -72,11 +59,11 @@ public final class CommandRunner {
      * @throws NoCommandException Thrown with no command was passed.
      */
     public static int runCommands(String... commands) throws NoCommandException {
-        return runCommands(NoOperation.supplier(), commands);
+        return runCommands((Supplier<ProcessBuilder>) ProcessBuilder::new, commands);
     }
 
     /**
-     *Run the commands received.
+     * Run the commands received.
      *
      * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
      * @param outputLogic Must hold the logic on dealing with the output and error result.
@@ -127,7 +114,7 @@ public final class CommandRunner {
             return process.exitValue();
         }
         catch(IOException ioe) {
-            ioe.printStackTrace(System.err);
+            System.err.println(ioe.getMessage());
             return ERROR_EXIT_CODE;
         }
     }
