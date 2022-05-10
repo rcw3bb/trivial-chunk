@@ -9,7 +9,7 @@ public class RegExMatcherTest {
     @Test
     public void matchLogicFound() {
         var sbText = new StringBuilder();
-        RegExMatcher.findByRegex( "(\\w*)\\s(\\w*)", "Hello world",
+        RegExMatcher.matchByRegEx( "(\\w*)\\s(\\w*)", "Hello world",
                 (___matcher) -> sbText.append(___matcher.group(1)),
                 () -> sbText.append("test"));
 
@@ -19,7 +19,7 @@ public class RegExMatcherTest {
     @Test
     public void matchLogicFoundOnly() {
         var sbText = new StringBuilder();
-        RegExMatcher.findByRegex("(\\w*)\\s(\\w*)", "Hello world",
+        RegExMatcher.matchByRegEx("(\\w*)\\s(\\w*)", "Hello world",
                 (___matcher) -> sbText.append(___matcher.group(1)));
 
         assertEquals("Hello", sbText.toString());
@@ -28,7 +28,7 @@ public class RegExMatcherTest {
     @Test
     public void matchLogicWithException() {
         var sbText = new StringBuilder();
-        RegExMatcher.findByRegex("(\\w*)\\s(\\w*)", "Hello world",
+        RegExMatcher.matchByRegEx("(\\w*)\\s(\\w*)", "Hello world",
                 (___matcher) -> {
                     throw new RuntimeException("Exception");
                 },
@@ -40,7 +40,7 @@ public class RegExMatcherTest {
     @Test
     public void noMatchLogicFound() {
         var sbText = new StringBuilder();
-        RegExMatcher.findByRegex("test","Hello world",
+        RegExMatcher.matchByRegEx("test","Hello world",
                 (___matcher) -> sbText.append(___matcher.group(1)),
                 () -> sbText.append("test"));
 
@@ -50,7 +50,7 @@ public class RegExMatcherTest {
     @Test
     public void runtimeExceptionFound() {
         var sbText = new StringBuilder();
-        RegExMatcher.findByRegex("test","Hello world",
+        RegExMatcher.matchByRegEx("test","Hello world",
                 (___matcher) -> sbText.append(___matcher.group(1)),
                 () -> {
                     throw new RuntimeException("Error test");
@@ -64,9 +64,19 @@ public class RegExMatcherTest {
 
     @Test
     public void matcherLogicFound() {
-        var matcher = RegExMatcher.findByRegex("(\\w*)\\s(\\w*)", "Hello world");
+        var matcher = RegExMatcher.matchByRegEx("(\\w*)\\s(\\w*)", "Hello world");
         assertEquals("Hello", matcher.group(1));
     }
 
-
+    @Test
+    public void forDocumentation() {
+RegExMatcher.matchByRegEx("(\\w*)\\s(\\w*)", "Hello world",
+        (___matcher) -> {
+            System.out.printf("Pattern: %s%n", ___matcher.pattern().pattern());
+            System.out.printf("Text: %s%n",___matcher.group(0));
+            System.out.printf("1st pattern group: %s%n", ___matcher.group(1));
+            System.out.printf("2nd pattern group: %s%n", ___matcher.group(2));
+        }
+);
+    }
 }

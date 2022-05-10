@@ -27,8 +27,8 @@ final public class RegExMatcher {
      * @param exceptionLogic The logic for capturing exception RuntimeException.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic,
-                                      Sink noMatchFoundLogic, Consumer<RuntimeException> exceptionLogic) {
+    public static Matcher matchByRegEx(String pattern, String text, Consumer<Matcher> matchFoundLogic,
+                                       Sink noMatchFoundLogic, Consumer<RuntimeException> exceptionLogic) {
         var compiledPattern = Pattern.compile(pattern);
         var matcher = compiledPattern.matcher(text);
         try {
@@ -53,9 +53,9 @@ final public class RegExMatcher {
      * @param noMatchFoundLogic The logic executed when the pattern was not found.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic,
-                                      Sink noMatchFoundLogic) {
-        return findByRegex(pattern, text, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
+    public static Matcher matchByRegEx(String pattern, String text, Consumer<Matcher> matchFoundLogic,
+                                       Sink noMatchFoundLogic) {
+        return matchByRegEx(pattern, text, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
     }
 
     /**
@@ -66,8 +66,8 @@ final public class RegExMatcher {
      * @param matchFoundLogic The logic executed when the pattern was found.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic) {
-        return findByRegex(pattern, text, matchFoundLogic, NoOperation.sink());
+    public static Matcher matchByRegEx(String pattern, String text, Consumer<Matcher> matchFoundLogic) {
+        return matchByRegEx(pattern, text, matchFoundLogic, NoOperation.sink());
     }
 
     /**
@@ -79,9 +79,9 @@ final public class RegExMatcher {
      * @param exceptionLogic The logic for capturing exception RuntimeException.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic,
-                                      Consumer<RuntimeException> exceptionLogic) {
-        return findByRegex(pattern, text, matchFoundLogic, NoOperation.sink(), exceptionLogic);
+    public static Matcher matchByRegEx(String pattern, String text, Consumer<Matcher> matchFoundLogic,
+                                       Consumer<RuntimeException> exceptionLogic) {
+        return matchByRegEx(pattern, text, matchFoundLogic, NoOperation.sink(), exceptionLogic);
     }
 
 
@@ -92,7 +92,7 @@ final public class RegExMatcher {
      * @param text The text where to find the pattern.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String pattern, String text) {
-        return findByRegex(pattern, text, NoOperation.consumer(), NoOperation.sink());
+    public static Matcher matchByRegEx(String pattern, String text) {
+        return matchByRegEx(pattern, text, NoOperation.consumer(), NoOperation.sink());
     }
 }
