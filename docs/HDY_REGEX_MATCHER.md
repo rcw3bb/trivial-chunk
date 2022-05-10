@@ -19,7 +19,7 @@ The matchByRegEx method is the method to use to **match the RegEx pattern from a
 | Parameter         | Description                                                  |
 | ----------------- | ------------------------------------------------------------ |
 | pattern           | The **regex pattern** to match.                              |
-| text              | The **text to match** the pattern from.                      |
+| text              | The **text where to match** the pattern from.                |
 | matchFoundLogic   | The **logic** that will be executed if the pattern was **matched successfully**. |
 | noMatchFoundLogic | The **logic** that will be executed if the pattern was **not found**. |
 | exceptionLogic    | The **logic** that will be executed if a **RuntimeException was thrown** from **matchFoundLogic or noMatchFoundLogic logic**. |
