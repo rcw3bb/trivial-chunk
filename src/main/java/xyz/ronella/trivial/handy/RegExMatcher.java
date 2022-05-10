@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A handy class the find a RegEx from a text.
+ * A handy class to find a RegEx pattern from a text.
  *
  * @author Ron Webb
  * @since 2.5.0
@@ -20,14 +20,14 @@ final public class RegExMatcher {
     /**
      * Find the RegEx from a text.
      *
-     * @param text The text to find the pattern.
      * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
      * @param matchFoundLogic The logic executed when the pattern was found.
      * @param noMatchFoundLogic The logic executed when the pattern was not found.
      * @param exceptionLogic The logic for capturing exception RuntimeException.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String text, String pattern, Consumer<Matcher> matchFoundLogic,
+    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic,
                                       Sink noMatchFoundLogic, Consumer<RuntimeException> exceptionLogic) {
         var compiledPattern = Pattern.compile(pattern);
         var matcher = compiledPattern.matcher(text);
@@ -47,52 +47,52 @@ final public class RegExMatcher {
     /**
      * Find the RegEx from a text.
      *
-     * @param text The text to find the pattern.
      * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
      * @param matchFoundLogic The logic executed when the pattern was found.
      * @param noMatchFoundLogic The logic executed when the pattern was not found.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String text, String pattern, Consumer<Matcher> matchFoundLogic,
+    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic,
                                       Sink noMatchFoundLogic) {
-        return findByRegex(text, pattern, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
+        return findByRegex(pattern, text, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
     }
 
     /**
      * Find the RegEx from a text.
      *
-     * @param text The text to find the pattern.
      * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
      * @param matchFoundLogic The logic executed when the pattern was found.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String text, String pattern, Consumer<Matcher> matchFoundLogic) {
-        return findByRegex(text, pattern, matchFoundLogic, NoOperation.sink());
+    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic) {
+        return findByRegex(pattern, text, matchFoundLogic, NoOperation.sink());
     }
 
     /**
      * Find the RegEx from a text.
      *
-     * @param text The text to find the pattern.
      * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
      * @param matchFoundLogic The logic executed when the pattern was found.
      * @param exceptionLogic The logic for capturing exception RuntimeException.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String text, String pattern, Consumer<Matcher> matchFoundLogic,
+    public static Matcher findByRegex(String pattern, String text, Consumer<Matcher> matchFoundLogic,
                                       Consumer<RuntimeException> exceptionLogic) {
-        return findByRegex(text, pattern, matchFoundLogic, NoOperation.sink(), exceptionLogic);
+        return findByRegex(pattern, text, matchFoundLogic, NoOperation.sink(), exceptionLogic);
     }
 
 
     /**
      * Find the RegEx from a text.
      *
-     * @param text The text to find the pattern.
      * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
      * @return An instance of Matcher.
      */
-    public static Matcher findByRegex(String text, String pattern) {
-        return findByRegex(text, pattern, NoOperation.consumer(), NoOperation.sink());
+    public static Matcher findByRegex(String pattern, String text) {
+        return findByRegex(pattern, text, NoOperation.consumer(), NoOperation.sink());
     }
 }
