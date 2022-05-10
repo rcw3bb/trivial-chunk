@@ -13,10 +13,12 @@
 * [NoOperation Class](FNC_NO_OPERATION.md)
 
 ### Handy Tools
+* [CommandRunner](HDY_COMMAND_RUNNER.md)
 * [Conditions](HDY_CONDITIONS.md)
 * [LogicMapper](HDY_LOGIC_MAPPER.md)
 * [NPESilencer](HDY_NPE_SILENCER.md)
 * [OSType](HDY_OSTYPE.md)
+* [RegExMatcher](HDY_REGEX_MATCHER.md)
 * [Require](HDY_REQUIRE_CLASS.md)
 * [BooleanSupplierKeyedMapExecutor](HDY_BOOLEAN_KEY_MAP_EXEC.md)
 * [BooleanSupplierKeyedMapGenerator](HDY_BOOLEAN_KEY_MAP_GEN.md)
