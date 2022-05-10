@@ -2,6 +2,8 @@ package xyz.ronella.trivial.handy;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.mockito.Mockito;
 import xyz.ronella.trivial.functional.NoOperation;
 
@@ -32,7 +34,7 @@ public class CommandRunnerTest {
         Mockito.when(process.exitValue()).thenReturn(0);
 
         Mockito.when(builder.start()).thenReturn(process);
-        assertEquals(0, CommandRunner.runCommands(()-> builder, "dummy"));
+        assertEquals(0, CommandRunner.runCommand(()-> builder, "dummy"));
     }
 
     @Test
@@ -43,7 +45,7 @@ public class CommandRunnerTest {
         Mockito.when(process.exitValue()).thenReturn(CommandRunner.ERROR_EXIT_CODE);
 
         Mockito.when(builder.start()).thenReturn(process);
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands(()-> builder, "dummy"));
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand(()-> builder, "dummy"));
     }
 
     @Test
@@ -54,7 +56,7 @@ public class CommandRunnerTest {
         Mockito.when(process.exitValue()).thenReturn(CommandRunner.ERROR_EXIT_CODE);
 
         Mockito.when(builder.start()).thenReturn(process);
-        assertThrows(NoCommandException.class, () -> CommandRunner.runCommands(()-> builder));
+        assertThrows(NoCommandException.class, () -> CommandRunner.runCommand(()-> builder));
     }
 
     @Test
@@ -67,7 +69,7 @@ public class CommandRunnerTest {
 
         Mockito.when(builder.start()).thenReturn(process);
         var sbOutput = new StringBuilder();
-        CommandRunner.runCommands(() -> builder, (out, err) -> {
+        CommandRunner.runCommand(() -> builder, (out, err) -> {
             sbOutput.append(new Scanner(out).nextLine());
         } ,"dummy");
 
@@ -84,7 +86,7 @@ public class CommandRunnerTest {
 
         Mockito.when(builder.start()).thenReturn(process);
         var sbOutput = new StringBuilder();
-        CommandRunner.runCommands(() -> builder, (out, err) -> {
+        CommandRunner.runCommand(() -> builder, (out, err) -> {
             sbOutput.append(new Scanner(err).nextLine());
         } ,"dummy");
 
@@ -93,17 +95,29 @@ public class CommandRunnerTest {
 
     @Test
     public void ioException() throws NoCommandException {
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands("dummy"));
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand("dummy"));
     }
 
     @Test
     public void usingConsumer() throws NoCommandException {
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands(NoOperation.consumer(), "dummy"));
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand(NoOperation.consumer(), "dummy"));
     }
 
     @Test
     public void usingConsumerWithOutputLogic() throws NoCommandException {
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommands((Supplier<ProcessBuilder>) ProcessBuilder::new,
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new,
                 NoOperation.biConsumer(), "dummy"));
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void defaultSuccessOutputLogic() throws NoCommandException {
+        assertEquals(0, CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, "where", "cmd"));
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void defaultErrorOutputLogic() throws NoCommandException {
+        assertTrue(CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, "where", "dummy") > 0);
     }
 }

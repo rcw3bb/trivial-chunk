@@ -1,15 +1,14 @@
 package xyz.ronella.trivial.handy;
 
-import xyz.ronella.trivial.functional.NoOperation;
-
 import java.io.*;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * Run external commands.
+ * Run external command.
  *
  * @author Ron Webb
  * @since 2.5.0
@@ -21,6 +20,27 @@ public final class CommandRunner {
      */
     public static final int ERROR_EXIT_CODE = -100;
 
+    /**
+     * The default output logic implementation that just simply print the output stream to
+     * System.out and error stream to System.err.
+     */
+    public static final BiConsumer<InputStream, InputStream> DEFAULT_OUTPUT_LOGIC;
+
+    static {
+        DEFAULT_OUTPUT_LOGIC = (___output, ___error) -> {
+          var outputScanner = new Scanner(___output);
+          var errorScanner = new Scanner(___error);
+
+          while (outputScanner.hasNextLine()) {
+              System.out.println(outputScanner.nextLine());
+          }
+
+          while (errorScanner.hasNextLine()) {
+              System.err.println(errorScanner.nextLine());
+          }
+        };
+    }
+
     private CommandRunner() {
     }
 
@@ -28,38 +48,51 @@ public final class CommandRunner {
      * Run the commands received.
      *
      * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
-     * @param commands             The commands to be executed.
+     * @param command              The commands to be executed.
      * @return The exit code after the completion of the process.
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommands(Supplier<ProcessBuilder> createProcessBuilder, String... commands) throws NoCommandException {
-        return runCommands(createProcessBuilder, NoOperation.biConsumer(), commands);
+    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder, String ... command) throws NoCommandException {
+        return runCommand(createProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
     }
 
     /**
      * Run the commands received.
      *
      * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
-     * @param commands             The commands to be executed.
+     * @param command             The commands to be executed.
      * @return The exit code after the completion of the process.
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommands(Consumer<ProcessBuilder> initProcessBuilder, String... commands) throws NoCommandException {
-        return runCommands(initProcessBuilder, NoOperation.biConsumer(), commands);
+    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder, String ... command) throws NoCommandException {
+        return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
     }
     
     /**
      * Run the commands received.
      *
-     * @param commands The commands to be executed.
+     * @param command The commands to be executed.
      * @return The exit code after the completion of the process.
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommands(String... commands) throws NoCommandException {
-        return runCommands((Supplier<ProcessBuilder>) ProcessBuilder::new, commands);
+    public static int runCommand(String ... command) throws NoCommandException {
+        return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, command);
+    }
+
+    /**
+     * Run the commands received.
+     *
+     * @param command The commands to be executed.
+     * @param outputLogic Must hold the logic on dealing with the output and error result.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws NoCommandException Thrown with no command was passed.
+     */
+    public static int runCommand(BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws NoCommandException {
+        return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, command);
     }
 
     /**
@@ -67,20 +100,20 @@ public final class CommandRunner {
      *
      * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
      * @param outputLogic Must hold the logic on dealing with the output and error result.
-     * @param commands The commands to be executed.
+     * @param command The commands to be executed.
      * @return The exit code after the completion of the process.
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommands(Consumer<ProcessBuilder> initProcessBuilder,
-                                  BiConsumer<InputStream, InputStream> outputLogic, String... commands) throws
+    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder,
+                                 BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws
             NoCommandException {
 
-        return runCommands(() -> {
+        return runCommand(() -> {
             var builder = new ProcessBuilder();
             initProcessBuilder.accept(builder);
             return builder;
-        }, outputLogic, commands);
+        }, outputLogic, command);
     }
 
     /**
@@ -88,22 +121,22 @@ public final class CommandRunner {
      *
      * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
      * @param outputLogic Must hold the logic on dealing with the output and error result.
-     * @param commands The commands to be executed.
+     * @param command The commands to be executed.
      * @return The exit code after the completion of the process.
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommands(Supplier<ProcessBuilder> createProcessBuilder,
-                                 BiConsumer<InputStream, InputStream> outputLogic, String ... commands) throws
+    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder,
+                                 BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws
             NoCommandException {
 
         try {
-            if (commands.length==0) {
+            if (command.length==0) {
                 throw new NoCommandException();
             }
 
             var builder = Optional.of(createProcessBuilder.get()).orElse(new ProcessBuilder());
-            builder.command(commands);
+            builder.command(command);
 
             var process = builder.start();
             try (var output = process.getInputStream();
@@ -118,5 +151,6 @@ public final class CommandRunner {
             return ERROR_EXIT_CODE;
         }
     }
+
 }
 
