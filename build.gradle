@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'xyz.ronella.casual'
-version '2.5.0-SNAPSHOT'
+version '2.5.1'
 
 sourceCompatibility = 1.11
 
@@ -43,6 +43,23 @@ repositories {
     }
 }
 
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task testsJar(type: Jar, dependsOn: [testClasses]) {
+    archiveClassifier = 'tests'
+    from sourceSets.test.output
+}
+
+jar.finalizedBy(javadocJar, sourcesJar, testsJar)
+
 java {
     withJavadocJar()
     withSourcesJar()
@@ -59,6 +76,8 @@ publishing {
             }
         }
         mavenJava(MavenPublication) {
+            from components.java
+            artifact testsJar
             pom {
                 name = 'Trivial Chunk'
                 description = 'A library of trivial codes.'
@@ -90,11 +109,11 @@ publishing {
 }
 
 test {
-    finalizedBy jacocoTestReport // report is always generated after tests run
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
+    dependsOn test
 }
 
 signing {
@@ -110,6 +129,8 @@ javadoc {
 nexusPublishing {
     repositories {
         sonatype {
+            nexusUrl = uri('https://oss.sonatype.org/service/local/')
+            snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots/')
             stagingProfileId = "142f3cca5418da"
         }
     }
