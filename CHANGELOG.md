@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.5.1 : 2022-05-12
+
+### Changed
+
+* Fix the publishing error on 2.5.0.
+
+## 2.5.0 : 2022-05-10 *(Publishing error)*
+
+### Added
+
+* CommandRunner implementation.
+* RegExMatcher implementation.
+
+### Changed
+
+* Deprecated Require.all method in favor or Require.objects method.
+
 ## 2.4.0 : 2021-12-13
 
 ### Added
@@ -39,7 +56,7 @@
 * StringBuilderAppender now support conditional append.
 * StringBuilderAppender now support custom logic for append.
 
-### Change
+### Changed
 
 * Supplier<Boolean> was replaced with BooleanSupplier.
 * Sink is now in the xyz.ronella.trivial.functional package.
