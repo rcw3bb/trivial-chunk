@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.6.0 : 2022-05-17
+
+## Added
+
+* The find and match methods are added in RegExMatcher. 
+
+### Changed
+
+* Deprecate matchByRegEx methods that requires you to use casting to some of the variants.
+
 ## 2.5.1 : 2022-05-12
 
 ### Changed

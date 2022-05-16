@@ -14,16 +14,15 @@ A library of trivial codes.
    | ----------- | ------------------ |
    | Group ID    | xyz.ronella.casual |
    | Artifact ID | trivial-chunk      |
-   | Version     | 2.5.1              |
+   | Version     | 2.6.0              |
 
    > Using gradle, this can be added as a dependency entry like the following:
    >
    > ```groovy
-   > compile group: 'xyz.ronella.casual', name: 'trivial-chunk', version: '2.5.1'
+   > implementation 'xyz.ronella.casual:trivial-chunk:2.6.0'
    > ```
    >
-   > 
-
+   
 2. Include the following to your **module-info.java**:
 
    ```java
