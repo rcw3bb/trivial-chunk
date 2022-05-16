@@ -19,10 +19,8 @@ final public class RegExMatcher {
 
     private RegExMatcher() {}
 
-    private static Matcher matcher(String pattern, String text,
-                                   Function<Matcher, Boolean> matchLogic,
-                                   Consumer<Matcher> matchFoundLogic,
-                                   Consumer<Matcher> noMatchFoundLogic,
+    private static Matcher matcher(String pattern, String text, Function<Matcher, Boolean> matchLogic,
+                                   Consumer<Matcher> matchFoundLogic, Consumer<Matcher> noMatchFoundLogic,
                                    Consumer<RuntimeException> exceptionLogic) {
         var compiledPattern = Pattern.compile(pattern);
         var matcher = compiledPattern.matcher(text);
@@ -65,7 +63,8 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
-     */    public static Matcher findWithMatchLogic(String pattern, String text, Consumer<Matcher> matchFoundLogic) {
+     */
+    public static Matcher findWithMatchLogic(String pattern, String text, Consumer<Matcher> matchFoundLogic) {
         return matcher(pattern, text, Matcher::find, matchFoundLogic, NoOperation.consumer(),
                 NoOperation.consumer());
     }
@@ -117,7 +116,8 @@ final public class RegExMatcher {
      * @since 2.6.0
      */
     public static Matcher findWithNoMatchLogic(String pattern, String text, Consumer<Matcher> matchFoundLogic,
-                                             Consumer<Matcher> noMatchFoundLogic, Consumer<RuntimeException> exceptionLogic) {
+                                             Consumer<Matcher> noMatchFoundLogic,
+                                               Consumer<RuntimeException> exceptionLogic) {
         return matcher(pattern, text, Matcher::find, matchFoundLogic, noMatchFoundLogic,
                 exceptionLogic);
     }
@@ -132,8 +132,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      */
-    public static Matcher match(String pattern, String text,
-                                Function<Matcher, Boolean> matchLogic) {
+    public static Matcher match(String pattern, String text, Function<Matcher, Boolean> matchLogic) {
         return matcher(pattern, text, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
                 NoOperation.consumer());
     }
@@ -149,8 +148,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      */
-    public static Matcher match(String pattern, String text,
-                                Function<Matcher, Boolean> matchLogic,
+    public static Matcher match(String pattern, String text, Function<Matcher, Boolean> matchLogic,
                                 Consumer<RuntimeException> exceptionLogic) {
         return matcher(pattern, text, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
                 exceptionLogic);
@@ -222,8 +220,7 @@ final public class RegExMatcher {
      * @since 2.6.0
      */
     public static Matcher matchWithNoMatchLogic(String pattern, String text, Function<Matcher, Boolean> matchLogic,
-                                                Consumer<Matcher> matchFoundLogic,
-                                                Consumer<Matcher> noMatchFoundLogic,
+                                                Consumer<Matcher> matchFoundLogic, Consumer<Matcher> noMatchFoundLogic,
                                                 Consumer<RuntimeException> exceptionLogic) {
         return matcher(pattern, text, matchLogic, matchFoundLogic,
                 noMatchFoundLogic, exceptionLogic);
