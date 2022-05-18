@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.0 : 2022-05-18
+
+## Added
+
+* Add replace method to StringBuilderAppender. 
+
 ## 2.7.0 : 2022-05-18
 
 ## Added
