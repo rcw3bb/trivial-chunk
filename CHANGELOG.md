@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.7.0 : 2022-05-18
+
+## Added
+
+* Add clear method to StringBuilderAppender. 
+
 ## 2.6.0 : 2022-05-17
 
 ## Added
