@@ -322,4 +322,24 @@ public class StringBuilderAppenderTest {
         builder.threadSafe().clear();
         assertEquals("", builder.toString());
     }
+
+    @Test
+    public void replace() {
+        var builder = new StringBuilderAppender(
+                ___builder -> ___builder.append("+"),
+                ___builder -> ___builder.append("-"))
+                .append("Hello");
+        builder.replace("Hello", "World");
+        assertEquals("+World-", builder.toString());
+    }
+
+    @Test
+    public void replaceThreadSafe() {
+        var builder = new StringBuilderAppender(
+                ___builder -> ___builder.append("+"),
+                ___builder -> ___builder.append("-"))
+                .append("Hello");
+        builder.threadSafe().replace("Hello", "World");
+        assertEquals("+World-", builder.toString());
+    }
 }

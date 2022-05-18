@@ -515,4 +515,27 @@ public class StringBuilderAppender {
         return builder;
     }
 
+    /**
+     * Replace part of StringBuilder
+     * @param target The target string to replacement.
+     * @param replacement The replacement of the target.
+     *
+     * @return An instance of StringBuilderAppender.
+     */
+    public StringBuilder replace(CharSequence target, CharSequence replacement) {
+        try {
+            if (threadSafe) {
+                INSTANCE_LOCK.lock();
+            }
+            var tmpText = builder.toString().replace(target, replacement);
+            clear().append(tmpText);
+        }
+        finally {
+            if (threadSafe) {
+                INSTANCE_LOCK.unlock();
+            }
+        }
+        return builder;
+    }
+
 }
