@@ -307,4 +307,19 @@ public class StringBuilderAppenderTest {
         assertEquals("Test", builder.toString());
     }
 
+    @Test
+    public void clearTest() {
+        var builder = new StringBuilderAppender(___builder -> ___builder.append("+"),
+                ___builder -> ___builder.append("-")).append("Test", NoOperation.consumer(), NoOperation.consumer());
+        builder.clear();
+        assertEquals("", builder.toString());
+    }
+
+    @Test
+    public void clearTestThreadSafe() {
+        var builder = new StringBuilderAppender(___builder -> ___builder.append("+"),
+                ___builder -> ___builder.append("-")).append("Test", NoOperation.consumer(), NoOperation.consumer());
+        builder.threadSafe().clear();
+        assertEquals("", builder.toString());
+    }
 }

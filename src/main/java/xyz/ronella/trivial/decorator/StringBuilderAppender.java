@@ -493,4 +493,26 @@ public class StringBuilderAppender {
         return append(condition, null, texts);
     }
 
+    /**
+     * Clears the content of the target string builder
+     *
+     * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.7.0
+     */
+    public StringBuilder clear() {
+        try {
+            if (threadSafe) {
+                INSTANCE_LOCK.lock();
+            }
+            builder.delete(0, builder.length());
+        }
+        finally {
+            if (threadSafe) {
+                INSTANCE_LOCK.unlock();
+            }
+        }
+        return builder;
+    }
+
 }
