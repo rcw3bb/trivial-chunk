@@ -500,7 +500,7 @@ public class StringBuilderAppender {
      *
      * @since 2.7.0
      */
-    public StringBuilder clear() {
+    public StringBuilderAppender clear() {
         try {
             if (threadSafe) {
                 INSTANCE_LOCK.lock();
@@ -512,7 +512,7 @@ public class StringBuilderAppender {
                 INSTANCE_LOCK.unlock();
             }
         }
-        return builder;
+        return this;
     }
 
     /**
@@ -521,21 +521,24 @@ public class StringBuilderAppender {
      * @param replacement The replacement of the target.
      *
      * @return An instance of StringBuilderAppender.
+     *
+     * @since 2.8.0
      */
-    public StringBuilder replace(CharSequence target, CharSequence replacement) {
+    public StringBuilderAppender replace(CharSequence target, CharSequence replacement) {
         try {
             if (threadSafe) {
                 INSTANCE_LOCK.lock();
             }
             var tmpText = builder.toString().replace(target, replacement);
-            clear().append(tmpText);
+            clear();
+            builder.append(tmpText);
         }
         finally {
             if (threadSafe) {
                 INSTANCE_LOCK.unlock();
             }
         }
-        return builder;
+        return this;
     }
 
 }
