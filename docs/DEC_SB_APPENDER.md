@@ -46,7 +46,8 @@ A decorator for StringBuilder that gives you a chance to add **pre-append** and 
 | public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic) |
 | public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) |
 | public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend) |
-| public StringBuilder clear() //Clears the content of the internal StringBuilder. |
+| public StringBuilderAppender clear() //Clears the content of the internal StringBuilder. |
+| public StringBuilderAppender replace(CharSequence target, CharSequence replacement) //Replacement |
 | public StringBuilderAppender threadSafe() //Make the appending task threadsafe. |
 | public String toString() //The String representation of the internal StringBuilder that the decorator is holding. |
 | public StringBuilder getStringBuilder() //Access the internal StringBuilder that the decorator is holding. |
@@ -61,6 +62,8 @@ A decorator for StringBuilder that gives you a chance to add **pre-append** and 
 | afterAppend | Must hold the post-append logic that can override the default post-append logic. |
 | condition | Must be evaluated to true before the append can be done. |
 | updateLogic | Must be evaluated to something that will perform an append. |
+| target | The target text with the builder to replace. |
+| replacement | The replacement of the target text. |
 
 **Sample Usage**
 
