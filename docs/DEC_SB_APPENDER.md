@@ -46,6 +46,7 @@ A decorator for StringBuilder that gives you a chance to add **pre-append** and 
 | public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic) |
 | public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) |
 | public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend) |
+| public StringBuilder clear() //Clears the content of the internal StringBuilder. |
 | public StringBuilderAppender threadSafe() //Make the appending task threadsafe. |
 | public String toString() //The String representation of the internal StringBuilder that the decorator is holding. |
 | public StringBuilder getStringBuilder() //Access the internal StringBuilder that the decorator is holding. |
