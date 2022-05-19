@@ -141,10 +141,7 @@ public class StringBuilderAppender {
 
     private void beforeAndAfterAppendLogic(Consumer<StringBuilder> logic, Consumer<StringBuilder> beforeAppend,
                                            Consumer<StringBuilder> afterAppend) {
-        try {
-            if (threadSafe) {
-                INSTANCE_LOCK.lock();
-            }
+        try(var ___ = new CloseableLock(INSTANCE_LOCK, this::isThreadSafe)) {
             if (null != beforeAppend) {
                 beforeAppend.accept(builder);
             } else if (null != defaultBeforeAppend) {
@@ -155,11 +152,6 @@ public class StringBuilderAppender {
                 afterAppend.accept(builder);
             } else if (null != defaultAfterAppend) {
                 defaultAfterAppend.accept(builder);
-            }
-        }
-        finally {
-            if (threadSafe) {
-                INSTANCE_LOCK.unlock();
             }
         }
     }
@@ -501,16 +493,8 @@ public class StringBuilderAppender {
      * @since 2.7.0
      */
     public StringBuilderAppender clear() {
-        try {
-            if (threadSafe) {
-                INSTANCE_LOCK.lock();
-            }
+        try(var ___ = new CloseableLock(INSTANCE_LOCK, this::isThreadSafe)) {
             builder.delete(0, builder.length());
-        }
-        finally {
-            if (threadSafe) {
-                INSTANCE_LOCK.unlock();
-            }
         }
         return this;
     }
@@ -525,20 +509,16 @@ public class StringBuilderAppender {
      * @since 2.8.0
      */
     public StringBuilderAppender replace(CharSequence target, CharSequence replacement) {
-        try {
-            if (threadSafe) {
-                INSTANCE_LOCK.lock();
-            }
+        try(var ___ = new CloseableLock(INSTANCE_LOCK, this::isThreadSafe)) {
             var tmpText = builder.toString().replace(target, replacement);
             clear();
             builder.append(tmpText);
         }
-        finally {
-            if (threadSafe) {
-                INSTANCE_LOCK.unlock();
-            }
-        }
         return this;
+    }
+
+    private boolean isThreadSafe() {
+        return threadSafe;
     }
 
 }
