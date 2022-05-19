@@ -1,6 +1,5 @@
 package xyz.ronella.trivial.decorator;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.function.BooleanSupplier;
 
@@ -14,7 +13,7 @@ public class CloseableLock implements AutoCloseable {
 
     private final Lock lock;
     private final BooleanSupplier lockOnlyWhen;
-    private AtomicInteger lockCount;
+    private int lockCount;
 
     /**
      * Creates an instance of CloseableLock. This constructor will call the lock method by default.
@@ -55,7 +54,6 @@ public class CloseableLock implements AutoCloseable {
     public CloseableLock(Lock lock, boolean noLockCall, BooleanSupplier lockOnlyWhen) {
         this.lock = lock;
         this.lockOnlyWhen = lockOnlyWhen;
-        this.lockCount = new AtomicInteger(0);
         if (!noLockCall) {
             lock();
         }
@@ -67,7 +65,7 @@ public class CloseableLock implements AutoCloseable {
     public void lock() {
         if (lockOnlyWhen.getAsBoolean()) {
             lock.lock();
-            lockCount.incrementAndGet();
+            ++lockCount;
         }
     }
 
@@ -75,9 +73,9 @@ public class CloseableLock implements AutoCloseable {
      * Calls the unlock method if the lockOnlyWhen returns true.
      */
     public void unlock() {
-        if (lockCount.get()>0 && lockOnlyWhen.getAsBoolean()) {
+        if (lockCount>0 && lockOnlyWhen.getAsBoolean()) {
+            --lockCount;
             lock.unlock();
-            lockCount.decrementAndGet();
         }
     }
 
