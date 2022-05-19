@@ -7,6 +7,7 @@
 
 ### Decorator
 * [StringBuilderAppender](DEC_SB_APPENDER.md)
+* [CloseableLock](DEC_CLOSEABLE_LOCK.md)
 
 ### Functional
 * [Sink Interface](FNC_SINK_INTERFACE.md)
