@@ -1,20 +1,27 @@
 # Changelog
 
+## 2.9.0 : 2022-05-20
+
+### Added
+
+* Add CloseableLock implementation.
+* Add Mutable implementation.
+
 ## 2.8.0 : 2022-05-18
 
-## Added
+### Added
 
 * Add replace method to StringBuilderAppender. 
 
 ## 2.7.0 : 2022-05-18
 
-## Added
+### Added
 
 * Add clear method to StringBuilderAppender. 
 
 ## 2.6.0 : 2022-05-17
 
-## Added
+### Added
 
 * The find and match methods are added in RegExMatcher. 
 
