@@ -6,8 +6,10 @@
 * [LogicOR](CMD_LOGIC_OR.md)
 
 ### Decorator
-* [StringBuilderAppender](DEC_SB_APPENDER.md)
+
 * [CloseableLock](DEC_CLOSEABLE_LOCK.md)
+* [Mutable](DEC_MUTABLE.md)
+* [StringBuilderAppender](DEC_SB_APPENDER.md)
 
 ### Functional
 * [Sink Interface](FNC_SINK_INTERFACE.md)
