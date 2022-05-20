@@ -1,7 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 /**
- * A convenience class for wrapping the immutable object and making it replaced within this class.
+ * A convenience class that accepts an immutable object and making it possible to be replaced within itself.
  * This means keeping the reference of this class intact while changing the immutable object it carries.
  *
  * @param <TYPE_OBJECT> The type of immutable object.
