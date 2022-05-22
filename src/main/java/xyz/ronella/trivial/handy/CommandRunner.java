@@ -60,6 +60,21 @@ public final class CommandRunner {
     /**
      * Run the commands received.
      *
+     * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws NoCommandException Thrown with no command was passed.
+     *
+     * @since 2.10.0
+     */
+    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder, ICommandArray commandArray) throws NoCommandException {
+        return runCommand(createProcessBuilder, DEFAULT_OUTPUT_LOGIC, commandArray.getCommand());
+    }
+
+    /**
+     * Run the commands received.
+     *
      * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
      * @param command             The commands to be executed.
      * @return The exit code after the completion of the process.
@@ -68,6 +83,35 @@ public final class CommandRunner {
      */
     public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder, String ... command) throws NoCommandException {
         return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
+    }
+
+    /**
+     * Run the commands received.
+     *
+     * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws NoCommandException Thrown with no command was passed.
+     *
+     * @since 2.10.0
+     */
+    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder, ICommandArray commandArray) throws NoCommandException {
+        return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, commandArray);
+    }
+
+    /**
+     * Run the commands received.
+     *
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws NoCommandException Thrown with no command was passed.
+     *
+     * @since 2.10.0
+     */
+    public static int runCommand(ICommandArray commandArray) throws NoCommandException {
+        return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, commandArray.getCommand());
     }
     
     /**
@@ -98,6 +142,21 @@ public final class CommandRunner {
     /**
      * Run the commands received.
      *
+     * @param commandArray An implementation of ICommandArray.
+     * @param outputLogic Must hold the logic on dealing with the output and error result.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws NoCommandException Thrown with no command was passed.
+     *
+     * @since 2.10.0
+     */
+    public static int runCommand(BiConsumer<InputStream, InputStream> outputLogic, ICommandArray commandArray) throws NoCommandException {
+        return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, commandArray);
+    }
+
+    /**
+     * Run the commands received.
+     *
      * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
      * @param outputLogic Must hold the logic on dealing with the output and error result.
      * @param command The commands to be executed.
@@ -119,13 +178,51 @@ public final class CommandRunner {
     /**
      * Run the commands received.
      *
-     * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+     * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
      * @param outputLogic Must hold the logic on dealing with the output and error result.
-     * @param command The commands to be executed.
+     * @param commandArray An implementation of ICommandArray.
      * @return The exit code after the completion of the process.
      *
      * @throws NoCommandException Thrown with no command was passed.
+     *
+     * @since 2.10.0
      */
+    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder,
+                                 BiConsumer<InputStream, InputStream> outputLogic, ICommandArray commandArray) throws
+            NoCommandException {
+
+        return runCommand(initProcessBuilder, outputLogic, commandArray.getCommand());
+
+    }
+
+    /**
+     * Run the commands received.
+     *
+     * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+     * @param outputLogic Must hold the logic on dealing with the output and error result.
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws NoCommandException Thrown with no command was passed.
+     *
+     * @since 2.10.0
+     */
+    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder,
+                                 BiConsumer<InputStream, InputStream> outputLogic, ICommandArray commandArray) throws
+            NoCommandException {
+        return runCommand(createProcessBuilder, outputLogic, commandArray.getCommand());
+    }
+
+        /**
+         * Run the commands received.
+         *
+         * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+         * @param outputLogic Must hold the logic on dealing with the output and error result.
+         * @param command The commands to be executed.
+         * @return The exit code after the completion of the process.
+         *
+         * @throws NoCommandException Thrown with no command was passed.
+         */
     public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder,
                                  BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws
             NoCommandException {
