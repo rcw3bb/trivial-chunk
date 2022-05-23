@@ -18,13 +18,17 @@ public class CommandArray implements ICommandArray {
     private final Set<String> arguments;
     private final Set<String> zArguments;
 
-    private CommandArray(CommandBuilder builder) {
+    private CommandArray(CommandArrayBuilder builder) {
         this.program = builder.program;
         this.command = builder.command;
         this.arguments = builder.arguments;
         this.zArguments = builder.zArguments;
     }
 
+    /**
+     * Generates the command as array.
+     * @return The array representation of the command.
+     */
     @Override
     public String[] getCommand() {
         var lstCommand = new ArrayList<String>();
@@ -38,42 +42,77 @@ public class CommandArray implements ICommandArray {
         return lstCommand.toArray(new String[] {});
     }
 
-    public static CommandBuilder getBuilder() {
-        return new CommandBuilder();
+    /**
+     * Return the builder of the CommandArray.
+     *
+     * @return An instance of CommandArrayBuilder.
+     */
+    public static CommandArrayBuilder getBuilder() {
+        return new CommandArrayBuilder();
     }
 
-    public static final class CommandBuilder {
+    /**
+     * The only instance that can create CommandArray.
+     */
+    public static final class CommandArrayBuilder {
 
-        public String program;
-        public String command;
-        public final Set<String> arguments;
-        public final Set<String> zArguments;
+        private String program;
+        private String command;
+        private final Set<String> arguments;
+        private final Set<String> zArguments;
 
-        public CommandBuilder() {
+        /**
+         * Creates an instance of CommandArrayBuilder.
+         */
+        private CommandArrayBuilder() {
             arguments = new TreeSet<>();
             zArguments = new TreeSet<>();
         }
 
+        /**
+         * The method that can create an instance of CommandArray.
+         * @return An instance of CommandArray.
+         */
         public CommandArray build() {
             return new CommandArray(this);
         }
 
-        public CommandBuilder setProgram(String program) {
+        /**
+         * Accepts the program name to be executed.
+         * @param program The name of the program.
+         * @return An instance of CommandArrayBuilder
+         */
+        public CommandArrayBuilder setProgram(String program) {
             this.program = program;
             return this;
         }
 
-        public CommandBuilder setCommand(String command) {
+        /**
+         * Accepts the command to be run with the program.
+         * @param command The name of the command.
+         * @return An instance of CommandArrayBuilder
+         */
+        public CommandArrayBuilder setCommand(String command) {
             this.command = command;
             return this;
         }
 
-        public CommandBuilder addArgs(String ... args) {
+        /**
+         * Accepts the arguments of the command.
+         * @param args The argument of the command.
+         * @return An instance of CommandArrayBuilder
+         */
+        public CommandArrayBuilder addArgs(String ... args) {
             this.arguments.addAll(Arrays.asList(args));
             return this;
         }
 
-        public CommandBuilder addZArgs(String ... zArgs) {
+        /**
+         * Accepts the arguments that must be at the end of the command arguments.
+         * @param zArgs The last arguments of the command.
+         * @return An instance of CommandArrayBuilder
+         */
+        public CommandArrayBuilder addZArgs(String ... zArgs) {
             this.zArguments.addAll(Arrays.asList(zArgs));
             return this;
         }
