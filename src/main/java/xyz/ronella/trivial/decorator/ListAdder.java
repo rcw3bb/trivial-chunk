@@ -39,6 +39,16 @@ public class ListAdder<TYPE_ELEMENT> {
     }
 
     /**
+     * Add element to a wrapped list. Added for convenience.
+     *
+     * @param element Specified in List.add
+     * @return Specified in List.add
+     */
+    public boolean add(TYPE_ELEMENT element) {
+        return list.add(element);
+    }
+
+    /**
      * Add elements to a wrapped list.
      *
      * @param when The logic that must return true to add the elements.
@@ -53,7 +63,17 @@ public class ListAdder<TYPE_ELEMENT> {
     }
 
     /**
-     * Add element to a specific index of the wrapped list
+     * Add elements to a wrapped list. Added for convenience.
+     *
+     * @param elements Specified in List.addAll
+     * @return Specified in List.addAll
+     */
+    public boolean addAll(Collection<? extends TYPE_ELEMENT> elements) {
+        return list.addAll(elements);
+    }
+
+    /**
+     * Add element to a specific index of the wrapped list.
      * @param when The logic that must return true to add the element.
      * @param index Specified in List.add
      * @param element Specified in List.add
@@ -62,6 +82,15 @@ public class ListAdder<TYPE_ELEMENT> {
         if (when.getAsBoolean()) {
             list.add(index, element);
         }
+    }
+
+    /**
+     * Add element to a specific index of the wrapped list. Added for convenience.
+     * @param index Specified in List.add
+     * @param element Specified in List.add
+     */
+    public void add(int index, TYPE_ELEMENT element) {
+        list.add(index, element);
     }
 
     /**
@@ -76,6 +105,16 @@ public class ListAdder<TYPE_ELEMENT> {
             return list.addAll(index, elements);
         }
         return false;
+    }
+
+    /**
+     * Add elements to a specified index of the wrapped list. Added for convenience.
+     * @param index Specified in List.add
+     * @param elements Specified in List.add
+     * @return Specified in List.addAll
+     */
+    public boolean addAll(int index, Collection<? extends TYPE_ELEMENT> elements) {
+        return list.addAll(index, elements);
     }
 
 }

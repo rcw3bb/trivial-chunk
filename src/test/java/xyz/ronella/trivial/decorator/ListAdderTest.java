@@ -21,6 +21,16 @@ public class ListAdderTest {
     }
 
     @Test
+    public void addOnly() {
+        var expected = Arrays.asList("Test");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.add(expected.get(0));
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
     public void addWhenFalse() {
         var expected = Arrays.asList("Test");
         var testList = new ArrayList<String>();
@@ -36,6 +46,16 @@ public class ListAdderTest {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
         adder.add(()-> true, 0, expected.get(0));
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
+    public void addIdxOnly() {
+        var expected = Arrays.asList("Test");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.add(0, expected.get(0));
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
@@ -61,6 +81,16 @@ public class ListAdderTest {
     }
 
     @Test
+    public void addAllOnly() {
+        var expected = Arrays.asList("Test1", "Test2");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addAll(expected);
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
     public void addAllWhenFalse() {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
@@ -76,6 +106,16 @@ public class ListAdderTest {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
         adder.addAll(()-> true, 0, expected);
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
+    public void addAllIdxOnly() {
+        var expected = Arrays.asList("Test1", "Test2");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addAll(0, expected);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
