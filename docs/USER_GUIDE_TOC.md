@@ -8,6 +8,7 @@
 ### Decorator
 
 * [CloseableLock](DEC_CLOSEABLE_LOCK.md)
+* [ListAdder](DEC_LIST_ADDER.md)
 * [Mutable](DEC_MUTABLE.md)
 * [StringBuilderAppender](DEC_SB_APPENDER.md)
 
