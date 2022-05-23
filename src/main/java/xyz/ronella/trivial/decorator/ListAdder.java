@@ -7,7 +7,7 @@ import java.util.function.BooleanSupplier;
 /**
  * A class the wraps a List to have add methods with condition.
  *
- * @param <TYPE_ELEMENT>
+ * @param <TYPE_ELEMENT> The type of object that the list will hold.
  *
  * @since 2.10.0
  * @author Ron Webb
