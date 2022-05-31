@@ -1,5 +1,7 @@
 package xyz.ronella.trivial.handy;
 
+import java.util.List;
+
 /**
  * The implementation of this interface must hold the logic of generating the command as array.
  *
@@ -13,5 +15,7 @@ public interface ICommandArray {
      * @return The command as array.
      */
     String[] getCommand();
+
+    List<String> getCommandAsList();
 
 }
