@@ -162,7 +162,7 @@ public class CommandRunnerTest {
     @EnabledOnOs(OS.WINDOWS)
     @Test
     public void defaultSuccessOutputLogicICommandArray() throws NoCommandException {
-        var command = CommandArray.getBuilder().setCommand("where").addArgs("cmd").build();
+        var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
         assertEquals(0, CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, command));
     }
 
