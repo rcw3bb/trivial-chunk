@@ -114,7 +114,7 @@ public class CommandArray implements ICommandArray {
          * @return An instance of CommandArrayBuilder
          */
         public CommandArrayBuilder addPArgs(Collection<String> args) {
-            this.arguments.addAll(args);
+            this.progArgs.addAll(args);
             return this;
         }
 
@@ -126,7 +126,7 @@ public class CommandArray implements ICommandArray {
          */
         public CommandArrayBuilder addPArgs(BooleanSupplier when, Collection<String> args) {
             if (when.getAsBoolean()) {
-                this.arguments.addAll(args);
+                this.progArgs.addAll(args);
             }
             return this;
         }
@@ -137,7 +137,7 @@ public class CommandArray implements ICommandArray {
          * @return An instance of CommandArrayBuilder
          */
         public CommandArrayBuilder addPArg(String arg) {
-            this.arguments.add(arg);
+            this.progArgs.add(arg);
             return this;
         }
 
@@ -149,7 +149,7 @@ public class CommandArray implements ICommandArray {
          */
         public CommandArrayBuilder addPArg(BooleanSupplier when, String arg) {
             if (when.getAsBoolean()) {
-                this.arguments.add(arg);
+                this.progArgs.add(arg);
             }
             return this;
         }
