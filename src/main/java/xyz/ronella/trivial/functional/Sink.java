@@ -1,7 +1,6 @@
 package xyz.ronella.trivial.functional;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * Must hold a logic that doesn't expects an argument and a return value.
@@ -25,7 +24,7 @@ public interface Sink {
      *
      * @since 2.2.0
      */
-    default Sink drainsTo(Sink logic) {
+    default Sink drainsTo(final Sink logic) {
         Objects.requireNonNull(logic);
         return () -> {
             plummet();

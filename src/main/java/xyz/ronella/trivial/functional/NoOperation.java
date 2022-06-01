@@ -64,7 +64,7 @@ public final class NoOperation {
      *
      * @return The value of the output parameter.
      */
-    public static <T> Predicate<T> predicate(Boolean output) {
+    public static <T> Predicate<T> predicate(final Boolean output) {
         return (arg) -> output;
     }
 
@@ -77,7 +77,7 @@ public final class NoOperation {
      *
      * @return The value of the output parameter.
      */
-    public static <T1, T2> BiPredicate<T1, T2> biPredicate(Boolean output) {
+    public static <T1, T2> BiPredicate<T1, T2> biPredicate(final Boolean output) {
         return (arg1, arg2) -> output;
     }
 

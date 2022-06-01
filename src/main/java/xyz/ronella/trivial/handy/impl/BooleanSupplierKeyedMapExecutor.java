@@ -25,7 +25,8 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapExecutor(Map<BooleanSupplier, Sink> map, Sink defaultLogic, Map.Entry<BooleanSupplier, Sink> ... logics) {
+    public BooleanSupplierKeyedMapExecutor(final Map<BooleanSupplier, Sink> map, final Sink defaultLogic,
+                                           final Map.Entry<BooleanSupplier, Sink> ... logics) {
         super(map, defaultLogic, logics);
     }
 
@@ -36,7 +37,7 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapExecutor(Sink defaultLogic, Map.Entry<BooleanSupplier, Sink> ... logics) {
+    public BooleanSupplierKeyedMapExecutor(final Sink defaultLogic, final Map.Entry<BooleanSupplier, Sink> ... logics) {
         this(null, defaultLogic, logics);
     }
 
@@ -46,7 +47,7 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapExecutor(Map.Entry<BooleanSupplier, Sink> ... logics) {
+    public BooleanSupplierKeyedMapExecutor(final Map.Entry<BooleanSupplier, Sink> ... logics) {
         this(null, logics);
     }
 
@@ -55,12 +56,12 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
      *
      * @param map An external map that already contains logics.
      */
-    public BooleanSupplierKeyedMapExecutor(Map<BooleanSupplier, Sink> map) {
+    public BooleanSupplierKeyedMapExecutor(final Map<BooleanSupplier, Sink> map) {
         super(map, null);
     }
 
     @Override
-    protected Sink handleDefaultLogicConstructorArgument(Sink defaultLogic) {
+    protected Sink handleDefaultLogicConstructorArgument(final Sink defaultLogic) {
         return Optional.ofNullable(defaultLogic).orElse(NoOperation.sink());
     }
 
@@ -69,7 +70,7 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
      */
     public void execute() {
         Sink logic = getDefaultLogic();
-        for (var key : internalMap.keySet()) {
+        for (final var key : internalMap.keySet()) {
             if (key.getAsBoolean()) {
                 logic = internalMap.get(key);
                 break;

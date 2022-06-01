@@ -27,7 +27,8 @@ public abstract class AbstractLogical implements ILogical {
      * @param defaultTruthLogic The default truth logic.
      * @param defaultFalseLogic The default false logic.
      */
-    public AbstractLogical(List<BooleanSupplier> conditions, Sink defaultTruthLogic, Sink defaultFalseLogic) {
+    public AbstractLogical(final List<BooleanSupplier> conditions, final Sink defaultTruthLogic,
+                           final Sink defaultFalseLogic) {
         this.conditions = Optional.ofNullable(conditions).orElse(new ArrayList<>());
         this.defaultTruthLogic = defaultTruthLogic;
         this.defaultFalseLogic = defaultFalseLogic;
@@ -39,7 +40,7 @@ public abstract class AbstractLogical implements ILogical {
      * @param conditions A list of BooleanSupplier.
      * @param defaultTruthLogic The default truth logic.
      */
-    public AbstractLogical(List<BooleanSupplier> conditions, Sink defaultTruthLogic) {
+    public AbstractLogical(final List<BooleanSupplier> conditions, final Sink defaultTruthLogic) {
         this(conditions, defaultTruthLogic, null);
     }
 
@@ -48,7 +49,7 @@ public abstract class AbstractLogical implements ILogical {
      *
      * @param conditions A list of BooleanSupplier.
      */
-    public AbstractLogical(List<BooleanSupplier> conditions) {
+    public AbstractLogical(final List<BooleanSupplier> conditions) {
         this(conditions, null);
     }
 
@@ -59,7 +60,8 @@ public abstract class AbstractLogical implements ILogical {
      * @param defaultFalseLogic The default false logic.
      * @param conditions An array of BooleanSupplier.
      */
-    public AbstractLogical(Sink defaultTruthLogic, Sink defaultFalseLogic, BooleanSupplier ... conditions) {
+    public AbstractLogical(final Sink defaultTruthLogic, final Sink defaultFalseLogic,
+                           final BooleanSupplier ... conditions) {
         this(Arrays.asList(Optional.ofNullable(conditions).orElseThrow()), defaultTruthLogic, defaultFalseLogic);
     }
 
@@ -69,7 +71,7 @@ public abstract class AbstractLogical implements ILogical {
      * @param defaultTruthLogic The default truth logic.
      * @param conditions An array of BooleanSupplier.
      */
-    public AbstractLogical(Sink defaultTruthLogic, BooleanSupplier ... conditions) {
+    public AbstractLogical(final Sink defaultTruthLogic, final BooleanSupplier ... conditions) {
         this(defaultTruthLogic, null, conditions);
     }
 
@@ -78,7 +80,7 @@ public abstract class AbstractLogical implements ILogical {
      *
      * @param conditions An array of BooleanSupplier.
      */
-    public AbstractLogical(BooleanSupplier ... conditions) {
+    public AbstractLogical(final BooleanSupplier ... conditions) {
         this(null, conditions);
     }
 
@@ -88,7 +90,7 @@ public abstract class AbstractLogical implements ILogical {
      * @param truthLogic Overrides the defaultTruthLogic if not null.
      */
     @Override
-    public void accept(Sink truthLogic) {
+    public void accept(final Sink truthLogic) {
         accept(Optional.ofNullable(truthLogic).orElse(defaultTruthLogic), null);
     }
 
@@ -98,7 +100,7 @@ public abstract class AbstractLogical implements ILogical {
      * @param conditions The list of conditions
      * @return True when the truthLogic must be called.
      */
-    abstract public boolean getTruthCondition(final List<BooleanSupplier> conditions);
+    abstract public boolean getTruthCondition(List<BooleanSupplier> conditions);
 
     /**
      * Calculates if the truthLogic or falseLogic must be executed.
@@ -107,7 +109,7 @@ public abstract class AbstractLogical implements ILogical {
      * @param falseLogic The logic to be executed when at least one condition is false.
      */
     @Override
-    public void accept(Sink truthLogic, Sink falseLogic) {
+    public void accept(final Sink truthLogic, final Sink falseLogic) {
         Optional.ofNullable(conditions).ifPresent(___condition -> {
             if (getTruthCondition(___condition)) {
                 Optional.ofNullable(truthLogic).orElse(Optional.ofNullable(defaultTruthLogic).orElse(() -> {})).plummet();

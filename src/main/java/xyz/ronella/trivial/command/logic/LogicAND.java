@@ -21,7 +21,7 @@ public class LogicAND extends AbstractLogical {
      * @param defaultTruthLogic The default truth logic.
      * @param defaultFalseLogic The default false logic.
      */
-    public LogicAND(List<BooleanSupplier> conditions, Sink defaultTruthLogic, Sink defaultFalseLogic) {
+    public LogicAND(final List<BooleanSupplier> conditions, final Sink defaultTruthLogic, final Sink defaultFalseLogic) {
         super(conditions, defaultTruthLogic, defaultFalseLogic);
     }
 
@@ -31,7 +31,7 @@ public class LogicAND extends AbstractLogical {
      * @param conditions A list of BooleanSupplier.
      * @param defaultTruthLogic The default truth logic.
      */
-    public LogicAND(List<BooleanSupplier> conditions, Sink defaultTruthLogic) {
+    public LogicAND(final List<BooleanSupplier> conditions, final Sink defaultTruthLogic) {
         super(conditions, defaultTruthLogic);
     }
 
@@ -40,7 +40,7 @@ public class LogicAND extends AbstractLogical {
      *
      * @param conditions A list of BooleanSupplier.
      */
-    public LogicAND(List<BooleanSupplier> conditions) {
+    public LogicAND(final List<BooleanSupplier> conditions) {
         super(conditions);
     }
 
@@ -51,7 +51,7 @@ public class LogicAND extends AbstractLogical {
      * @param defaultFalseLogic The default false logic.
      * @param conditions An array of BooleanSupplier.
      */
-    public LogicAND(Sink defaultTruthLogic, Sink defaultFalseLogic, BooleanSupplier ... conditions) {
+    public LogicAND(final Sink defaultTruthLogic, final Sink defaultFalseLogic, final BooleanSupplier ... conditions) {
         super(defaultTruthLogic, defaultFalseLogic, conditions);
     }
 
@@ -61,7 +61,7 @@ public class LogicAND extends AbstractLogical {
      * @param defaultTruthLogic The default truth logic.
      * @param conditions An array of BooleanSupplier.
      */
-    public LogicAND(Sink defaultTruthLogic, BooleanSupplier ... conditions) {
+    public LogicAND(final Sink defaultTruthLogic, final BooleanSupplier ... conditions) {
         super(defaultTruthLogic, conditions);
     }
 
@@ -70,12 +70,12 @@ public class LogicAND extends AbstractLogical {
      *
      * @param conditions An array of BooleanSupplier.
      */
-    public LogicAND(BooleanSupplier ... conditions) {
+    public LogicAND(final BooleanSupplier ... conditions) {
         super(conditions);
     }
 
     @Override
-    public boolean getTruthCondition(List<BooleanSupplier> conditions) {
+    public boolean getTruthCondition(final List<BooleanSupplier> conditions) {
         return !conditions.isEmpty() && conditions.stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 }

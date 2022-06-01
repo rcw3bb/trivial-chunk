@@ -24,7 +24,8 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> exten
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public AbstractStringKeyedMapLogic(Map<String, TYPE_LOGIC> map, TYPE_LOGIC defaultLogic, Map.Entry<String, TYPE_LOGIC> ... logics) {
+    public AbstractStringKeyedMapLogic(final Map<String, TYPE_LOGIC> map, final TYPE_LOGIC defaultLogic,
+                                       final Map.Entry<String, TYPE_LOGIC> ... logics) {
         super(map, defaultLogic, Arrays.asList(logics));
         this.internalMap.put(DEFAULT_LOGIC, defaultLogic);
     }

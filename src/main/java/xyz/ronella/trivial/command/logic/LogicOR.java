@@ -21,7 +21,7 @@ public class LogicOR extends AbstractLogical {
      * @param defaultTruthLogic The default truth logic.
      * @param defaultFalseLogic The default false logic.
      */
-    public LogicOR(List<BooleanSupplier> conditions, Sink defaultTruthLogic, Sink defaultFalseLogic) {
+    public LogicOR(final List<BooleanSupplier> conditions, final Sink defaultTruthLogic, final Sink defaultFalseLogic) {
         super(conditions, defaultTruthLogic, defaultFalseLogic);
     }
 
@@ -31,7 +31,7 @@ public class LogicOR extends AbstractLogical {
      * @param conditions A list of BooleanSupplier.
      * @param defaultTruthLogic The default truth logic.
      */
-    public LogicOR(List<BooleanSupplier> conditions, Sink defaultTruthLogic) {
+    public LogicOR(final List<BooleanSupplier> conditions, final Sink defaultTruthLogic) {
         super(conditions, defaultTruthLogic);
     }
 
@@ -40,7 +40,7 @@ public class LogicOR extends AbstractLogical {
      *
      * @param conditions A list of BooleanSupplier.
      */
-    public LogicOR(List<BooleanSupplier> conditions) {
+    public LogicOR(final List<BooleanSupplier> conditions) {
         super(conditions);
     }
 
@@ -51,7 +51,7 @@ public class LogicOR extends AbstractLogical {
      * @param defaultFalseLogic The default false logic.
      * @param conditions An array of BooleanSupplier.
      */
-    public LogicOR(Sink defaultTruthLogic, Sink defaultFalseLogic, BooleanSupplier ... conditions) {
+    public LogicOR(final Sink defaultTruthLogic, final Sink defaultFalseLogic, final BooleanSupplier ... conditions) {
         super(defaultTruthLogic, defaultFalseLogic, conditions);
     }
 
@@ -61,7 +61,7 @@ public class LogicOR extends AbstractLogical {
      * @param defaultTruthLogic The default truth logic.
      * @param conditions An array of BooleanSupplier.
      */
-    public LogicOR(Sink defaultTruthLogic, BooleanSupplier ... conditions) {
+    public LogicOR(final Sink defaultTruthLogic, final BooleanSupplier ... conditions) {
         super(defaultTruthLogic, conditions);
     }
 
@@ -70,12 +70,12 @@ public class LogicOR extends AbstractLogical {
      *
      * @param conditions An array of BooleanSupplier.
      */
-    public LogicOR(BooleanSupplier ... conditions) {
+    public LogicOR(final BooleanSupplier ... conditions) {
         super(conditions);
     }
 
     @Override
-    public boolean getTruthCondition(List<BooleanSupplier> conditions) {
+    public boolean getTruthCondition(final List<BooleanSupplier> conditions) {
         return conditions.stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 }

@@ -21,7 +21,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * Creates an instance of ListAdder
      * @param list An instance of List to wrap.
      */
-    public ListAdder(List<TYPE_ELEMENT> list) {
+    public ListAdder(final List<TYPE_ELEMENT> list) {
         this.list = list;
     }
 
@@ -32,7 +32,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param element Specified in List.add
      * @return Specified in List.add
      */
-    public boolean add(BooleanSupplier when, TYPE_ELEMENT element) {
+    public boolean add(final BooleanSupplier when, final TYPE_ELEMENT element) {
         if (when.getAsBoolean()) {
             return list.add(element);
         }
@@ -46,9 +46,9 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElement The logic that will generate the element.
      * @return Specified in List.add
      */
-    public boolean add(BooleanSupplier when, Supplier<TYPE_ELEMENT> generateElement) {
+    public boolean add(final BooleanSupplier when, final Supplier<TYPE_ELEMENT> generateElement) {
         if (when.getAsBoolean()) {
-            var element = generateElement.get();
+            final var element = generateElement.get();
             return list.add(element);
         }
         return false;
@@ -60,7 +60,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param element Specified in List.add
      * @return Specified in List.add
      */
-    public boolean add(TYPE_ELEMENT element) {
+    public boolean add(final TYPE_ELEMENT element) {
         return list.add(element);
     }
 
@@ -70,8 +70,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElement The logic that will generate the element.
      * @return Specified in List.add
      */
-    public boolean add(Supplier<TYPE_ELEMENT> generateElement) {
-        var element = generateElement.get();
+    public boolean add(final Supplier<TYPE_ELEMENT> generateElement) {
+        final var element = generateElement.get();
         return list.add(element);
     }
 
@@ -82,7 +82,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param elements Specified in List.addAll
      * @return Specified in List.addAll
      */
-    public boolean addAll(BooleanSupplier when, Collection<? extends TYPE_ELEMENT> elements) {
+    public boolean addAll(final BooleanSupplier when, final Collection<? extends TYPE_ELEMENT> elements) {
         if (when.getAsBoolean()) {
             return list.addAll(elements);
         }
@@ -96,9 +96,10 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElements The logic that will generate the elements.
      * @return Specified in List.addAll
      */
-    public boolean addAll(BooleanSupplier when, Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
+    public boolean addAll(final BooleanSupplier when,
+                          final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
         if (when.getAsBoolean()) {
-            var elements = generateElements.get();
+            final var elements = generateElements.get();
             return list.addAll(elements);
         }
         return false;
@@ -110,7 +111,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param elements Specified in List.addAll
      * @return Specified in List.addAll
      */
-    public boolean addAll(Collection<? extends TYPE_ELEMENT> elements) {
+    public boolean addAll(final Collection<? extends TYPE_ELEMENT> elements) {
         return list.addAll(elements);
     }
 
@@ -120,8 +121,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElements The logic that will generate the elements.
      * @return Specified in List.addAll
      */
-    public boolean addAll(Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        var elements = generateElements.get();
+    public boolean addAll(final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
+        final var elements = generateElements.get();
         return list.addAll(elements);
     }
 
@@ -131,7 +132,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index Specified in List.add
      * @param element Specified in List.add
      */
-    public void add(BooleanSupplier when, int index, TYPE_ELEMENT element) {
+    public void add(final BooleanSupplier when, final int index, final TYPE_ELEMENT element) {
         if (when.getAsBoolean()) {
             list.add(index, element);
         }
@@ -143,9 +144,9 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index Specified in List.add
      * @param generateElement The logic that will generate the element.
      */
-    public void add(BooleanSupplier when, int index, Supplier<TYPE_ELEMENT> generateElement) {
+    public void add(final BooleanSupplier when, final int index, final Supplier<TYPE_ELEMENT> generateElement) {
         if (when.getAsBoolean()) {
-            var element = generateElement.get();
+            final var element = generateElement.get();
             list.add(index, element);
         }
     }
@@ -155,7 +156,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index Specified in List.add
      * @param element Specified in List.add
      */
-    public void add(int index, TYPE_ELEMENT element) {
+    public void add(final int index, final TYPE_ELEMENT element) {
         list.add(index, element);
     }
 
@@ -164,8 +165,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index Specified in List.add
      * @param generateElement The logic that will generate the element.
      */
-    public void add(int index, Supplier<TYPE_ELEMENT> generateElement) {
-        var element = generateElement.get();
+    public void add(final int index, final Supplier<TYPE_ELEMENT> generateElement) {
+        final var element = generateElement.get();
         list.add(index, element);
     }
 
@@ -176,7 +177,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param elements Specified in List.add
      * @return Specified in List.addAll
      */
-    public boolean addAll(BooleanSupplier when, int index, Collection<? extends TYPE_ELEMENT> elements) {
+    public boolean addAll(final BooleanSupplier when, final int index,
+                          final Collection<? extends TYPE_ELEMENT> elements) {
         if (when.getAsBoolean()) {
             return list.addAll(index, elements);
         }
@@ -190,9 +192,10 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElements The logic that will generate the elements.
      * @return Specified in List.addAll
      */
-    public boolean addAll(BooleanSupplier when, int index, Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
+    public boolean addAll(final BooleanSupplier when, final int index,
+                          final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
         if (when.getAsBoolean()) {
-            var elements = generateElements.get();
+            final var elements = generateElements.get();
             return list.addAll(index, elements);
         }
         return false;
@@ -204,7 +207,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param elements Specified in List.add
      * @return Specified in List.addAll
      */
-    public boolean addAll(int index, Collection<? extends TYPE_ELEMENT> elements) {
+    public boolean addAll(final int index, final Collection<? extends TYPE_ELEMENT> elements) {
         return list.addAll(index, elements);
     }
 
@@ -214,8 +217,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElements The logic that will generate the elements.
      * @return Specified in List.addAll
      */
-    public boolean addAll(int index, Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        var elements = generateElements.get();
+    public boolean addAll(final int index, final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
+        final var elements = generateElements.get();
         return list.addAll(index, elements);
     }
 

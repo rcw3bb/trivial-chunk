@@ -28,8 +28,8 @@ public final class CommandRunner {
 
     static {
         DEFAULT_OUTPUT_LOGIC = (___output, ___error) -> {
-          var outputScanner = new Scanner(___output);
-          var errorScanner = new Scanner(___error);
+          final var outputScanner = new Scanner(___output);
+          final var errorScanner = new Scanner(___error);
 
           while (outputScanner.hasNextLine()) {
               System.out.println(outputScanner.nextLine());
@@ -53,7 +53,7 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder, String ... command) throws NoCommandException {
+    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,final String ... command) throws NoCommandException {
         return runCommand(createProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
     }
 
@@ -68,7 +68,7 @@ public final class CommandRunner {
      *
      * @since 2.10.0
      */
-    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder, ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder, final ICommandArray commandArray) throws NoCommandException {
         return runCommand(createProcessBuilder, DEFAULT_OUTPUT_LOGIC, commandArray.getCommand());
     }
 
@@ -81,7 +81,7 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder, String ... command) throws NoCommandException {
+    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final String ... command) throws NoCommandException {
         return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
     }
 
@@ -96,7 +96,7 @@ public final class CommandRunner {
      *
      * @since 2.10.0
      */
-    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder, ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final ICommandArray commandArray) throws NoCommandException {
         return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, commandArray);
     }
 
@@ -110,7 +110,7 @@ public final class CommandRunner {
      *
      * @since 2.10.0
      */
-    public static int runCommand(ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final ICommandArray commandArray) throws NoCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, commandArray.getCommand());
     }
     
@@ -122,7 +122,7 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommand(String ... command) throws NoCommandException {
+    public static int runCommand(final String ... command) throws NoCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, command);
     }
 
@@ -135,7 +135,7 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommand(BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws NoCommandException {
+    public static int runCommand(final BiConsumer<InputStream, InputStream> outputLogic, final String ... command) throws NoCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, command);
     }
 
@@ -150,7 +150,8 @@ public final class CommandRunner {
      *
      * @since 2.10.0
      */
-    public static int runCommand(BiConsumer<InputStream, InputStream> outputLogic, ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final ICommandArray commandArray) throws NoCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, commandArray);
     }
 
@@ -164,12 +165,13 @@ public final class CommandRunner {
      *
      * @throws NoCommandException Thrown with no command was passed.
      */
-    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder,
-                                 BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws
+    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder,
+                                 final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final String ... command) throws
             NoCommandException {
 
         return runCommand(() -> {
-            var builder = new ProcessBuilder();
+            final var builder = new ProcessBuilder();
             initProcessBuilder.accept(builder);
             return builder;
         }, outputLogic, command);
@@ -187,8 +189,9 @@ public final class CommandRunner {
      *
      * @since 2.10.0
      */
-    public static int runCommand(Consumer<ProcessBuilder> initProcessBuilder,
-                                 BiConsumer<InputStream, InputStream> outputLogic, ICommandArray commandArray) throws
+    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder,
+                                 final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final ICommandArray commandArray) throws
             NoCommandException {
 
         return runCommand(initProcessBuilder, outputLogic, commandArray.getCommand());
@@ -207,8 +210,9 @@ public final class CommandRunner {
      *
      * @since 2.10.0
      */
-    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder,
-                                 BiConsumer<InputStream, InputStream> outputLogic, ICommandArray commandArray) throws
+    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,
+                                 final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final ICommandArray commandArray) throws
             NoCommandException {
         return runCommand(createProcessBuilder, outputLogic, commandArray.getCommand());
     }
@@ -223,8 +227,9 @@ public final class CommandRunner {
          *
          * @throws NoCommandException Thrown with no command was passed.
          */
-    public static int runCommand(Supplier<ProcessBuilder> createProcessBuilder,
-                                 BiConsumer<InputStream, InputStream> outputLogic, String ... command) throws
+    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,
+                                 final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final String ... command) throws
             NoCommandException {
 
         try {
@@ -232,10 +237,10 @@ public final class CommandRunner {
                 throw new NoCommandException();
             }
 
-            var builder = Optional.of(createProcessBuilder.get()).orElse(new ProcessBuilder());
+            final var builder = Optional.of(createProcessBuilder.get()).orElse(new ProcessBuilder());
             builder.command(command);
 
-            var process = builder.start();
+            final var process = builder.start();
             try (var output = process.getInputStream();
                  var error = process.getErrorStream()) {
                 outputLogic.accept(output, error);

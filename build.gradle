@@ -5,12 +5,21 @@ plugins {
     id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
     id 'signing'
     id 'jacoco'
+    id 'pmd'
 }
 
 group 'xyz.ronella.casual'
 version '2.10.0-SNAPSHOT'
 
 sourceCompatibility = 1.11
+
+pmd {
+    consoleOutput = true
+    toolVersion = "6.45.0"
+    rulesMinimumPriority = 5
+    ruleSetFiles = files('config/pmd/java/custom.xml')
+    ruleSets = []
+}
 
 repositories {
     if (Boolean.valueOf(USE_PRIVATE_REPO)) {
@@ -109,6 +118,8 @@ publishing {
 }
 
 test {
+    useJUnitPlatform()
+    dependsOn pmdMain
     finalizedBy jacocoTestReport
 }
 
@@ -145,7 +156,3 @@ dependencies {
 }
 
 closeAndReleaseSonatypeStagingRepository.dependsOn('publishToSonatype')
-
-test {
-    useJUnitPlatform()
-}

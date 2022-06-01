@@ -19,8 +19,8 @@ public class StringBuilderAppender {
     final private StringBuilder builder;
     final private Consumer<StringBuilder> defaultBeforeAppend;
     final private Consumer<StringBuilder> defaultAfterAppend;
-    final private Lock INSTANCE_LOCK = new ReentrantLock();
-    private boolean threadSafe;
+    final private Lock instanceLock = new ReentrantLock();
+    private boolean hasLocking;
 
     /**
      * Decorate the StringBuilder to have a default pre-append and post-append logic.
@@ -29,9 +29,9 @@ public class StringBuilderAppender {
      * @param defaultBeforeAppend The logic to perform before an append.
      * @param defaultAfterAppend The logic to perform after an append.
      */
-    public StringBuilderAppender(StringBuilder builder,
-                                 Consumer<StringBuilder> defaultBeforeAppend,
-                                 Consumer<StringBuilder> defaultAfterAppend) {
+    public StringBuilderAppender(final StringBuilder builder,
+                                 final Consumer<StringBuilder> defaultBeforeAppend,
+                                 final Consumer<StringBuilder> defaultAfterAppend) {
         this.builder = Optional.ofNullable(builder).orElseThrow();
         this.defaultBeforeAppend = defaultBeforeAppend;
         this.defaultAfterAppend = defaultAfterAppend;
@@ -46,9 +46,9 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender(String string,
-                                 Consumer<StringBuilder> defaultBeforeAppend,
-                                 Consumer<StringBuilder> defaultAfterAppend) {
+    public StringBuilderAppender(final String string,
+                                 final Consumer<StringBuilder> defaultBeforeAppend,
+                                 final Consumer<StringBuilder> defaultAfterAppend) {
         this(new StringBuilder(string), defaultBeforeAppend, defaultAfterAppend);
     }
 
@@ -60,8 +60,8 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender(Consumer<StringBuilder> defaultBeforeAppend,
-                                 Consumer<StringBuilder> defaultAfterAppend) {
+    public StringBuilderAppender(final Consumer<StringBuilder> defaultBeforeAppend,
+                                 final Consumer<StringBuilder> defaultAfterAppend) {
         this(new StringBuilder(), defaultBeforeAppend, defaultAfterAppend);
     }
 
@@ -71,8 +71,8 @@ public class StringBuilderAppender {
      * @param builder An instance of StringBuilder.
      * @param defaultBeforeAppend The logic to perform before an append.
      */
-    public StringBuilderAppender(StringBuilder builder,
-                                 Consumer<StringBuilder> defaultBeforeAppend) {
+    public StringBuilderAppender(final StringBuilder builder,
+                                 final Consumer<StringBuilder> defaultBeforeAppend) {
         this(builder, defaultBeforeAppend, null);
     }
 
@@ -84,8 +84,8 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender(String string,
-                                 Consumer<StringBuilder> defaultBeforeAppend) {
+    public StringBuilderAppender(final String string,
+                                 final Consumer<StringBuilder> defaultBeforeAppend) {
         this(string, defaultBeforeAppend, null);
     }
 
@@ -96,7 +96,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender(Consumer<StringBuilder> defaultBeforeAppend) {
+    public StringBuilderAppender(final Consumer<StringBuilder> defaultBeforeAppend) {
         this(defaultBeforeAppend, null);
     }
 
@@ -105,7 +105,7 @@ public class StringBuilderAppender {
      *
      * @param builder An instance of StringBuilder.
      */
-    public StringBuilderAppender(StringBuilder builder) {
+    public StringBuilderAppender(final StringBuilder builder) {
         this(builder, null);
     }
 
@@ -116,7 +116,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender(String string) {
+    public StringBuilderAppender(final String string) {
         this(string, null);
     }
 
@@ -135,13 +135,14 @@ public class StringBuilderAppender {
      * @return An instance of StringBuilderAppender.
      */
     public StringBuilderAppender threadSafe() {
-        this.threadSafe = true;
+        this.hasLocking = true;
         return this;
     }
 
-    private void beforeAndAfterAppendLogic(Consumer<StringBuilder> logic, Consumer<StringBuilder> beforeAppend,
-                                           Consumer<StringBuilder> afterAppend) {
-        try(var ___ = new CloseableLock(INSTANCE_LOCK, this::isThreadSafe)) {
+    private void beforeAndAfterAppendLogic(final Consumer<StringBuilder> logic,
+                                           final Consumer<StringBuilder> beforeAppend,
+                                           final Consumer<StringBuilder> afterAppend) {
+        try(var ___ = new CloseableLock(instanceLock, this::isThreadSafe)) {
             if (null != beforeAppend) {
                 beforeAppend.accept(builder);
             } else if (null != defaultBeforeAppend) {
@@ -166,8 +167,8 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilderAppender.
      */
-    public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend,
-                                        Consumer<StringBuilder> afterAppend) {
+    public StringBuilderAppender append(final String text, final Consumer<StringBuilder> beforeAppend,
+                                        final Consumer<StringBuilder> afterAppend) {
 
         Optional.ofNullable(text).ifPresent( ___text ->
                 beforeAndAfterAppendLogic(sb -> sb.append(___text), beforeAppend, afterAppend));
@@ -175,7 +176,7 @@ public class StringBuilderAppender {
         return this;
     }
 
-    private void conditionLogic(BooleanSupplier condition, Sink logic) {
+    private void conditionLogic(final BooleanSupplier condition, final Sink logic) {
         Optional.ofNullable(condition).ifPresent(___condition -> {
             if (___condition.getAsBoolean()) {
                 logic.plummet();
@@ -196,8 +197,9 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, String text, Consumer<StringBuilder> beforeAppend,
-                                        Consumer<StringBuilder> afterAppend) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final String text,
+                                        final Consumer<StringBuilder> beforeAppend,
+                                        final Consumer<StringBuilder> afterAppend) {
         conditionLogic(condition, ()-> append(text, beforeAppend, afterAppend));
         return this;
     }
@@ -211,7 +213,7 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilderAppender.
      */
-    public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend) {
+    public StringBuilderAppender append(final String text, final Consumer<StringBuilder> beforeAppend) {
         return append(text, beforeAppend, null);
     }
 
@@ -228,7 +230,8 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, String text, Consumer<StringBuilder> beforeAppend) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final String text,
+                                        final Consumer<StringBuilder> beforeAppend) {
         conditionLogic(condition, ()-> append(text, beforeAppend));
         return this;
     }
@@ -240,7 +243,7 @@ public class StringBuilderAppender {
      *
      * @return An instance of StringBuilderAppender.
      */
-    public StringBuilderAppender append(String text) {
+    public StringBuilderAppender append(final String text) {
         return append(text, null);
     }
 
@@ -254,7 +257,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, String text) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final String text) {
         conditionLogic(condition, ()-> append(text));
         return this;
     }
@@ -294,8 +297,9 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,
-                                        Consumer<StringBuilder> afterAppend) {
+    public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic,
+                                        final Consumer<StringBuilder> beforeAppend,
+                                        final Consumer<StringBuilder> afterAppend) {
 
         Optional.ofNullable(updateLogic).ifPresent(logic -> beforeAndAfterAppendLogic(sb -> logic.accept(builder), beforeAppend, afterAppend));
 
@@ -314,8 +318,9 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,
-                                        Consumer<StringBuilder> afterAppend) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
+                                        final Consumer<StringBuilder> beforeAppend,
+                                        final Consumer<StringBuilder> afterAppend) {
 
         conditionLogic(condition, ()-> append(updateLogic, beforeAppend, afterAppend));
         return this;
@@ -331,7 +336,8 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) {
+    public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic,
+                                        final Consumer<StringBuilder> beforeAppend) {
         return append(updateLogic, beforeAppend, (Consumer<StringBuilder>) null);
     }
 
@@ -346,8 +352,8 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic,
-                                        Consumer<StringBuilder> beforeAppend) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
+                                        final Consumer<StringBuilder> beforeAppend) {
         conditionLogic(condition, ()-> append(updateLogic, beforeAppend));
         return this;
     }
@@ -361,7 +367,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) {
+    public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic) {
         return append(updateLogic, (Consumer<StringBuilder>) null);
     }
 
@@ -375,7 +381,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic) {
         conditionLogic(condition, ()-> append(updateLogic));
         return this;
     }
@@ -392,8 +398,9 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender append(Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend,
-                                        String ... texts) {
+    public StringBuilderAppender append(final Consumer<StringBuilder> beforeAppend,
+                                        final Consumer<StringBuilder> afterAppend,
+                                        final String ... texts) {
         Optional.ofNullable(texts).ifPresent(___texts -> {
             Arrays.asList(___texts).forEach(___text -> {
                 append(___text, beforeAppend, afterAppend);
@@ -414,7 +421,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender append(Consumer<StringBuilder> beforeAppend, String ... texts) {
+    public StringBuilderAppender append(final Consumer<StringBuilder> beforeAppend, final String ... texts) {
         return append(beforeAppend, null, texts);
     }
 
@@ -427,7 +434,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender append(String ... texts) {
+    public StringBuilderAppender append(final String ... texts) {
         return append((Consumer<StringBuilder>) null, texts);
     }
 
@@ -444,8 +451,9 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend,
-                                        String ... texts) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
+                                        final Consumer<StringBuilder> afterAppend,
+                                        final String ... texts) {
         Optional.ofNullable(texts).ifPresent(___texts -> {
             Arrays.asList(___texts).forEach(___text -> {
                 append(condition, ___text, beforeAppend, afterAppend);
@@ -467,7 +475,8 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> beforeAppend, String ... texts) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
+                                        final String ... texts) {
         return append(condition, beforeAppend, null, texts);
     }
 
@@ -481,7 +490,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      */
-    public StringBuilderAppender append(BooleanSupplier condition, String ... texts) {
+    public StringBuilderAppender append(final BooleanSupplier condition, final String ... texts) {
         return append(condition, null, texts);
     }
 
@@ -493,7 +502,7 @@ public class StringBuilderAppender {
      * @since 2.7.0
      */
     public StringBuilderAppender clear() {
-        try(var ___ = new CloseableLock(INSTANCE_LOCK, this::isThreadSafe)) {
+        try(var ___ = new CloseableLock(instanceLock, this::isThreadSafe)) {
             builder.delete(0, builder.length());
         }
         return this;
@@ -508,9 +517,9 @@ public class StringBuilderAppender {
      *
      * @since 2.8.0
      */
-    public StringBuilderAppender replace(CharSequence target, CharSequence replacement) {
-        try(var ___ = new CloseableLock(INSTANCE_LOCK, this::isThreadSafe)) {
-            var tmpText = builder.toString().replace(target, replacement);
+    public StringBuilderAppender replace(final CharSequence target, final CharSequence replacement) {
+        try(var ___ = new CloseableLock(instanceLock, this::isThreadSafe)) {
+            final var tmpText = builder.toString().replace(target, replacement);
             clear();
             builder.append(tmpText);
         }
@@ -518,7 +527,7 @@ public class StringBuilderAppender {
     }
 
     private boolean isThreadSafe() {
-        return threadSafe;
+        return hasLocking;
     }
 
 }

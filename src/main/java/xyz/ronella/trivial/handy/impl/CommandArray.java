@@ -12,7 +12,7 @@ import java.util.function.BooleanSupplier;
  * @author Ron Webb
  * @since 2.10.0
  */
-public class CommandArray implements ICommandArray {
+public final class CommandArray implements ICommandArray {
 
     private final String program;
     private final List<String> progArgs;
@@ -20,7 +20,7 @@ public class CommandArray implements ICommandArray {
     private final List<String> arguments;
     private final List<String> zArguments;
 
-    private CommandArray(CommandArrayBuilder builder) {
+    private CommandArray(final CommandArrayBuilder builder) {
         this.program = builder.program;
         this.progArgs = builder.progArgs;
         this.command = builder.command;
@@ -34,14 +34,14 @@ public class CommandArray implements ICommandArray {
      */
     @Override
     public String[] getCommand() {
-        var lstCommand = new ArrayList<String>();
-        var lstAddrCommand = new ListAdder<>(lstCommand);
+        final var lstCommand = new ArrayList<String>();
+        final var lstAddrCommand = new ListAdder<>(lstCommand);
 
         lstAddrCommand.add(()-> null!=program, program);
-        lstAddrCommand.addAll(()-> progArgs.size() > 0, progArgs);
+        lstAddrCommand.addAll(()-> !progArgs.isEmpty(), progArgs);
         lstAddrCommand.add(()-> null!=command, command);
-        lstAddrCommand.addAll(()-> arguments.size() > 0, arguments);
-        lstAddrCommand.addAll(()-> zArguments.size() > 0, zArguments);
+        lstAddrCommand.addAll(()-> !arguments.isEmpty(), arguments);
+        lstAddrCommand.addAll(()-> !zArguments.isEmpty(), zArguments);
 
         return lstCommand.toArray(new String[] {});
     }
@@ -93,7 +93,7 @@ public class CommandArray implements ICommandArray {
          * @param program The name of the program.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder setProgram(String program) {
+        public CommandArrayBuilder setProgram(final String program) {
             this.program = program;
             return this;
         }
@@ -103,7 +103,7 @@ public class CommandArray implements ICommandArray {
          * @param command The name of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder setCommand(String command) {
+        public CommandArrayBuilder setCommand(final String command) {
             this.command = command;
             return this;
         }
@@ -113,7 +113,7 @@ public class CommandArray implements ICommandArray {
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addPArgs(Collection<String> args) {
+        public CommandArrayBuilder addPArgs(final Collection<String> args) {
             this.progArgs.addAll(args);
             return this;
         }
@@ -124,7 +124,7 @@ public class CommandArray implements ICommandArray {
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addPArgs(BooleanSupplier when, Collection<String> args) {
+        public CommandArrayBuilder addPArgs(final BooleanSupplier when, final Collection<String> args) {
             if (when.getAsBoolean()) {
                 this.progArgs.addAll(args);
             }
@@ -136,7 +136,7 @@ public class CommandArray implements ICommandArray {
          * @param arg The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addPArg(String arg) {
+        public CommandArrayBuilder addPArg(final String arg) {
             this.progArgs.add(arg);
             return this;
         }
@@ -147,7 +147,7 @@ public class CommandArray implements ICommandArray {
          * @param arg The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addPArg(BooleanSupplier when, String arg) {
+        public CommandArrayBuilder addPArg(final BooleanSupplier when, final String arg) {
             if (when.getAsBoolean()) {
                 this.progArgs.add(arg);
             }
@@ -159,7 +159,7 @@ public class CommandArray implements ICommandArray {
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addArgs(Collection<String> args) {
+        public CommandArrayBuilder addArgs(final Collection<String> args) {
             this.arguments.addAll(args);
             return this;
         }
@@ -170,7 +170,7 @@ public class CommandArray implements ICommandArray {
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addArgs(BooleanSupplier when, Collection<String> args) {
+        public CommandArrayBuilder addArgs(final BooleanSupplier when, final Collection<String> args) {
             if (when.getAsBoolean()) {
                 this.arguments.addAll(args);
             }
@@ -182,7 +182,7 @@ public class CommandArray implements ICommandArray {
          * @param arg The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addArg(String arg) {
+        public CommandArrayBuilder addArg(final String arg) {
             this.arguments.add(arg);
             return this;
         }
@@ -193,7 +193,7 @@ public class CommandArray implements ICommandArray {
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addArg(BooleanSupplier when, String args) {
+        public CommandArrayBuilder addArg(final BooleanSupplier when, final String args) {
             if (when.getAsBoolean()) {
                 this.arguments.add(args);
             }
@@ -205,7 +205,7 @@ public class CommandArray implements ICommandArray {
          * @param zArgs The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArgs(Collection<String> zArgs) {
+        public CommandArrayBuilder addZArgs(final Collection<String> zArgs) {
             this.zArguments.addAll(zArgs);
             return this;
         }
@@ -216,7 +216,7 @@ public class CommandArray implements ICommandArray {
          * @param zArgs The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArgs(BooleanSupplier when, Collection<String> zArgs) {
+        public CommandArrayBuilder addZArgs(final BooleanSupplier when, final Collection<String> zArgs) {
             if (when.getAsBoolean()) {
                 this.zArguments.addAll(zArgs);
             }
@@ -228,7 +228,7 @@ public class CommandArray implements ICommandArray {
          * @param zArg The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArg(String zArg) {
+        public CommandArrayBuilder addZArg(final String zArg) {
             this.arguments.add(zArg);
             return this;
         }
@@ -239,7 +239,7 @@ public class CommandArray implements ICommandArray {
          * @param zArg The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArg(BooleanSupplier when, String zArg) {
+        public CommandArrayBuilder addZArg(final BooleanSupplier when, final String zArg) {
             if (when.getAsBoolean()) {
                 this.arguments.add(zArg);
             }

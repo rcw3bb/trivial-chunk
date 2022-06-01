@@ -8,6 +8,8 @@ package xyz.ronella.trivial.handy;
  */
 public class NoCommandException extends Exception {
 
+    private static final long serialVersionUID = -6887968132858882534L;
+
     /**
      * Creates an instance of NoCommandException.
      */

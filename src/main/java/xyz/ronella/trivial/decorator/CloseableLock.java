@@ -11,7 +11,7 @@ import java.util.function.BooleanSupplier;
  */
 public class CloseableLock implements AutoCloseable {
 
-    private final Lock lock;
+    private final Lock receivedLock;
     private final BooleanSupplier lockOnlyWhen;
     private int lockCount;
 
@@ -20,7 +20,7 @@ public class CloseableLock implements AutoCloseable {
      *
      * @param lock An instance of Lock
      */
-    public CloseableLock(Lock lock) {
+    public CloseableLock(final Lock lock) {
         this(lock, false);
     }
 
@@ -30,7 +30,7 @@ public class CloseableLock implements AutoCloseable {
      * @param lock An instance of Lock
      * @param lockOnlyWhen The logic if lock will actually be needed.
      */
-    public CloseableLock(Lock lock, BooleanSupplier lockOnlyWhen) {
+    public CloseableLock(final Lock lock, final BooleanSupplier lockOnlyWhen) {
         this(lock, false, lockOnlyWhen);
     }
 
@@ -40,7 +40,7 @@ public class CloseableLock implements AutoCloseable {
      * @param lock An instance of Lock
      * @param noLockCall When true the constructor will not call the lock method.
      */
-    public CloseableLock(Lock lock, boolean noLockCall) {
+    public CloseableLock(final Lock lock, final boolean noLockCall) {
         this(lock, noLockCall, () -> Boolean.TRUE);
     }
 
@@ -51,8 +51,8 @@ public class CloseableLock implements AutoCloseable {
      * @param noLockCall When true the constructor will not call the lock method.
      * @param lockOnlyWhen The logic if lock will actually be needed.
      */
-    public CloseableLock(Lock lock, boolean noLockCall, BooleanSupplier lockOnlyWhen) {
-        this.lock = lock;
+    public CloseableLock(final Lock lock, final boolean noLockCall, final BooleanSupplier lockOnlyWhen) {
+        this.receivedLock = lock;
         this.lockOnlyWhen = lockOnlyWhen;
         if (!noLockCall) {
             lock();
@@ -64,7 +64,7 @@ public class CloseableLock implements AutoCloseable {
      */
     public void lock() {
         if (lockOnlyWhen.getAsBoolean()) {
-            lock.lock();
+            receivedLock.lock();
             ++lockCount;
         }
     }
@@ -75,7 +75,7 @@ public class CloseableLock implements AutoCloseable {
     public void unlock() {
         if (lockCount>0 && lockOnlyWhen.getAsBoolean()) {
             --lockCount;
-            lock.unlock();
+            receivedLock.unlock();
         }
     }
 

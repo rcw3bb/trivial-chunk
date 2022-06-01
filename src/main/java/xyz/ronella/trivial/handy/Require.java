@@ -23,7 +23,7 @@ public final class Require {
      * @deprecated Use the objects method instead.
      */
     @Deprecated
-    public static void all(Object param, Object ... params) throws RequireAllException {
+    public static void all(final Object param, final Object ... params) throws RequireAllException {
         objects(param, params);
     }
 
@@ -37,10 +37,10 @@ public final class Require {
      *
      * @since 2.5.0
      */
-    public static void objects(Object obj, Object ... objs) throws RequireAllException {
+    public static void objects(final Object obj, final Object ... objs) throws RequireAllException {
         try {
             Objects.requireNonNull(obj);
-            for (var parameter : objs) {
+            for (final var parameter : objs) {
                 Objects.requireNonNull(parameter);
             }
         }

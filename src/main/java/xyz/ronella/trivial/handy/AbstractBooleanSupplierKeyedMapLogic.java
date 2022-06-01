@@ -16,10 +16,22 @@ import java.util.function.BooleanSupplier;
  */
 public abstract class AbstractBooleanSupplierKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> extends AbstractKeyedMapLogic<BooleanSupplier, TYPE_LOGIC, TYPE_OUTPUT> {
 
+    /**
+     * A standard way of creating an instance of AbstractBooleanSupplierKeyedMapLogic.
+     * @param map The map that holds the keyed map logics.
+     * @param defaultLogic The default logic if no matching key was found.
+     * @param logics The logics that will be stored to the map parameter.
+     */
     @SafeVarargs
-    public AbstractBooleanSupplierKeyedMapLogic(Map<BooleanSupplier, TYPE_LOGIC> map, TYPE_LOGIC defaultLogic, Map.Entry<BooleanSupplier, TYPE_LOGIC> ... logics) {
+    public AbstractBooleanSupplierKeyedMapLogic(final Map<BooleanSupplier, TYPE_LOGIC> map,
+                                                final TYPE_LOGIC defaultLogic,
+                                                final Map.Entry<BooleanSupplier, TYPE_LOGIC> ... logics) {
         super(map, defaultLogic, Arrays.asList(logics));
     }
 
+    /**
+     * Returns the calculated output.
+     * @return The typed output.
+     */
     public abstract Optional<TYPE_OUTPUT> get();
 }

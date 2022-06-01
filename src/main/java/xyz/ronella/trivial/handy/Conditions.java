@@ -24,7 +24,7 @@ public final class Conditions {
      * @param conditions A list of Boolean suppliers.
      * @param truthLogic Must have the truthLogic to perform if at least one is evaluated to true.
      */
-    public static void or(List<BooleanSupplier> conditions, Sink truthLogic) {
+    public static void or(final List<BooleanSupplier> conditions, final Sink truthLogic) {
         Invoker.execute(new LogicOR(conditions), truthLogic);
     }
 
@@ -36,7 +36,7 @@ public final class Conditions {
      * @param truthLogic Must have the truthLogic to perform if at least one is evaluated to true.
      * @param falseLogic Must have the falseLogic to perform if nothing is evaluated to true.
      */
-    public static void or(List<BooleanSupplier> conditions, Sink truthLogic, Sink falseLogic) {
+    public static void or(final List<BooleanSupplier> conditions, final Sink truthLogic, final Sink falseLogic) {
         Invoker.execute(new LogicOR(conditions), truthLogic, falseLogic);
     }
 
@@ -46,7 +46,7 @@ public final class Conditions {
      * @param conditions A list of Boolean suppliers.
      * @param truthLogic Must have the truthLogic to perform if all are evaluated to true.
      */
-    public static void and(List<BooleanSupplier> conditions, Sink truthLogic) {
+    public static void and(final List<BooleanSupplier> conditions, final Sink truthLogic) {
         Invoker.execute(new LogicAND(conditions), truthLogic);
     }
 
@@ -58,7 +58,7 @@ public final class Conditions {
      * @param truthLogic Must have the truthLogic to perform if all are evaluated to true.
      * @param falseLogic Must have the falseLogic to perform if at least one is evaluated to false.
      */
-    public static void and(List<BooleanSupplier> conditions, Sink truthLogic, Sink falseLogic) {
+    public static void and(final List<BooleanSupplier> conditions, final Sink truthLogic, final Sink falseLogic) {
         Invoker.execute(new LogicAND(conditions), truthLogic, falseLogic);
     }
 }

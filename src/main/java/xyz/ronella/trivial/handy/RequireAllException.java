@@ -7,6 +7,8 @@ package xyz.ronella.trivial.handy;
  */
 public class RequireAllException extends RuntimeException {
 
+    private static final long serialVersionUID = 8886147418746226040L;
+
     /**
      * Creates an instance of RequireAllException.
      */

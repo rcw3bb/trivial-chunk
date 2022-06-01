@@ -19,7 +19,7 @@ public class Mutable<TYPE_OBJECT> {
      *
      * @param object The immutable object to carry.
      */
-    public Mutable(TYPE_OBJECT object) {
+    public Mutable(final TYPE_OBJECT object) {
         this.object = object;
     }
 
@@ -37,7 +37,7 @@ public class Mutable<TYPE_OBJECT> {
      *
      * @param object The new immutable object.
      */
-    public void set(TYPE_OBJECT object) {
+    public void set(final TYPE_OBJECT object) {
         this.object = object;
     }
 

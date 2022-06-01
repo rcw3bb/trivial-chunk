@@ -27,7 +27,9 @@ public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBoole
      * @param logics       An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapGenerator(Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map, Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>> ... logics) {
+    public BooleanSupplierKeyedMapGenerator(final Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map,
+                                            final Supplier<TYPE_OUTPUT> defaultLogic,
+                                            final Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>> ... logics) {
         super(map, defaultLogic, logics);
     }
 
@@ -38,7 +40,8 @@ public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBoole
      * @param logics       An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapGenerator(Supplier<TYPE_OUTPUT> defaultLogic, Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
+    public BooleanSupplierKeyedMapGenerator(final Supplier<TYPE_OUTPUT> defaultLogic,
+                                            final Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
         this(null, defaultLogic, logics);
     }
 
@@ -48,7 +51,7 @@ public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBoole
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public BooleanSupplierKeyedMapGenerator(Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
+    public BooleanSupplierKeyedMapGenerator(final Map.Entry<BooleanSupplier, Supplier<TYPE_OUTPUT>>... logics) {
         this(null, logics);
     }
 
@@ -57,12 +60,12 @@ public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBoole
      *
      * @param map An external map that already contains logics.
      */
-    public BooleanSupplierKeyedMapGenerator(Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map) {
+    public BooleanSupplierKeyedMapGenerator(final Map<BooleanSupplier, Supplier<TYPE_OUTPUT>> map) {
         this(map, null);
     }
 
     @Override
-    protected Supplier<TYPE_OUTPUT> handleDefaultLogicConstructorArgument(Supplier<TYPE_OUTPUT> defaultLogic) {
+    protected Supplier<TYPE_OUTPUT> handleDefaultLogicConstructorArgument(final Supplier<TYPE_OUTPUT> defaultLogic) {
         return Optional.ofNullable(defaultLogic).orElse(NoOperation.supplier());
     }
 
@@ -75,7 +78,7 @@ public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBoole
     public Optional<TYPE_OUTPUT> get() {
 
         var logic = getDefaultLogic();
-        for (var key : internalMap.keySet()) {
+        for (final var key : internalMap.keySet()) {
             if (key.getAsBoolean()) {
                 logic = internalMap.get(key);
                 break;

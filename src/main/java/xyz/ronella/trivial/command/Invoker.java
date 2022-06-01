@@ -24,7 +24,7 @@ public final class Invoker {
      * @param <TYPE_ARG2> The type of the second parameter.
      */
     public static <TYPE_ARG1, TYPE_ARG2> void execute(
-            BiConsumer<TYPE_ARG1, TYPE_ARG2> logic, TYPE_ARG1 arg1, TYPE_ARG2 arg2)
+            final BiConsumer<TYPE_ARG1, TYPE_ARG2> logic, final TYPE_ARG1 arg1, final TYPE_ARG2 arg2)
     {
         logic.accept(arg1, arg2);
     }
@@ -38,8 +38,7 @@ public final class Invoker {
      *
      * @since 2.0.0
      */
-    public static <TYPE_ARG1, TYPE_ARG2> void execute(
-            BiConsumer<TYPE_ARG1, TYPE_ARG2> logic)
+    public static <TYPE_ARG1, TYPE_ARG2> void execute(final BiConsumer<TYPE_ARG1, TYPE_ARG2> logic)
     {
         logic.accept(null, null);
     }
@@ -56,7 +55,8 @@ public final class Invoker {
      * @return The output of a BiFunction.
      */
     public static <TYPE_ARG1, TYPE_ARG2, TYPE_RETURN>
-    TYPE_RETURN process(BiFunction<TYPE_ARG1, TYPE_ARG2, TYPE_RETURN> logic, TYPE_ARG1 arg1, TYPE_ARG2 arg2) {
+    TYPE_RETURN process(final BiFunction<TYPE_ARG1, TYPE_ARG2, TYPE_RETURN> logic, final TYPE_ARG1 arg1,
+                        final TYPE_ARG2 arg2) {
         return logic.apply(arg1, arg2);
     }
 
@@ -67,7 +67,7 @@ public final class Invoker {
      * @param arg The parameter for the Consumer.
      * @param <TYPE> The type of the parameter.
      */
-    public static <TYPE> void execute(Consumer<TYPE> logic, TYPE arg) {
+    public static <TYPE> void execute(final Consumer<TYPE> logic, final TYPE arg) {
         logic.accept(arg);
     }
 
@@ -79,7 +79,7 @@ public final class Invoker {
      *
      * @since 2.0.0
      */
-    public static <TYPE> void execute(Consumer<TYPE> logic) {
+    public static <TYPE> void execute(final Consumer<TYPE> logic) {
         logic.accept(null);
     }
 
@@ -92,7 +92,8 @@ public final class Invoker {
      * @param <TYPE_RETURN> The type of the expected return value.
      * @return The output of a Function.
      */
-    public static <TYPE_ARG, TYPE_RETURN> TYPE_RETURN process(Function<TYPE_ARG, TYPE_RETURN> logic, TYPE_ARG arg) {
+    public static <TYPE_ARG, TYPE_RETURN> TYPE_RETURN process(final Function<TYPE_ARG, TYPE_RETURN> logic,
+                                                              final TYPE_ARG arg) {
         return logic.apply(arg);
     }
 
@@ -102,7 +103,7 @@ public final class Invoker {
      * @param <TYPE_RETURN> The type of the expected return value.
      * @return The output of a Supplier.
      */
-    public static <TYPE_RETURN> TYPE_RETURN generate(Supplier<TYPE_RETURN> logic) {
+    public static <TYPE_RETURN> TYPE_RETURN generate(final Supplier<TYPE_RETURN> logic) {
         return logic.get();
     }
 
@@ -110,7 +111,7 @@ public final class Invoker {
      * Executes an implementation of Sink
      * @param logic The Sink implementation.
      */
-    public static void plunge(Sink logic) {
+    public static void plunge(final Sink logic) {
         logic.plummet();
     }
 

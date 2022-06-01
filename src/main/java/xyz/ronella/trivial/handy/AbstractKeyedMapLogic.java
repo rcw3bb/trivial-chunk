@@ -16,7 +16,15 @@ public abstract class AbstractKeyedMapLogic<TYPE_KEY, TYPE_LOGIC, TYPE_OUTPUT> {
     protected final Map<TYPE_KEY, TYPE_LOGIC> internalMap;
     protected final TYPE_LOGIC defaultLogic;
 
-    public AbstractKeyedMapLogic(Map<TYPE_KEY, TYPE_LOGIC> map, TYPE_LOGIC defaultLogic, List<Map.Entry<TYPE_KEY, TYPE_LOGIC>> logics) {
+    /**
+     * A standard way of creating an instance of AbstractKeyedMapLogic
+     * @param map The map that holds the keyed map logics.
+     * @param defaultLogic The default logic if no matching key was found.
+     * @param logics The logics that will be stored to the map parameter.
+     */
+    public AbstractKeyedMapLogic(final Map<TYPE_KEY, TYPE_LOGIC> map,
+                                 final TYPE_LOGIC defaultLogic,
+                                 final List<Map.Entry<TYPE_KEY, TYPE_LOGIC>> logics) {
         this.internalMap = Optional.ofNullable(map).orElse(new LinkedHashMap<>());
         this.defaultLogic = handleDefaultLogicConstructorArgument(defaultLogic);
 

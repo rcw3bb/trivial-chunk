@@ -21,11 +21,11 @@ import java.util.function.Supplier;
  */
 public final class LogicMapper<TYPE_OUTPUT> {
 
-    private Map<BooleanSupplier, Sink> logicMap = null;
-    private Sink initialLogic = null;
-    private Supplier<TYPE_OUTPUT> finalLogic = null;
+    final private Map<BooleanSupplier, Sink> logicMap;
+    final private Sink initialLogic;
+    final private Supplier<TYPE_OUTPUT> finalLogic;
 
-    private LogicMapper(LogicMapperBuilder<TYPE_OUTPUT> builder) {
+    private LogicMapper(final LogicMapperBuilder<TYPE_OUTPUT> builder) {
         this.logicMap = Optional.ofNullable(builder.logicMap).orElse(new LinkedHashMap<>());
         this.initialLogic = Optional.ofNullable(builder.initialLogic).orElse(()->{});
         this.finalLogic = Optional.ofNullable(builder.finalLogic).orElse(()-> null);
@@ -60,10 +60,10 @@ public final class LogicMapper<TYPE_OUTPUT> {
      */
     public static class LogicMapperBuilder<TYPE_OUTPUT> {
 
-        private Map<BooleanSupplier, Sink> logicMap = null;
-        private Sink initialLogic = null;
-        private Supplier<TYPE_OUTPUT> finalLogic = null;
-        private AtomicInteger inlineIdx = null;
+        final private Map<BooleanSupplier, Sink> logicMap;
+        private Sink initialLogic;
+        private Supplier<TYPE_OUTPUT> finalLogic;
+        final private AtomicInteger inlineIdx;
 
         /**
          * Creates an instance that can build a LogicMapper instance.
@@ -80,7 +80,7 @@ public final class LogicMapper<TYPE_OUTPUT> {
          * @param logic The logic to be executed if the condition is evaluated to true.
          * @return The builder instance.
          */
-        public LogicMapperBuilder<TYPE_OUTPUT> addLogic(BooleanSupplier condition, Sink logic) {
+        public LogicMapperBuilder<TYPE_OUTPUT> addLogic(final BooleanSupplier condition, final Sink logic) {
             logicMap.put(condition, logic);
             return this;
         }
@@ -93,9 +93,9 @@ public final class LogicMapper<TYPE_OUTPUT> {
          *
          * @since 2.0.0
          */
-        public LogicMapperBuilder<TYPE_OUTPUT> addInlineLogic(Sink logic) {
+        public LogicMapperBuilder<TYPE_OUTPUT> addInlineLogic(final Sink logic) {
             logicMap.put(()-> {
-                Predicate<Integer> dummy = __ -> Boolean.TRUE;
+                final Predicate<Integer> dummy = __ -> Boolean.TRUE;
                 return dummy.test(inlineIdx.incrementAndGet());
             }, logic);
             return this;
@@ -109,7 +109,7 @@ public final class LogicMapper<TYPE_OUTPUT> {
          *
          * @since 1.3.0
          */
-        public LogicMapperBuilder<TYPE_OUTPUT> addInitialLogic(Sink logic) {
+        public LogicMapperBuilder<TYPE_OUTPUT> addInitialLogic(final Sink logic) {
             this.initialLogic = logic;
             return this;
         }
@@ -122,7 +122,7 @@ public final class LogicMapper<TYPE_OUTPUT> {
          *
          * @since 1.3.0
          */
-        public LogicMapperBuilder<TYPE_OUTPUT> addFinalLogic(Supplier<TYPE_OUTPUT> logic) {
+        public LogicMapperBuilder<TYPE_OUTPUT> addFinalLogic(final Supplier<TYPE_OUTPUT> logic) {
             this.finalLogic = logic;
             return this;
         }

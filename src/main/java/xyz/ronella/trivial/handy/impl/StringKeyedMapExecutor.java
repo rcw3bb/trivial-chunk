@@ -24,7 +24,8 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public StringKeyedMapExecutor(Map<String, Sink> map, Sink defaultLogic, Map.Entry<String, Sink> ... logics) {
+    public StringKeyedMapExecutor(final Map<String, Sink> map, final Sink defaultLogic,
+                                  final Map.Entry<String, Sink> ... logics) {
         super(map, defaultLogic, logics);
     }
 
@@ -35,7 +36,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public StringKeyedMapExecutor(Sink defaultLogic, Map.Entry<String, Sink> ... logics) {
+    public StringKeyedMapExecutor(final Sink defaultLogic, final Map.Entry<String, Sink> ... logics) {
         this(null, defaultLogic, logics);
     }
 
@@ -45,7 +46,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      * @param logics An arrays of create logic mapped to key.
      */
     @SafeVarargs
-    public StringKeyedMapExecutor(Map.Entry<String, Sink> ... logics) {
+    public StringKeyedMapExecutor(final Map.Entry<String, Sink> ... logics) {
         this(null, logics);
     }
 
@@ -54,12 +55,12 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      *
      * @param map An external map that already contains logics.
      */
-    public StringKeyedMapExecutor(Map<String, Sink> map) {
+    public StringKeyedMapExecutor(final Map<String, Sink> map) {
         super(map, null);
     }
 
     @Override
-    protected Sink handleDefaultLogicConstructorArgument(Sink defaultLogic) {
+    protected Sink handleDefaultLogicConstructorArgument(final Sink defaultLogic) {
         return Optional.ofNullable(defaultLogic).orElse(NoOperation.sink());
     }
 
@@ -71,7 +72,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      * @return Always empty.
      */
     @Override
-    public Optional<Object> get(String key) {
+    public Optional<Object> get(final String key) {
         execute(key);
         return Optional.empty();
     }
@@ -81,7 +82,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
      *
      * @param key The target key of the corresponding logic.
      */
-    public void execute(String key) {
+    public void execute(final String key) {
         internalMap.getOrDefault(key, defaultLogic).plummet();
     }
 }

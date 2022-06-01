@@ -19,10 +19,10 @@ import java.util.function.Supplier;
 @SuppressWarnings("unchecked")
 public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
 
-    private TYPE_ROOT_OBJECT root;
-    private List<Function> expressions;
+    private final TYPE_ROOT_OBJECT root;
+    private final List<Function> expressions;
 
-    private NPESilencer(NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> builder) {
+    private NPESilencer(final NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> builder) {
         this.root = builder.root;
         this.expressions = builder.expressions;
     }
@@ -46,7 +46,7 @@ public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
      */
     public TYPE_OUTPUT evaluate() {
         Object arg = root;
-        for (Function expression : expressions) {
+        for (final Function expression : expressions) {
             try {
                 arg = expression.apply(arg);
             }
@@ -77,7 +77,7 @@ public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
          *
          * @return An instance of the builder.
          */
-        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addRoot(TYPE_ROOT_OBJECT root) {
+        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addRoot(final TYPE_ROOT_OBJECT root) {
             this.root = root;
             return this;
         }
@@ -91,7 +91,7 @@ public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
          *
          * @return An instance of the builder.
          */
-        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addExpr(Function expression) {
+        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addExpr(final Function expression) {
             expressions.add(expression);
             return this;
         }
@@ -105,7 +105,7 @@ public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
          *
          * @return An instance of the builder.
          */
-        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addExpr(Supplier expression) {
+        public NPESilencerBuilder<TYPE_ROOT_OBJECT, TYPE_OUTPUT> addExpr(final Supplier expression) {
             Optional.ofNullable(expression).ifPresent(___expression -> {
                 expressions.add(___arg -> ___expression.get());
             });
@@ -132,8 +132,8 @@ public final class NPESilencer<TYPE_ROOT_OBJECT, TYPE_OUTPUT> {
      *
      * @return The output of the expression.
      */
-    public static <TYPE_OUTPUT> TYPE_OUTPUT nullable(Supplier expression) {
-        var silencer = NPESilencer.<Object, TYPE_OUTPUT>getBuilder().addExpr(expression).build();
+    public static <TYPE_OUTPUT> TYPE_OUTPUT nullable(final Supplier expression) {
+        final var silencer = NPESilencer.<Object, TYPE_OUTPUT>getBuilder().addExpr(expression).build();
         return silencer.evaluate();
 
     }

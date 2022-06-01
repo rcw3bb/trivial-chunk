@@ -1,5 +1,7 @@
 package xyz.ronella.trivial.handy;
 
+import java.util.Locale;
+
 /**
  * The enumerator that identifies the OSType.
  *
@@ -18,7 +20,7 @@ public enum OSType {
      * @return An instance of OSType.
      */
     public static OSType identify() {
-        String osName = System.getProperty("os.name").toLowerCase();
+        final var osName = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         if (osName.contains("win")) {
             return OSType.Windows;
         }

@@ -16,6 +16,10 @@ public interface ICommandArray {
      */
     String[] getCommand();
 
+    /**
+     * Must hold the implementation of return the command as List.
+     * @return The command as List.
+     */
     List<String> getCommandAsList();
 
 }
