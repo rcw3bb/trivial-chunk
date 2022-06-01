@@ -46,11 +46,6 @@ public final class CommandArray implements ICommandArray {
         return lstCommand.toArray(new String[] {});
     }
 
-    @Override
-    public List<String> getCommandAsList() {
-        return List.of(getCommand());
-    }
-
     /**
      * Return the builder of the CommandArray.
      *

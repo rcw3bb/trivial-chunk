@@ -24,20 +24,6 @@ public class CommandArrayTest {
     }
 
     @Test
-    public void fullCommandAsList() {
-        var expected = List.of("Program", "PArgs1", "Command", "Args1", "ZArg1");
-        var command = CommandArray.getBuilder()
-                .setProgram(expected.get(0))
-                .addPArg(expected.get(1))
-                .setCommand(expected.get(2))
-                .addArg(expected.get(3))
-                .addZArg(expected.get(4))
-                .build();
-
-        assertArrayEquals(expected.toArray(), command.getCommandAsList().toArray());
-    }
-
-    @Test
     public void justProgram() {
         var expected = new String[] {"Program"};
         var command = CommandArray.getBuilder()
