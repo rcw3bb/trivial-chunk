@@ -16,8 +16,19 @@ import java.util.function.BooleanSupplier;
  */
 public abstract class AbstractLogical implements ILogical {
 
+    /**
+     * A list of BooleanSupplier.
+     */
     protected List<BooleanSupplier> conditions;
+
+    /**
+     * The default truth logic
+     */
     protected Sink defaultTruthLogic;
+
+    /**
+     * The default false logic.
+     */
     protected Sink defaultFalseLogic;
 
     /**

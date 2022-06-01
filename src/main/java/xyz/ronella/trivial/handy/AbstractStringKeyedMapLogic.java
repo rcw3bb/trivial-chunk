@@ -14,6 +14,10 @@ import java.util.Optional;
  * @since 2.2.0
  */
 public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> extends AbstractKeyedMapLogic<String, TYPE_LOGIC, TYPE_OUTPUT> {
+
+    /**
+     * The key for the default logic.
+     */
     public static final String DEFAULT_LOGIC = "___DEFAULT_LOGIC__";
 
     /**

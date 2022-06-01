@@ -13,7 +13,15 @@ import java.util.*;
  * @since 2.4.0
  */
 public abstract class AbstractKeyedMapLogic<TYPE_KEY, TYPE_LOGIC, TYPE_OUTPUT> {
+
+    /**
+     * The instance of Map received.
+     */
     protected final Map<TYPE_KEY, TYPE_LOGIC> internalMap;
+
+    /**
+     * Holds the default logic if the key doesn't exist in internalMap.
+     */
     protected final TYPE_LOGIC defaultLogic;
 
     /**

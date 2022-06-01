@@ -9,9 +9,22 @@ import java.util.Locale;
  * @since 2020-05-15
  */
 public enum OSType {
+
+    /**
+     * Indicates that the OS type is Windows.
+     */
     Windows,
+    /**
+     * Indicates that the OS type is Linux.
+     */
     Linux,
+    /**
+     * Indicates that the OS type is Mac.
+     */
     Mac,
+    /**
+     * Indicates that the OS type cannot be determined.
+     */
     Unknown;
 
     /**
