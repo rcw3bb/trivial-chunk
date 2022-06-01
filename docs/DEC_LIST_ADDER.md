@@ -1,5 +1,5 @@
 #  ListAdder
-A decorator of List implementation that exposes **conditional add methods**.
+A decorator of List implementation that exposes **conditional add methods** and ability to **add calculated elements**.
 
 ## Constructor
 
@@ -18,14 +18,22 @@ A decorator of List implementation that exposes **conditional add methods**.
 
 | Signature |
 |--------|
-| public void **add**(BooleanSupplier **when**, int **index**, TYPE_ELEMENT **element**) |
-| public boolean **add**(BooleanSupplier **when**, TYPE_ELEMENT **element**) |
-| public void **add**(int **index**, TYPE_ELEMENT **element**) |
-| public boolean **add**(TYPE_ELEMENT **element**) |
-| public boolean **addAll**(BooleanSupplier **when**, Collection<? extends TYPE_ELEMENT> **elements**) |
-| public boolean **addAll**(BooleanSupplier **when**, int **index**, Collection<? extends TYPE_ELEMENT> **elements**) |
-| public boolean **addAll**(Collection<? extends TYPE_ELEMENT> **elements**) |
-| public boolean **addAll**(BooleanSupplier **when**, int **index**, Collection<? extends TYPE_ELEMENT> **elements**) |
+| public void **add**(final BooleanSupplier **when**, final int **index**, final Supplier<TYPE_ELEMENT> **generateElement**) |
+| public void **add**(final BooleanSupplier **when**, final int index, **final** TYPE_ELEMENT **element**) |
+| public boolean **add**(final BooleanSupplier **when**, final Supplier<TYPE_ELEMENT> **generateElement**) |
+| public boolean **add**(final BooleanSupplier **when**, final TYPE_ELEMENT **element**) |
+| public void **add**(final int **index**, final Supplier<TYPE_ELEMENT> **generateElement**) |
+| public void **add**(final int **index**, final TYPE_ELEMENT **element**) |
+| public boolean **add**(final Supplier<TYPE_ELEMENT> **generateElement**) |
+| public boolean **add**(final TYPE_ELEMENT **element**) |
+| public boolean **addAll**(final BooleanSupplier **when**, final Collection<? extends TYPE_ELEMENT> **elements**) |
+| public boolean **addAll**(final BooleanSupplier **when**, final int **index**,                       final Collection<? extends TYPE_ELEMENT> **elements**) |
+| public boolean **addAll**(final BooleanSupplier **when**, final int **index**,                       final Supplier<Collection<? extends TYPE_ELEMENT>> **generateElements**) |
+| public boolean **addAll**(final BooleanSupplier **when**,                       final Supplier<Collection<? extends TYPE_ELEMENT>> **generateElements**) |
+| public boolean **addAll**(final Collection<? extends TYPE_ELEMENT> **elements**) |
+| public boolean **addAll**(final int **index**, final Collection<? extends TYPE_ELEMENT> **elements**) |
+| public boolean **addAll**(final int **index**, final Supplier<Collection<? extends TYPE_ELEMENT>> **generateElements**) |
+| public boolean **addAll**(final Supplier<Collection<? extends TYPE_ELEMENT>> **generateElements**) |
 
 ### **Parameter**
 
@@ -33,6 +41,8 @@ A decorator of List implementation that exposes **conditional add methods**.
 | --------- | ------------------------- |
 | element | The element to be added. |
 | elements | The elements to be added. |
+| generateElement | The logic to produce the element. |
+| generateElements | The logic to produce the elements. |
 | index | The index where the element(s) to be added. |
 | when | The condition if the element(s) can be added. |
 
