@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.10.0 : 2022-06-03
+
+### Added
+
+* Introduce ICommandArray to be used along side CommandRunner.
+* Add ListAdder implementation.
+* Usage of PMD upon testing.
+
 ## 2.9.0 : 2022-05-20
 
 ### Added
