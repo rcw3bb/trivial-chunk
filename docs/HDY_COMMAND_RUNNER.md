@@ -4,7 +4,7 @@ A convenience class for **creating operating system process**.
 
 ## The ICommandArray Interface
 
-The interface that must hold the logic of how to **generate an array equivalent of the command**. 
+The interface that must hold the logic of how to **generate an array equivalent of the command**. The implementation must assist in sequencing all the program, command, options and arguments as arrays.
 
 ```java
 public interface ICommandArray {
@@ -14,7 +14,7 @@ public interface ICommandArray {
 
 ## The CommandArray Class
 
-The **default implementation of ICommandArray**. 
+The **default implementation of ICommandArray**.
 
 This implementation can only be instantiated by the following builder class:
 
@@ -34,13 +34,41 @@ This is the only class can can **create an instance of CommandArray**.
 
 ### Methods
 
-| Method                                                       | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| public CommandArrayBuilder **addArgs**(String ... **args**)  | Add the arguments of the command.                            |
-| public CommandArrayBuilder **addZArgs**(String ... **zArgs**) | Add the arguments that must be after the normal arguments of the command. |
-| public CommandArray **build**()                              | Build an instance of CommandArray.                           |
-| public CommandArrayBuilder **setCommand**(String **command**) | Set the command of the program to use.                       |
-| public CommandArrayBuilder **setProgram**(String **program**) | Set the program to run.                                      |
+| Method                                                       |
+| ------------------------------------------------------------ |
+| public CommandArrayBuilder **addArg**(final BooleanSupplier **when**, final String arg) |
+| public CommandArrayBuilder **addArg**(final String **arg**)  |
+| public CommandArrayBuilder **addArgs**(final BooleanSupplier **when**, final Collection<String> **args**) |
+| public CommandArrayBuilder **addArgs**(final Collection<String> **args**) |
+| public CommandArrayBuilder **addPArg**(final BooleanSupplier **when**, final String **arg**) |
+| public CommandArrayBuilder **addPArg**(final String **arg**) |
+| public CommandArrayBuilder **addPArgs**(final BooleanSupplier **when**, final Collection<String> **args**) |
+| public CommandArrayBuilder **addPArgs**(final Collection<String> **args**) |
+| public CommandArrayBuilder **addZArg**(final BooleanSupplier when, final String **arg**) |
+| public CommandArrayBuilder **addZArg**(final String **arg**) |
+| public CommandArrayBuilder **addZArgs**(final BooleanSupplier **when**, final Collection<String> **args**) |
+| public CommandArrayBuilder **addZArgs**(final Collection<String> **args**) |
+| public CommandArray **build**() //The only method that creates an instance of CommandArray. |
+| public CommandArrayBuilder **setCommand**(final String **command**) //The command of for the program. |
+| public CommandArrayBuilder **setProgram**(final String **program**) //The program to execute *(i.e. the executable)* |
+
+#### Parameters
+
+|         |                                                              |
+| ------- | ------------------------------------------------------------ |
+| arg     | The argument to be added.                                    |
+| args    | The collection of arguments to be added.                     |
+| command | The command for the program.                                 |
+| program | The program to execute.                                      |
+| when    | The logic to must return true for the argument(s) to be added. |
+
+### Usage of Add Methods
+
+| Methods          | Usage                                                        |
+| ---------------- | ------------------------------------------------------------ |
+| addArg/addArgs   | Use this to add argument(s) to the command.                  |
+| addPArg/addPArgs | Use this to add argument(s) to the program.                  |
+| addZArg/addZArgs | Use this to add argument(s) that will become available after the argument(s) added to the command. |
 
 ## The runCommand Method
 
