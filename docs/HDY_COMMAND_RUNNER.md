@@ -48,9 +48,9 @@ This is the only class can can **create an instance of CommandArray**.
 | public CommandArrayBuilder **addZArg**(final String **arg**) |
 | public CommandArrayBuilder **addZArgs**(final BooleanSupplier **when**, final Collection<String> **args**) |
 | public CommandArrayBuilder **addZArgs**(final Collection<String> **args**) |
-| public CommandArray **build**() //The only method that creates an instance of CommandArray. |
-| public CommandArrayBuilder **setCommand**(final String **command**) //The command of for the program. |
-| public CommandArrayBuilder **setProgram**(final String **program**) //The program to execute *(i.e. the executable)* |
+| public CommandArray **build**() <span style="color:red">//The only method that creates an instance of CommandArray.</span> |
+| public CommandArrayBuilder **setCommand**(final String **command**) <span style="color:red">//The command of for the program.</span> |
+| public CommandArrayBuilder **setProgram**(final String **program**) <span style="color:red">//The program to execute *(i.e. the executable)*</span> |
 
 #### Parameters
 
