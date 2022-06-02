@@ -185,58 +185,58 @@ public final class CommandArray implements ICommandArray {
         /**
          * Accepts the arguments of the command.
          * @param when Only apply the method when this returns true.
-         * @param args The argument of the command.
+         * @param arg The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addArg(final BooleanSupplier when, final String args) {
+        public CommandArrayBuilder addArg(final BooleanSupplier when, final String arg) {
             if (when.getAsBoolean()) {
-                this.arguments.add(args);
+                this.arguments.add(arg);
             }
             return this;
         }
 
         /**
          * Accepts the arguments that must be at the end of the command arguments.
-         * @param zArgs The last arguments of the command.
+         * @param args The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArgs(final Collection<String> zArgs) {
-            this.zArguments.addAll(zArgs);
+        public CommandArrayBuilder addZArgs(final Collection<String> args) {
+            this.zArguments.addAll(args);
             return this;
         }
 
         /**
          * Accepts the arguments that must be at the end of the command arguments.
          * @param when Only apply the method when this returns true.
-         * @param zArgs The last arguments of the command.
+         * @param args The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArgs(final BooleanSupplier when, final Collection<String> zArgs) {
+        public CommandArrayBuilder addZArgs(final BooleanSupplier when, final Collection<String> args) {
             if (when.getAsBoolean()) {
-                this.zArguments.addAll(zArgs);
+                this.zArguments.addAll(args);
             }
             return this;
         }
 
         /**
          * Accepts an argument that must be at the end of the command arguments.
-         * @param zArg The last arguments of the command.
+         * @param arg The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArg(final String zArg) {
-            this.arguments.add(zArg);
+        public CommandArrayBuilder addZArg(final String arg) {
+            this.arguments.add(arg);
             return this;
         }
 
         /**
          * Accepts an argument that must be at the end of the command arguments.
          * @param when Only apply the method when this returns true.
-         * @param zArg The last arguments of the command.
+         * @param arg The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
-        public CommandArrayBuilder addZArg(final BooleanSupplier when, final String zArg) {
+        public CommandArrayBuilder addZArg(final BooleanSupplier when, final String arg) {
             if (when.getAsBoolean()) {
-                this.arguments.add(zArg);
+                this.arguments.add(arg);
             }
             return this;
         }
