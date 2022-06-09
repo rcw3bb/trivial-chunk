@@ -123,6 +123,8 @@ test {
     finalizedBy jacocoTestReport
 }
 
+pmdTest.enabled = false
+
 jacocoTestReport {
     dependsOn test
 }
