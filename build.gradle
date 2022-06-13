@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'xyz.ronella.casual'
-version '2.10.0'
+version '2.11.0-SNAPSHOT'
 
 sourceCompatibility = 1.11
 
@@ -17,7 +17,7 @@ pmd {
     consoleOutput = true
     toolVersion = "6.45.0"
     rulesMinimumPriority = 5
-    ruleSetFiles = files('config/pmd/java/custom.xml')
+    ruleSetFiles = files('config/pmd/custom.xml')
     ruleSets = []
 }
 
