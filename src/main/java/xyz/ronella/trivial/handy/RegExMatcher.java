@@ -19,10 +19,10 @@ final public class RegExMatcher {
 
     private RegExMatcher() {}
 
-    private static Matcher matcher(final String pattern, final String text, final int flags, final Function<Matcher, Boolean> matchLogic,
+    private static Matcher matcher(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic,
                                    final Consumer<Matcher> matchFoundLogic, final Consumer<Matcher> noMatchFoundLogic,
                                    final Consumer<RuntimeException> exceptionLogic) {
-        final var compiledPattern = Pattern.compile(pattern, flags);
+        final var compiledPattern = Pattern.compile(pattern);
         final var matcher = compiledPattern.matcher(text);
         try {
             final var matchLogicOption = Optional.ofNullable(matchLogic).
@@ -50,7 +50,7 @@ final public class RegExMatcher {
      * @since 2.6.0
      */
     public static Matcher find(final String pattern, final String text) {
-        return matcher(pattern, text, 0, Matcher::find,
+        return matcher(pattern, text, Matcher::find,
                 NoOperation.consumer(), NoOperation.consumer(), NoOperation.consumer());
     }
 
@@ -66,7 +66,7 @@ final public class RegExMatcher {
      */
     public static Matcher findWithMatchLogic(final String pattern, final String text,
                                              final Consumer<Matcher> matchFoundLogic) {
-        return matcher(pattern, text, 0, Matcher::find, matchFoundLogic, NoOperation.consumer(),
+        return matcher(pattern, text, Matcher::find, matchFoundLogic, NoOperation.consumer(),
                 NoOperation.consumer());
     }
 
@@ -84,7 +84,7 @@ final public class RegExMatcher {
     public static Matcher findWithMatchLogic(final String pattern, final String text,
                                              final Consumer<Matcher> matchFoundLogic,
                                              final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, 0, Matcher::find, matchFoundLogic, NoOperation.consumer(),
+        return matcher(pattern, text, Matcher::find, matchFoundLogic, NoOperation.consumer(),
                 exceptionLogic);
     }
 
@@ -102,7 +102,7 @@ final public class RegExMatcher {
     public static Matcher findWithNoMatchLogic(final String pattern, final String text,
                                                final Consumer<Matcher> matchFoundLogic,
                                                final Consumer<Matcher> noMatchFoundLogic) {
-        return matcher(pattern, text, 0, Matcher::find, matchFoundLogic, noMatchFoundLogic,
+        return matcher(pattern, text, Matcher::find, matchFoundLogic, noMatchFoundLogic,
                 NoOperation.consumer());
     }
 
@@ -122,7 +122,7 @@ final public class RegExMatcher {
                                                final Consumer<Matcher> matchFoundLogic,
                                                final Consumer<Matcher> noMatchFoundLogic,
                                                final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, 0, Matcher::find, matchFoundLogic, noMatchFoundLogic,
+        return matcher(pattern, text, Matcher::find, matchFoundLogic, noMatchFoundLogic,
                 exceptionLogic);
     }
 
@@ -137,7 +137,7 @@ final public class RegExMatcher {
      * @since 2.6.0
      */
     public static Matcher match(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic) {
-        return matcher(pattern, text, 0, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
+        return matcher(pattern, text, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
                 NoOperation.consumer());
     }
 
@@ -154,7 +154,7 @@ final public class RegExMatcher {
      */
     public static Matcher match(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic,
                                 final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, 0, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
+        return matcher(pattern, text, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
                 exceptionLogic);
     }
 
@@ -172,7 +172,7 @@ final public class RegExMatcher {
     public static Matcher matchWithMatchLogic(final String pattern, final String text,
                                               final Function<Matcher, Boolean> matchLogic,
                                               final Consumer<Matcher> matchFoundLogic) {
-        return matcher(pattern, text, 0, matchLogic, matchFoundLogic, NoOperation.consumer(), NoOperation.consumer());
+        return matcher(pattern, text, matchLogic, matchFoundLogic, NoOperation.consumer(), NoOperation.consumer());
     }
 
     /**
@@ -191,7 +191,7 @@ final public class RegExMatcher {
                                               final Function<Matcher, Boolean> matchLogic,
                                               final Consumer<Matcher> matchFoundLogic,
                                               final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, 0, matchLogic, matchFoundLogic, NoOperation.consumer(), exceptionLogic);
+        return matcher(pattern, text, matchLogic, matchFoundLogic, NoOperation.consumer(), exceptionLogic);
     }
 
     /**
@@ -210,7 +210,7 @@ final public class RegExMatcher {
                                                 final Function<Matcher, Boolean> matchLogic,
                                                 final Consumer<Matcher> matchFoundLogic,
                                                 final Consumer<Matcher> noMatchFoundLogic) {
-        return matcher(pattern, text, 0, matchLogic, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
+        return matcher(pattern, text, matchLogic, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
     }
 
     /**
@@ -231,7 +231,7 @@ final public class RegExMatcher {
                                                 final Consumer<Matcher> matchFoundLogic,
                                                 final Consumer<Matcher> noMatchFoundLogic,
                                                 final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, 0, matchLogic, matchFoundLogic,
+        return matcher(pattern, text, matchLogic, matchFoundLogic,
                 noMatchFoundLogic, exceptionLogic);
     }
 
@@ -253,7 +253,7 @@ final public class RegExMatcher {
                                        final Function<Matcher, Boolean> matchLogic,
                                        final Consumer<Matcher> matchFoundLogic,
                                        final Sink noMatchFoundLogic, final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, 0, matchLogic, matchFoundLogic, (___matcher) -> noMatchFoundLogic.plummet(), exceptionLogic);
+        return matcher(pattern, text, matchLogic, matchFoundLogic, (___matcher) -> noMatchFoundLogic.plummet(), exceptionLogic);
     }
 
     /**
