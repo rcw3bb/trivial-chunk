@@ -102,7 +102,7 @@ public final class NoOperation {
      *
      * @since 2.11.0
      */
-    public static <T,R> Function<T,R> function(R output) {
+    public static <T,R> Function<T,R> function(final R output) {
         return (arg) -> output;
     }
 
@@ -143,7 +143,7 @@ public final class NoOperation {
      *
      * @since 2.11.0
      */
-    public static <T1, T2, R> BiFunction<T1, T2, R> biFunction(R output) {
+    public static <T1, T2, R> BiFunction<T1, T2, R> biFunction(final R output) {
         return (arg1, arg2) -> output;
     }
 
