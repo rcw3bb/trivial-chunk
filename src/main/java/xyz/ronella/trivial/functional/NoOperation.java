@@ -93,6 +93,33 @@ public final class NoOperation {
     }
 
     /**
+     * An implementation of Function that does nothing but produce default output.
+     * @param <T> The type of the argument to work on.
+     * @param <R> The return type.
+     * @param output The desired output of type R.
+     *
+     * @return The value of the output parameter.
+     *
+     * @since 2.11.0
+     */
+    public static <T,R> Function<T,R> function(R output) {
+        return (arg) -> output;
+    }
+
+    /**
+     * An implementation of Function that does nothing and just return what passed.
+     * @param <T> The type of the argument of instance of R to work on.
+     * @param <R> The return type.
+     *
+     * @return The value of the output parameter.
+     *
+     * @since 2.11.0
+     */
+    public static <T extends R,R> Function<T,R> functionPassThru() {
+        return (arg) -> arg;
+    }
+
+    /**
      * An implementation of BiFunction that does nothing.
      * @param <T1> The type of the first argument to work on.
      * @param <T2> The type of the second argument to work on.
@@ -103,5 +130,48 @@ public final class NoOperation {
      */
     public static <T1, T2, R> BiFunction<T1, T2, R> biFunction() {
         return (arg1, arg2) -> null;
+    }
+
+    /**
+     * An implementation of BiFunction that does nothing but produce default output.
+     * @param <T1> The type of the first argument to work on.
+     * @param <T2> The type of the second argument to work on.
+     * @param <R> The return type.*
+     * @param output The desired output of type R.
+     *
+     * @return The value of the output parameter.
+     *
+     * @since 2.11.0
+     */
+    public static <T1, T2, R> BiFunction<T1, T2, R> biFunction(R output) {
+        return (arg1, arg2) -> output;
+    }
+
+    /**
+     * An implementation of BiFunction that does nothing and just return argument 1.
+     * @param <T1> The type of the first argument of instance of R to work on.
+     * @param <T2> The type of the second argument to work on.
+     * @param <R> The return type.*
+     *
+     * @return The value of the output parameter.
+     *
+     * @since 2.11.0
+     */
+    public static <T1 extends R, T2, R> BiFunction<T1, T2, R> biFunctionArg1PassThru() {
+        return (arg1, arg2) -> arg1;
+    }
+
+    /**
+     * An implementation of BiFunction that does nothing and just return argument 2.
+     * @param <T1> The type of the first argument to work on.
+     * @param <T2> The type of the second argument of instance of R to work on.
+     * @param <R> The return type.*
+     *
+     * @return The value of the output parameter.
+     *
+     * @since 2.11.0
+     */
+    public static <T1, T2 extends R, R> BiFunction<T1, T2, R> biFunctionArg2PassThru() {
+        return (arg1, arg2) -> arg2;
     }
 }

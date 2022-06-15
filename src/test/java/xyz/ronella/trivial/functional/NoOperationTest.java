@@ -64,9 +64,39 @@ public class NoOperationTest {
     }
 
     @Test
+    public void noopFunctionOutputTest() {
+        Function<String, String> function = NoOperation.function("output");
+        assertEquals("output", function.apply("test"));
+    }
+
+    @Test
+    public void noopFunctionPassThru() {
+        Function<String, String> function = NoOperation.functionPassThru();
+        assertEquals("output", function.apply("output"));
+    }
+
+    @Test
     public void noopBiFunctionTest() {
         BiFunction<String, String, String> biFunction = NoOperation.biFunction();
         assertNull(biFunction.apply("test", "test2`"));
+    }
+
+    @Test
+    public void noopBiFunctionOutputTest() {
+        BiFunction<String, String, String> biFunction = NoOperation.biFunction("output");
+        assertEquals("output", biFunction.apply("test", "test2`"));
+    }
+
+    @Test
+    public void noopBiFunctionArg1PassThru() {
+        BiFunction<String, String, String> biFunction = NoOperation.biFunctionArg1PassThru();
+        assertEquals("arg1", biFunction.apply("arg1", "arg2`"));
+    }
+
+    @Test
+    public void noopBiFunctionArg2PassThru() {
+        BiFunction<String, String, String> biFunction = NoOperation.biFunctionArg2PassThru();
+        assertEquals("arg2", biFunction.apply("arg1", "arg2"));
     }
 
     @Test
