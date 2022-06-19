@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.11.0 : 2022-06-20
+
+### Added
+
+* Introduce IMatcherConfig to be used with RegExMatcher.
+* More NoOperation methods.
+
 ## 2.10.0 : 2022-06-03
 
 ### Added
