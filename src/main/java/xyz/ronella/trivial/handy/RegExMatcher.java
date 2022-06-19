@@ -248,7 +248,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      *
-     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
+     * @deprecated Use match(String, String, Function, IRegExMatcherConfig) instead.
      */
     @Deprecated
     public static Matcher match(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic,
@@ -268,7 +268,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      *
-     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
+     * @deprecated Use match(String, String, Function, IRegExMatcherConfig) instead.
      */
     @Deprecated
     public static Matcher matchWithMatchLogic(final String pattern, final String text,
@@ -290,7 +290,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      *
-     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
+     * @deprecated Use match(String, String, Function, IRegExMatcherConfig) instead.
      */
     @Deprecated
     public static Matcher matchWithMatchLogic(final String pattern, final String text,
@@ -313,7 +313,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      *
-     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
+     * @deprecated Use match(String, String, Function, IRegExMatcherConfig) instead.
      */
     @Deprecated
     public static Matcher matchWithNoMatchLogic(final String pattern, final String text,
@@ -337,7 +337,7 @@ final public class RegExMatcher {
      *
      * @since 2.6.0
      *
-     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
+     * @deprecated Use match(String, String, Function, IRegExMatcherConfig) instead.
      */
     @Deprecated
     public static Matcher matchWithNoMatchLogic(final String pattern, final String text,
