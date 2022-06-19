@@ -2,6 +2,7 @@ package xyz.ronella.trivial.handy;
 
 import xyz.ronella.trivial.functional.NoOperation;
 import xyz.ronella.trivial.functional.Sink;
+import xyz.ronella.trivial.handy.impl.MatcherConfig;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -19,23 +20,29 @@ final public class RegExMatcher {
 
     private RegExMatcher() {}
 
-    private static Matcher matcher(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic,
-                                   final Consumer<Matcher> matchFoundLogic, final Consumer<Matcher> noMatchFoundLogic,
-                                   final Consumer<RuntimeException> exceptionLogic) {
+    /**
+     * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
+     * @param config An implementation of IRegExMatcherConfig dictates how the match will behave.
+     * @return An instance of Matcher.
+     *
+     * @since 2.11.0
+     */
+    public static Matcher match(final String pattern, final String text, final IMatcherConfig config) {
         final var compiledPattern = Pattern.compile(pattern);
         final var matcher = compiledPattern.matcher(text);
         try {
-            final var matchLogicOption = Optional.ofNullable(matchLogic).
+            final var matchLogicOption = Optional.ofNullable(config.getMatchLogic()).
                     orElse(Matcher::find);
 
             if (matchLogicOption.apply(matcher)) {
-                matchFoundLogic.accept(matcher);
+                config.getMatchFoundLogic().accept(matcher);
             } else {
-                noMatchFoundLogic.accept(matcher);
+                config.getNoMatchFoundLogic().accept(matcher);
             }
         }
         catch (RuntimeException exception) {
-            exceptionLogic.accept(exception);
+            config.getExceptionLogic().accept(exception);
         }
         return matcher;
     }
@@ -48,10 +55,12 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher find(final String pattern, final String text) {
-        return matcher(pattern, text, Matcher::find,
-                NoOperation.consumer(), NoOperation.consumer(), NoOperation.consumer());
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find).build());
     }
 
     /**
@@ -63,11 +72,14 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher findWithMatchLogic(final String pattern, final String text,
                                              final Consumer<Matcher> matchFoundLogic) {
-        return matcher(pattern, text, Matcher::find, matchFoundLogic, NoOperation.consumer(),
-                NoOperation.consumer());
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).build());
     }
 
     /**
@@ -80,12 +92,15 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher findWithMatchLogic(final String pattern, final String text,
                                              final Consumer<Matcher> matchFoundLogic,
                                              final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, Matcher::find, matchFoundLogic, NoOperation.consumer(),
-                exceptionLogic);
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setExceptionLogic(exceptionLogic).build());
     }
 
     /**
@@ -98,12 +113,87 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher findWithNoMatchLogic(final String pattern, final String text,
                                                final Consumer<Matcher> matchFoundLogic,
                                                final Consumer<Matcher> noMatchFoundLogic) {
-        return matcher(pattern, text, Matcher::find, matchFoundLogic, noMatchFoundLogic,
-                NoOperation.consumer());
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(noMatchFoundLogic).build());
+    }
+
+    /**
+     * A convenience method for the find matching.
+     *
+     * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
+     * @param matchFoundLogic The logic executed when the pattern was found.
+     * @param noMatchFoundLogic The logic executed when the pattern was not found.
+     * @return An instance of Matcher.
+     *
+     * @since 2.11.0
+     */
+    public static Matcher find(final String pattern, final String text,
+                               final Consumer<Matcher> matchFoundLogic,
+                               final Consumer<Matcher> noMatchFoundLogic) {
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(noMatchFoundLogic).build());
+    }
+
+    /**
+     * A convenience method for the find matching.
+     *
+     * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
+     * @param matchFoundLogic The logic executed when the pattern was found.
+     * @return An instance of Matcher.
+     *
+     * @since 2.11.0
+     */
+    public static Matcher find(final String pattern, final String text,
+                               final Consumer<Matcher> matchFoundLogic) {
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(NoOperation.consumer())
+                .build());
+    }
+
+    /**
+     * A convenience method for the find matching with pattern flags.
+     *
+     * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
+     * @param flags The Pattern flags to use.
+     * @param matchFoundLogic The logic executed when the pattern was found.
+     * @param noMatchFoundLogic The logic executed when the pattern was not found.
+     * @return An instance of Matcher.
+     *
+     * @since 2.11.0
+     */
+    public static Matcher find(final String pattern, final String text, final int flags,
+                               final Consumer<Matcher> matchFoundLogic,
+                               final Consumer<Matcher> noMatchFoundLogic) {
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(noMatchFoundLogic)
+                .build(flags));
+    }
+
+    /**
+     * A convenience method for the find matching with pattern flags.
+     *
+     * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
+     * @param flags The Pattern flags to use.
+     * @param matchFoundLogic The logic executed when the pattern was found.
+     * @return An instance of Matcher.
+     *
+     * @since 2.11.0
+     */
+    public static Matcher find(final String pattern, final String text, final int flags,
+                               final Consumer<Matcher> matchFoundLogic) {
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(NoOperation.consumer()).build(flags));
     }
 
     /**
@@ -117,13 +207,17 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher findWithNoMatchLogic(final String pattern, final String text,
                                                final Consumer<Matcher> matchFoundLogic,
                                                final Consumer<Matcher> noMatchFoundLogic,
                                                final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, Matcher::find, matchFoundLogic, noMatchFoundLogic,
-                exceptionLogic);
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(noMatchFoundLogic)
+                .setExceptionLogic(exceptionLogic).build());
     }
 
     /**
@@ -135,10 +229,12 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher match(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic) {
-        return matcher(pattern, text, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
-                NoOperation.consumer());
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic).build());
     }
 
     /**
@@ -151,11 +247,14 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher match(final String pattern, final String text, final Function<Matcher, Boolean> matchLogic,
                                 final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, matchLogic,NoOperation.consumer(), NoOperation.consumer(),
-                exceptionLogic);
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic)
+                .setExceptionLogic(exceptionLogic).build());
     }
 
     /**
@@ -168,11 +267,15 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher matchWithMatchLogic(final String pattern, final String text,
                                               final Function<Matcher, Boolean> matchLogic,
                                               final Consumer<Matcher> matchFoundLogic) {
-        return matcher(pattern, text, matchLogic, matchFoundLogic, NoOperation.consumer(), NoOperation.consumer());
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic)
+                .setMatchFoundLogic(matchFoundLogic).build());
     }
 
     /**
@@ -186,12 +289,16 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher matchWithMatchLogic(final String pattern, final String text,
                                               final Function<Matcher, Boolean> matchLogic,
                                               final Consumer<Matcher> matchFoundLogic,
                                               final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, matchLogic, matchFoundLogic, NoOperation.consumer(), exceptionLogic);
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic)
+                .setMatchFoundLogic(matchFoundLogic).setExceptionLogic(exceptionLogic).build());
     }
 
     /**
@@ -205,12 +312,16 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher matchWithNoMatchLogic(final String pattern, final String text,
                                                 final Function<Matcher, Boolean> matchLogic,
                                                 final Consumer<Matcher> matchFoundLogic,
                                                 final Consumer<Matcher> noMatchFoundLogic) {
-        return matcher(pattern, text, matchLogic, matchFoundLogic, noMatchFoundLogic, NoOperation.consumer());
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(noMatchFoundLogic).build());
     }
 
     /**
@@ -225,14 +336,18 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
+     *
+     * @deprecated Use match(String, String, Function<Matcher, Boolean>, IRegExMatcherConfig) instead.
      */
+    @Deprecated
     public static Matcher matchWithNoMatchLogic(final String pattern, final String text,
                                                 final Function<Matcher, Boolean> matchLogic,
                                                 final Consumer<Matcher> matchFoundLogic,
                                                 final Consumer<Matcher> noMatchFoundLogic,
                                                 final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, matchLogic, matchFoundLogic,
-                noMatchFoundLogic, exceptionLogic);
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(noMatchFoundLogic)
+                .setExceptionLogic(exceptionLogic).build());
     }
 
     /**
@@ -253,7 +368,9 @@ final public class RegExMatcher {
                                        final Function<Matcher, Boolean> matchLogic,
                                        final Consumer<Matcher> matchFoundLogic,
                                        final Sink noMatchFoundLogic, final Consumer<RuntimeException> exceptionLogic) {
-        return matcher(pattern, text, matchLogic, matchFoundLogic, (___matcher) -> noMatchFoundLogic.plummet(), exceptionLogic);
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(matchLogic)
+                .setMatchFoundLogic(matchFoundLogic).setNoMatchFoundLogic(___matcher-> noMatchFoundLogic.plummet())
+                .setExceptionLogic(exceptionLogic).build());
     }
 
     /**

@@ -1,9 +1,11 @@
 package xyz.ronella.trivial.handy;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.decorator.Mutable;
+import xyz.ronella.trivial.handy.impl.MatcherConfig;
 
-import java.util.function.Consumer;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,9 +14,12 @@ public class RegExMatcherTest {
     @Test
     public void findMatchLogicFound() {
         var sbText = new StringBuilder();
-        RegExMatcher.findWithMatchLogic( "(\\w*)\\s(\\w*)", "Hello world",
-                (___matcher) -> sbText.append(___matcher.group(1)),
-                (___matcher) -> sbText.append("test"));
+
+        RegExMatcher.match( "(\\w*)\\s(\\w*)", "Hello world", MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> sbText.append(___matcher.group(1)))
+                .setExceptionLogic((___matcher) -> sbText.append("test"))
+                .build());
 
         assertEquals("Hello", sbText.toString());
     }
@@ -22,8 +27,11 @@ public class RegExMatcherTest {
     @Test
     public void findMatchLogicFoundOnly() {
         var sbText = new StringBuilder();
-        RegExMatcher.findWithMatchLogic("(\\w*)\\s(\\w*)", "Hello world",
-                (Consumer<Matcher>) (___matcher) -> sbText.append(___matcher.group(1)));
+
+        RegExMatcher.match("(\\w*)\\s(\\w*)", "Hello world", MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> sbText.append(___matcher.group(1)))
+                .build());
 
         assertEquals("Hello", sbText.toString());
     }
@@ -31,11 +39,14 @@ public class RegExMatcherTest {
     @Test
     public void findMatchLogicWithException() {
         var sbText = new StringBuilder();
-        RegExMatcher.findWithMatchLogic("(\\w*)\\s(\\w*)", "Hello world",
-                (___matcher) -> {
-                    throw new RuntimeException("Exception");
-                },
-                (___exception) -> sbText.append("Exception"));
+
+        RegExMatcher.match("(\\w*)\\s(\\w*)", "Hello world", MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> {
+                            throw new RuntimeException("Exception");
+                })
+                .setExceptionLogic((___exception) -> sbText.append("Exception"))
+                .build());
 
         assertEquals("Exception", sbText.toString());
     }
@@ -43,9 +54,11 @@ public class RegExMatcherTest {
     @Test
     public void findNoMatchLogicFound() {
         var sbText = new StringBuilder();
-        RegExMatcher.findWithNoMatchLogic("test","Hello world",
-                (___matcher) -> sbText.append(___matcher.group(1)),
-                (___matcher) -> sbText.append("test"));
+
+        RegExMatcher.match("test","Hello world", MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> sbText.append(___matcher.group(1)))
+                .setNoMatchFoundLogic((___matcher) -> sbText.append("test")).build());
 
         assertEquals("test", sbText.toString());
     }
@@ -53,13 +66,14 @@ public class RegExMatcherTest {
     @Test
     public void findRuntimeExceptionFound() {
         var sbText = new StringBuilder();
-        RegExMatcher.findWithNoMatchLogic("test","Hello world",
-                (___matcher) -> sbText.append(___matcher.group(1)),
-                (___matcher) -> {
+
+        RegExMatcher.match("test","Hello world", MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> sbText.append(___matcher.group(1)))
+                .setNoMatchFoundLogic((___matcher) -> {
                     throw new RuntimeException("Error test");
-                },
-                ___exception -> sbText.append(___exception.getMessage())
-        );
+                })
+                .setExceptionLogic(___exception -> sbText.append(___exception.getMessage())).build());
 
         assertEquals("Error test", sbText.toString());
     }
@@ -67,86 +81,45 @@ public class RegExMatcherTest {
 
     @Test
     public void findMatcherLogicFound() {
-        var matcher = RegExMatcher.find("(\\w*)\\s(\\w*)", "Hello world");
+        var matcher = RegExMatcher.match("(\\w*)\\s(\\w*)", "Hello world",
+                MatcherConfig.getBuilder().setMatchLogic(Matcher::find).build());
         assertEquals("Hello", matcher.group(1));
     }
 
     @Test
-    public void matchMatchLogicFound() {
-        var sbText = new StringBuilder();
-        RegExMatcher.matchWithMatchLogic( "(\\w*)\\s(\\w*)", "Hello world",
-                Matcher::find,
-                (___matcher) -> sbText.append(___matcher.group(1)),
-                (___matcher) -> sbText.append("test"));
-
-        assertEquals("Hello", sbText.toString());
+    public void findConvenienceMatcherLogicFound() {
+        var mutableString = new Mutable<>("");
+        RegExMatcher.find("(\\w*)\\s(\\w*)", "Hello world",
+                ___matcher -> mutableString.set(___matcher.group(1)));
+        assertEquals("Hello", mutableString.get());
     }
 
     @Test
-    public void matchMatchLogicFoundOnly() {
-        var sbText = new StringBuilder();
-        RegExMatcher.matchWithMatchLogic("(\\w*)\\s(\\w*)", "Hello world",
-                Matcher::find, (___matcher) -> sbText.append(___matcher.group(1)));
-
-        assertEquals("Hello", sbText.toString());
+    public void findConvenienceMatcherLogicFoundWithFlag() {
+        var mutableString = new Mutable<>("");
+        RegExMatcher.find("(\\w*)\\s(\\w*)", "Hello world", Pattern.MULTILINE,
+                ___matcher -> mutableString.set(___matcher.group(1)));
+        assertEquals("Hello", mutableString.get());
     }
 
     @Test
-    public void matchMatchLogicWithException() {
-        var sbText = new StringBuilder();
-        RegExMatcher.matchWithMatchLogic("(\\w*)\\s(\\w*)", "Hello world",
-                Matcher::find,
-                (___matcher) -> {
-                    throw new RuntimeException("Exception");
-                },
-                (___exception) -> sbText.append("Exception"));
-
-        assertEquals("Exception", sbText.toString());
-    }
-
-    @Test
-    public void matchNoMatchLogicFound() {
-        var sbText = new StringBuilder();
-        RegExMatcher.matchWithNoMatchLogic("test","Hello world",
-                Matcher::find,
-                (___matcher) -> sbText.append(___matcher.group(1)),
-                (___matcher) -> sbText.append("test"));
-
-        assertEquals("test", sbText.toString());
-    }
-
-    @Test
-    public void matchRuntimeExceptionFound() {
-        var sbText = new StringBuilder();
-        RegExMatcher.matchWithNoMatchLogic("test","Hello world",
-                Matcher::find,
-                (___matcher) -> sbText.append(___matcher.group(1)),
-                (___matcher) -> {
-                    throw new RuntimeException("Error test");
-                },
-                ___exception -> sbText.append(___exception.getMessage())
+    public void findConvenienceMatcherLogicNotFound() {
+        var mutableString = new Mutable<>("");
+        RegExMatcher.find("Test", "Hello world",
+                ___matcher -> mutableString.set(___matcher.group(1)),
+                ___matcher -> mutableString.set(___matcher.pattern().pattern())
         );
-
-        assertEquals("Error test", sbText.toString());
+        assertEquals("Test", mutableString.get());
     }
 
     @Test
-    public void matchMatcherLogicFound() {
-        var matcher = RegExMatcher.match("(\\w*)\\s(\\w*)", "Hello world", Matcher::find);
-        assertEquals("Hello", matcher.group(1));
-    }
-
-    @Test
-    public void matchExceptionFound() {
-        var sbText = new StringBuilder();
-        RegExMatcher.match("test","Hello world",
-                (___matcher) -> {
-                    throw new RuntimeException("Error test");
-                },
-                ___exception -> sbText.append(___exception.getMessage())
+    public void findConvenienceMatcherLogicNotFoundWithFlag() {
+        var mutableString = new Mutable<>("");
+        RegExMatcher.find("Test", "Hello world", Pattern.MULTILINE,
+                ___matcher -> mutableString.set(___matcher.group(1)),
+                ___matcher -> mutableString.set(___matcher.pattern().pattern())
         );
-
-        assertEquals("Error test", sbText.toString());
+        assertEquals("Test", mutableString.get());
     }
 
 }

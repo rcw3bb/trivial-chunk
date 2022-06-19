@@ -7,18 +7,18 @@
         Custom Rules
     </description>
 
-    <exclude-pattern>.*/StringBuilderAppender.*</exclude-pattern>
-    <exclude-pattern>.*/CommandRunner.*</exclude-pattern>
-    <exclude-pattern>.*/NPESilencer.*</exclude-pattern>
-    <exclude-pattern>.*/NoCommandException.*</exclude-pattern>
+    <exclude-pattern>.*/StringBuilderAppender\.java</exclude-pattern>
+    <exclude-pattern>.*/CommandRunner\.java</exclude-pattern>
+    <exclude-pattern>.*/NPESilencer\.java</exclude-pattern>
+    <exclude-pattern>.*/NoCommandException\.java</exclude-pattern>
     <exclude-pattern>.*/OSType.*</exclude-pattern>
-    <exclude-pattern>.*/RegExMatcher.*</exclude-pattern>
-    <exclude-pattern>.*/Require.*</exclude-pattern>
-    <exclude-pattern>.*/RequireAllException.*</exclude-pattern>
-    <exclude-pattern>.*/Sink.*</exclude-pattern>
-    <exclude-pattern>.*/Conditions.*</exclude-pattern>
-    <exclude-pattern>.*/CloseableLock.*</exclude-pattern>
-    <exclude-pattern>.*/ListAdder.*</exclude-pattern>
+    <exclude-pattern>.*/RegExMatcher\.java</exclude-pattern>
+    <exclude-pattern>.*/Require\.java</exclude-pattern>
+    <exclude-pattern>.*/RequireAllException\.java</exclude-pattern>
+    <exclude-pattern>.*/Sink\.java</exclude-pattern>
+    <exclude-pattern>.*/Conditions\.java</exclude-pattern>
+    <exclude-pattern>.*/CloseableLock\.java</exclude-pattern>
+    <exclude-pattern>.*/ListAdder\.java</exclude-pattern>
 
     <rule ref="category/java/bestpractices.xml" />
     <rule ref="category/java/codestyle.xml" >
@@ -29,6 +29,7 @@
     <rule ref="category/java/design.xml" >
         <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
+        <exclude name="DataClass"/>
     </rule>
     <rule ref="category/java/design.xml/TooManyMethods">
         <properties>
