@@ -122,4 +122,17 @@ public class RegExMatcherTest {
         assertEquals("Test", mutableString.get());
     }
 
+    @Test
+    public void findMatcherNoCustomLogic() {
+        var matcher = RegExMatcher.find("(\\w*)\\s(\\w*)", "Hello world");
+        assertEquals("Hello", matcher.group(1));
+    }
+
+    @Test
+    public void findMatcherNoCustomLogicWithFlags() {
+        var matcher = RegExMatcher.find("(\\w*)\\s(\\w*)", "Hello world", Pattern.MULTILINE);
+        assertEquals("Hello", matcher.group(1));
+    }
+
+
 }

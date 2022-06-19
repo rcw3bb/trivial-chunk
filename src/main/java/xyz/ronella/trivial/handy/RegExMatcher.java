@@ -55,12 +55,23 @@ final public class RegExMatcher {
      * @return An instance of Matcher.
      *
      * @since 2.6.0
-     *
-     * @deprecated Use match(String, String, IRegExMatcherConfig) instead.
      */
-    @Deprecated
     public static Matcher find(final String pattern, final String text) {
         return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find).build());
+    }
+
+    /**
+     * Find the RegEx from a text with pattern flags.
+     *
+     * @param pattern The RegEx pattern to find.
+     * @param text The text where to find the pattern.
+     * @param flags The pattern flags to use.
+     * @return An instance of Matcher.
+     *
+     * @since 2.11.0
+     */
+    public static Matcher find(final String pattern, final String text, final int flags) {
+        return match(pattern, text, MatcherConfig.getBuilder().setMatchLogic(Matcher::find).build(flags));
     }
 
     /**
