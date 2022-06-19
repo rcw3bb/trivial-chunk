@@ -2,7 +2,48 @@
 
 A handy class to match a RegEx pattern from a text.
 
-## The find methods
+## The IMatcherConfig Interface
+
+The implementation IMatcherConfig interface must be used to **configure the RegExMatcher.match method**.
+
+## The MatcherConfig class
+
+The MatcherConfig class is the **default implementation of IMatcherConfig Interface**. This can only be initialized using the following builder class:
+
+```
+MatcherConfig.MatcherConfigBuilder
+```
+
+## The MatcherConfigBuilder class
+
+The MatcherConfigBuilder is the only class that can create an instance of MatcherConfig.
+
+### Methods
+
+| Signatures                                                   |
+| ------------------------------------------------------------ |
+| public MatcherConfig **build**()                             |
+| public MatcherConfig **build**(final int **patternFlags**)   |
+| public MatcherConfigBuilder **setExceptionLogic**(final Consumer<RuntimeException> **exceptionLogic**) |
+| public MatcherConfigBuilder **setMatchFoundLogic**(final Consumer<Matcher>  **matchFoundLogic**) |
+| public MatcherConfigBuilder **setMatchLogic**(final Function<Matcher, Boolean> **matchLogic**) |
+| public MatcherConfigBuilder **setNoMatchFoundLogic**(final Consumer<Matcher>  **noMatchFoundLogic**) |
+
+> The **build methods** are the only methods that can create an instance of MatcherConfig .
+
+### Parameters
+
+| Parameter         | Description                           |
+| ----------------- | ------------------------------------- |
+| exceptionLogic    | Must hold the exception logic.        |
+| matchFoundLogic   | Must hold the matched found logic.    |
+| matchLogic        | Must hold the matching logic.         |
+| noMatchFoundLogic | Must hold the no matched found logic. |
+| patternFlags      | Must hold the pattern flags to use.   |
+
+## RegExMatcher Methods
+
+### The find methods
 
 These are the convenience methods with **Matcher.find()** as the default matching logic. 
 
@@ -11,30 +52,28 @@ All of these methods returns the instance of the Matcher that was used.
 | Signature                                                    |
 | ------------------------------------------------------------ |
 | public static Matcher **find**(String **pattern**, String **text**) |
-| public static Matcher **findWithMatchLogic**(String **pattern**, String **text**, Consumer<Matcher> **matchFoundLogic**) |
-| public static Matcher **findWithMatchLogic**(String **pattern**, String **text**, Consumer<Matcher> **matchFoundLogic**,                                          Consumer<RuntimeException> **exceptionLogic**) |
-| public static Matcher **findWithNoMatchLogic**(String **pattern**, String **text**, Consumer<Matcher> **matchFoundLogic**,                                            Consumer<Matcher> **noMatchFoundLogic**) |
-| public static Matcher **findWithNoMatchLogic**(String **pattern**, String **text, Consumer**<Matcher> **matchFoundLogic**,                                          Consumer<Matcher> **noMatchFoundLogic**, Consumer<RuntimeException> **exceptionLogic**) |
+| public static Matcher **find**(final String **pattern**, final String **text**, final Consumer<Matcher> **matchFoundLogic**) |
+| public static Matcher **find**(final String **pattern**, final String **text**, final Consumer<Matcher> **matchFoundLogic**, final Consumer<Matcher> **noMatchFoundLogic**) |
+| public static Matcher **find**(final String **pattern**, final String **text**, final int **flags**) |
+| public static Matcher **find**(final String **pattern**, final String **text**, final int **flags**,                            final Consumer<Matcher> **matchFoundLogic**) |
+| public static Matcher **find**(final String **pattern**, final String **text**, final int **flags**,                            final Consumer<Matcher> **matchFoundLogic**, final Consumer<Matcher> **noMatchFoundLogic**) |
 
-## The match methods
+### The match methods
 
-There are the methods that requires **matchLogic** be passed in. Use one of these if the matching logic is more than Matcher.find().
+These is the method that requires an implementation of **IMatcherConfig** be passed in. 
 
-All of these methods returns the instance of the Matcher that was used.
+This methods returns the instance of the Matcher that was used.
 
 | Signature                                                    |
 | ------------------------------------------------------------ |
-| public static Matcher **match**(String **pattern**, String **text**, Function<Matcher, Boolean> **matchLogic**) |
-| public static Matcher **match**(String **pattern**, String **text**, Function<Matcher, Boolean> **matchLogic**,                             Consumer<RuntimeException> **exceptionLogic**) |
-| public static Matcher **matchWithMatchLogic**(String **pattern**, String **text**, Function<Matcher, Boolean> **matchLogic**,                                           Consumer<Matcher> **matchFoundLogic**) |
-| public static Matcher **matchWithMatchLogic**(String **pattern**, String **text**, Function<Matcher, Boolean> **matchLogic**,                                           Consumer<Matcher> **matchFoundLogic**, Consumer<RuntimeException> **exceptionLogic**) |
-| public static Matcher **matchWithNoMatchLogic**(String **pattern**, String **text**, Function<Matcher, Boolean> **matchLogic**,                                             Consumer<Matcher> **matchFoundLogic**, Consumer<Matcher> **noMatchFoundLogic**) |
-| public static Matcher **matchWithNoMatchLogic**(String **pattern**, String **text**, Function<Matcher, Boolean> **matchLogic**,                                             Consumer<Matcher> **matchFoundLogic**, Consumer<Matcher> **noMatchFoundLogic**,                                       Consumer<RuntimeException> **exceptionLogic**) |
+| public static Matcher **match**(final String **pattern**, final String text, **final** IMatcherConfig **config**) |
 
-## Parameters
+### Parameters
 
 | Parameter         | Description                                                  |
 | ----------------- | ------------------------------------------------------------ |
+| config            | An **implementation of IMatcherConfig** that holds the configuration of RegExMatcher. |
+| flags             | The **pattern flags** to use when doing the matching *(e.g. Pattern.MULTILINE \| Pattern.CASE_INSENSITIVE)*. |
 | pattern           | The **regex pattern** to match.                              |
 | text              | The **text where to match** the pattern from.                |
 | matchLogic        | The **logic** to perform the matching. The find methods uses Matcher.find() by default. |
@@ -42,17 +81,10 @@ All of these methods returns the instance of the Matcher that was used.
 | noMatchFoundLogic | The **logic** that will be executed if the pattern was **not found**. |
 | exceptionLogic    | The **logic** that will be executed if a **RuntimeException was thrown** from **matchFoundLogic or noMatchFoundLogic logic**. |
 
-## Method suffixes
-
-| Suffix           | Description                                                  |
-| ---------------- | ------------------------------------------------------------ |
-| WithMatchLogic   | These are methods that **accept matched logic** by **matchFoundLogic parameter**. |
-| WithNoMatchLogic | There are methods that accept both **matched** and **non-matched logics** by the **matchFoundLogic and noMatchFoundLogic parameters**, respectively. |
-
 ## Sample usage
 
 ```java
-RegExMatcher.findWithMatchLogic("(\\w*)\\s(\\w*)", "Hello world",
+RegExMatcher.find("(\\w*)\\s(\\w*)", "Hello world",
         (___matcher) -> {
             System.out.printf("Pattern: %s%n", ___matcher.pattern().pattern());
             System.out.printf("Text: %s%n",___matcher.group(0));
