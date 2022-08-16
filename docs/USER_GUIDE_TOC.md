@@ -10,6 +10,7 @@
 * [CloseableLock](DEC_CLOSEABLE_LOCK.md)
 * [ListAdder](DEC_LIST_ADDER.md)
 * [Mutable](DEC_MUTABLE.md)
+* [OptionalString](DEC_OPTIONAL_STRING.md)
 * [StringBuilderAppender](DEC_SB_APPENDER.md)
 
 ### Functional

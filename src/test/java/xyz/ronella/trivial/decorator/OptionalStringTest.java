@@ -150,4 +150,13 @@ public class OptionalStringTest {
         assertEquals(expectedText, controlText.get());
     }
 
+    @Test
+    public void docSample() {
+        var text="NotBlank";
+        final var controlText = new Mutable<>("");
+        new OptionalString(Optional.of(text)).ifPresentNotBlank(___text -> controlText.set("NotBlank"));
+
+        System.out.println(controlText.get());
+    }
+
 }
