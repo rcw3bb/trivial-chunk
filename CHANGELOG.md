@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.12.0 : 2022-08-16
+
+### Added
+
+* Introduce OptionalString decorator.
+
 ## 2.11.0 : 2022-06-20
 
 ### Added
