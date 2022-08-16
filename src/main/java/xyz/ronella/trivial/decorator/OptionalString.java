@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 
 /**
  * A class that wraps an Optional instance of type String.
- * @param <T> An instance of String type.
  *
  * @author Ron Webb
  * @since 2.12.0
