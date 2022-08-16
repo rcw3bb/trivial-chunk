@@ -9,9 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OptionalStringTest {
 
     @Test
-    public void nullString() {
+    public void nullBlankString() {
         String text=null;
         assertTrue(new OptionalString(Optional.ofNullable(text)).isBlank());
+    }
+
+    @Test
+    public void nullEmptyString() {
+        String text=null;
+        assertTrue(new OptionalString(Optional.ofNullable(text)).isEmpty());
     }
 
     @Test
@@ -27,15 +33,27 @@ public class OptionalStringTest {
     }
 
     @Test
-    public void validString() {
+    public void validStringBlank() {
         String text="Test";
         assertFalse(new OptionalString(Optional.of(text)).isBlank());
     }
 
     @Test
-    public void validTestString() {
+    public void validTestStringBlank() {
         var text="Test";
         assertFalse(new OptionalString(Optional.of(text)).isBlank());
+    }
+
+    @Test
+    public void validStringEmpty() {
+        String text="Test";
+        assertFalse(new OptionalString(Optional.of(text)).isEmpty());
+    }
+
+    @Test
+    public void validTestStringEmpty() {
+        var text="Test";
+        assertFalse(new OptionalString(Optional.of(text)).isEmpty());
     }
 
     @Test
@@ -73,7 +91,7 @@ public class OptionalStringTest {
         var text="NotEmpty";
         final var controlText = new Mutable<>("");
         final var expectedText = "NotEmpty";
-        new OptionalString(Optional.of(text)).ifPresentNotBlank(___text -> controlText.set("NotEmpty"));
+        new OptionalString(Optional.of(text)).ifPresentNotEmpty(___text -> controlText.set("NotEmpty"));
 
         assertEquals(expectedText, controlText.get());
     }
