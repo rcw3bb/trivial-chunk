@@ -10,7 +10,6 @@
     <exclude-pattern>.*/StringBuilderAppender\.java</exclude-pattern>
     <exclude-pattern>.*/CommandRunner\.java</exclude-pattern>
     <exclude-pattern>.*/NPESilencer\.java</exclude-pattern>
-    <exclude-pattern>.*/NoCommandException\.java</exclude-pattern>
     <exclude-pattern>.*/OSType.*</exclude-pattern>
     <exclude-pattern>.*/RegExMatcher\.java</exclude-pattern>
     <exclude-pattern>.*/Require\.java</exclude-pattern>
@@ -25,6 +24,7 @@
         <exclude name="FormalParameterNamingConventions"/>
         <exclude name="LinguisticNaming"/>
         <exclude name="GenericsNaming"/>
+        <exclude name="UnnecessaryConstructor"/>
     </rule>
     <rule ref="category/java/design.xml" >
         <exclude name="LawOfDemeter"/>

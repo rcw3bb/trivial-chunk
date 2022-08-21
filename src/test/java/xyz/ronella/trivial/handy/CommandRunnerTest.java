@@ -28,7 +28,7 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void goodExitCode() throws NoCommandException, IOException {
+    public void goodExitCode() throws MissingCommandException, IOException {
         var process = Mockito.mock(Process.class);
         Mockito.when(process.getInputStream()).thenReturn(output);
         Mockito.when(process.getErrorStream()).thenReturn(error);
@@ -39,7 +39,7 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void badExitCode() throws NoCommandException, IOException {
+    public void badExitCode() throws MissingCommandException, IOException {
         var process = Mockito.mock(Process.class);
         Mockito.when(process.getInputStream()).thenReturn(output);
         Mockito.when(process.getErrorStream()).thenReturn(error);
@@ -50,7 +50,7 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void badExitCodeICommandArray() throws NoCommandException, IOException {
+    public void badExitCodeICommandArray() throws MissingCommandException, IOException {
         var process = Mockito.mock(Process.class);
         Mockito.when(process.getInputStream()).thenReturn(output);
         Mockito.when(process.getErrorStream()).thenReturn(error);
@@ -70,11 +70,11 @@ public class CommandRunnerTest {
         Mockito.when(process.exitValue()).thenReturn(CommandRunner.ERROR_EXIT_CODE);
 
         Mockito.when(builder.start()).thenReturn(process);
-        assertThrows(NoCommandException.class, () -> CommandRunner.runCommand(()-> builder));
+        assertThrows(MissingCommandException.class, () -> CommandRunner.runCommand(()-> builder));
     }
 
     @Test
-    public void outputTest() throws IOException, NoCommandException {
+    public void outputTest() throws IOException, MissingCommandException {
         var process = Mockito.mock(Process.class);
         var outputStream = new ByteArrayInputStream("Mocked output".getBytes());
         Mockito.when(process.getInputStream()).thenReturn(outputStream);
@@ -91,7 +91,7 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void outputTestICommandArray() throws IOException, NoCommandException {
+    public void outputTestICommandArray() throws IOException, MissingCommandException {
         var process = Mockito.mock(Process.class);
         var outputStream = new ByteArrayInputStream("Mocked output".getBytes());
         var command = CommandArray.getBuilder().setCommand("dummy").build();
@@ -109,7 +109,7 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void errorTest() throws IOException, NoCommandException {
+    public void errorTest() throws IOException, MissingCommandException {
         var process = Mockito.mock(Process.class);
         var errorStream = new ByteArrayInputStream("Mocked error".getBytes());
         Mockito.when(process.getInputStream()).thenReturn(output);
@@ -126,49 +126,49 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void ioException() throws NoCommandException {
+    public void ioException() throws MissingCommandException {
         assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand("dummy"));
     }
 
     @Test
-    public void ioExceptionICommandArray() throws NoCommandException {
+    public void ioExceptionICommandArray() throws MissingCommandException {
         var command = CommandArray.getBuilder().setCommand("dummy").build();
         assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand(command));
     }
 
     @Test
-    public void usingConsumer() throws NoCommandException {
+    public void usingConsumer() throws MissingCommandException {
         assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand(NoOperation.consumer(), "dummy"));
     }
 
     @Test
-    public void usingConsumerICommandArray() throws NoCommandException {
+    public void usingConsumerICommandArray() throws MissingCommandException {
         var command = CommandArray.getBuilder().setCommand("dummy").build();
         assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand(NoOperation.consumer(), command));
     }
 
     @Test
-    public void usingConsumerWithOutputLogic() throws NoCommandException {
+    public void usingConsumerWithOutputLogic() throws MissingCommandException {
         assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new,
                 NoOperation.biConsumer(), "dummy"));
     }
 
     @EnabledOnOs(OS.WINDOWS)
     @Test
-    public void defaultSuccessOutputLogic() throws NoCommandException {
+    public void defaultSuccessOutputLogic() throws MissingCommandException {
         assertEquals(0, CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, "where", "cmd"));
     }
 
     @EnabledOnOs(OS.WINDOWS)
     @Test
-    public void defaultSuccessOutputLogicICommandArray() throws NoCommandException {
+    public void defaultSuccessOutputLogicICommandArray() throws MissingCommandException {
         var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
         assertEquals(0, CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, command));
     }
 
     @EnabledOnOs(OS.WINDOWS)
     @Test
-    public void defaultErrorOutputLogic() throws NoCommandException {
+    public void defaultErrorOutputLogic() throws MissingCommandException {
         assertTrue(CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, "where", "dummy") > 0);
     }
 }

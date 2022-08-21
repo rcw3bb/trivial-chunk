@@ -51,9 +51,9 @@ public final class CommandRunner {
      * @param command              The commands to be executed.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      */
-    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,final String ... command) throws NoCommandException {
+    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,final String ... command) throws MissingCommandException {
         return runCommand(createProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
     }
 
@@ -64,11 +64,11 @@ public final class CommandRunner {
      * @param commandArray An implementation of ICommandArray.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      *
      * @since 2.10.0
      */
-    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder, final ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder, final ICommandArray commandArray) throws MissingCommandException {
         return runCommand(createProcessBuilder, DEFAULT_OUTPUT_LOGIC, commandArray.getCommand());
     }
 
@@ -79,9 +79,9 @@ public final class CommandRunner {
      * @param command             The commands to be executed.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      */
-    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final String ... command) throws NoCommandException {
+    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final String ... command) throws MissingCommandException {
         return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
     }
 
@@ -92,11 +92,11 @@ public final class CommandRunner {
      * @param commandArray An implementation of ICommandArray.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      *
      * @since 2.10.0
      */
-    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final ICommandArray commandArray) throws MissingCommandException {
         return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, commandArray);
     }
 
@@ -106,11 +106,11 @@ public final class CommandRunner {
      * @param commandArray An implementation of ICommandArray.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      *
      * @since 2.10.0
      */
-    public static int runCommand(final ICommandArray commandArray) throws NoCommandException {
+    public static int runCommand(final ICommandArray commandArray) throws MissingCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, commandArray.getCommand());
     }
     
@@ -120,9 +120,9 @@ public final class CommandRunner {
      * @param command The commands to be executed.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      */
-    public static int runCommand(final String ... command) throws NoCommandException {
+    public static int runCommand(final String ... command) throws MissingCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, command);
     }
 
@@ -133,9 +133,9 @@ public final class CommandRunner {
      * @param outputLogic Must hold the logic on dealing with the output and error result.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      */
-    public static int runCommand(final BiConsumer<InputStream, InputStream> outputLogic, final String ... command) throws NoCommandException {
+    public static int runCommand(final BiConsumer<InputStream, InputStream> outputLogic, final String ... command) throws MissingCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, command);
     }
 
@@ -146,12 +146,12 @@ public final class CommandRunner {
      * @param outputLogic Must hold the logic on dealing with the output and error result.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      *
      * @since 2.10.0
      */
     public static int runCommand(final BiConsumer<InputStream, InputStream> outputLogic,
-                                 final ICommandArray commandArray) throws NoCommandException {
+                                 final ICommandArray commandArray) throws MissingCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, commandArray);
     }
 
@@ -163,12 +163,12 @@ public final class CommandRunner {
      * @param command The commands to be executed.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      */
     public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder,
                                  final BiConsumer<InputStream, InputStream> outputLogic,
                                  final String ... command) throws
-            NoCommandException {
+            MissingCommandException {
 
         return runCommand(() -> {
             final var builder = new ProcessBuilder();
@@ -185,14 +185,14 @@ public final class CommandRunner {
      * @param commandArray An implementation of ICommandArray.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      *
      * @since 2.10.0
      */
     public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder,
                                  final BiConsumer<InputStream, InputStream> outputLogic,
                                  final ICommandArray commandArray) throws
-            NoCommandException {
+            MissingCommandException {
 
         return runCommand(initProcessBuilder, outputLogic, commandArray.getCommand());
 
@@ -206,14 +206,14 @@ public final class CommandRunner {
      * @param commandArray An implementation of ICommandArray.
      * @return The exit code after the completion of the process.
      *
-     * @throws NoCommandException Thrown with no command was passed.
+     * @throws MissingCommandException Thrown with no command was passed.
      *
      * @since 2.10.0
      */
     public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,
                                  final BiConsumer<InputStream, InputStream> outputLogic,
                                  final ICommandArray commandArray) throws
-            NoCommandException {
+            MissingCommandException {
         return runCommand(createProcessBuilder, outputLogic, commandArray.getCommand());
     }
 
@@ -225,16 +225,16 @@ public final class CommandRunner {
          * @param command The commands to be executed.
          * @return The exit code after the completion of the process.
          *
-         * @throws NoCommandException Thrown with no command was passed.
+         * @throws MissingCommandException Thrown with no command was passed.
          */
     public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,
                                  final BiConsumer<InputStream, InputStream> outputLogic,
                                  final String ... command) throws
-            NoCommandException {
+            MissingCommandException {
 
         try {
             if (command.length==0) {
-                throw new NoCommandException();
+                throw new MissingCommandException();
             }
 
             final var builder = Optional.of(createProcessBuilder.get()).orElse(new ProcessBuilder());
