@@ -12,6 +12,7 @@ public class CommandRunnerException extends Exception {
 
     /**
      * Creates an instance of CommandRunnerException.
+     * @param message The error message.
      */
     public CommandRunnerException(final String message) {
         super(message);
