@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.mockito.Mockito;
+import xyz.ronella.trivial.decorator.Mutable;
 import xyz.ronella.trivial.functional.NoOperation;
 import xyz.ronella.trivial.handy.impl.CommandArray;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -109,6 +111,22 @@ public class CommandRunnerTest {
     }
 
     @Test
+    public void outputTestICommandArrayProcess() throws IOException, MissingCommandException {
+        var command = CommandArray.getBuilder().setCommand("dummy").build();
+        var mOutput = new Mutable<>("");
+
+        var process = Mockito.mock(Process.class);
+        Mockito.when(process.exitValue()).thenReturn(0);
+
+        Mockito.when(builder.start()).thenReturn(process);
+        CommandRunner.startProcess(() -> builder, (___process) -> {
+            mOutput.set("Processed");
+        } ,command);
+
+        assertEquals("Processed", mOutput.get());
+    }
+
+    @Test
     public void errorTest() throws IOException, MissingCommandException {
         var process = Mockito.mock(Process.class);
         var errorStream = new ByteArrayInputStream("Mocked error".getBytes());
@@ -142,6 +160,11 @@ public class CommandRunnerTest {
     }
 
     @Test
+    public void usingConsumerStartProcess() throws MissingCommandException {
+        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.startProcess(NoOperation.consumer(), CommandArray.getBuilder().setCommand("dummy").build()));
+    }
+
+    @Test
     public void usingConsumerICommandArray() throws MissingCommandException {
         var command = CommandArray.getBuilder().setCommand("dummy").build();
         assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.runCommand(NoOperation.consumer(), command));
@@ -164,6 +187,44 @@ public class CommandRunnerTest {
     public void defaultSuccessOutputLogicICommandArray() throws MissingCommandException {
         var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
         assertEquals(0, CommandRunner.runCommand(CommandRunner.DEFAULT_OUTPUT_LOGIC, command));
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void defaultSuccessOutputLogicICommandArrayStartProcess() throws MissingCommandException {
+        var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
+        assertEquals(0, CommandRunner.startProcess((___process) -> {
+            var onExit = ___process.onExit();
+            onExit.thenAccept(____process -> {
+               if (____process.exitValue()!=0) {
+                   throw new RuntimeException("Error occurred");
+               }
+            });
+            try {
+                onExit.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }, command));
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void defaultSuccessOutputLogicICommandArrayStartProcess2() throws MissingCommandException {
+        var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
+        assertEquals(0, CommandRunner.startProcess(NoOperation.consumer(), (___process) -> {
+            var onExit = ___process.onExit();
+            onExit.thenAccept(____process -> {
+                if (____process.exitValue()!=0) {
+                    throw new RuntimeException("Error occurred");
+                }
+            });
+            try {
+                onExit.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }, command));
     }
 
     @EnabledOnOs(OS.WINDOWS)

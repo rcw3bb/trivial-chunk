@@ -1,5 +1,7 @@
 package xyz.ronella.trivial.handy;
 
+import xyz.ronella.trivial.functional.NoOperation;
+
 import java.io.*;
 import java.util.Optional;
 import java.util.Scanner;
@@ -80,6 +82,7 @@ public final class CommandRunner {
      * @return The exit code after the completion of the process.
      *
      * @throws MissingCommandException Thrown with no command was passed.
+     * @since 2.13.0
      */
     public static int runCommand(final Consumer<ProcessBuilder> initProcessBuilder, final String ... command) throws MissingCommandException {
         return runCommand(initProcessBuilder, DEFAULT_OUTPUT_LOGIC, command);
@@ -113,7 +116,7 @@ public final class CommandRunner {
     public static int runCommand(final ICommandArray commandArray) throws MissingCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, commandArray.getCommand());
     }
-    
+
     /**
      * Run the commands received.
      *
@@ -139,8 +142,10 @@ public final class CommandRunner {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, command);
     }
 
+
+
     /**
-     * Run the commands received.
+     * Start a process based on the command received.
      *
      * @param commandArray An implementation of ICommandArray.
      * @param outputLogic Must hold the logic on dealing with the output and error result.
@@ -153,6 +158,22 @@ public final class CommandRunner {
     public static int runCommand(final BiConsumer<InputStream, InputStream> outputLogic,
                                  final ICommandArray commandArray) throws MissingCommandException {
         return runCommand((Supplier<ProcessBuilder>) ProcessBuilder::new, outputLogic, commandArray);
+    }
+
+    /**
+     * Run the commands received.
+     *
+     * @param commandArray An implementation of ICommandArray.
+     * @param initProcess Manually initialize the instance of Process.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws MissingCommandException Thrown with no command was passed.
+     *
+     * @since 2.13.0
+     */
+    public static int startProcess(final Consumer<Process> initProcess,
+                                 final ICommandArray commandArray) throws MissingCommandException {
+        return startProcess((Supplier<ProcessBuilder>) ProcessBuilder::new, initProcess, commandArray);
     }
 
     /**
@@ -199,6 +220,31 @@ public final class CommandRunner {
     }
 
     /**
+     * Start a process based on the command received.
+     *
+     * @param initProcessBuilder Must hold the additional initialization logic for ProcessBuilder.
+     * @param initProcess Manually initialize the instance of Process.
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws MissingCommandException Thrown with no command was passed.
+     *
+     * @since 2.13.0
+     */
+    public static int startProcess(final Consumer<ProcessBuilder> initProcessBuilder,
+                                 final Consumer<Process> initProcess,
+                                 final ICommandArray commandArray) throws
+            MissingCommandException {
+
+        return startProcess(() -> {
+            final var builder = new ProcessBuilder();
+            initProcessBuilder.accept(builder);
+            return builder;
+        }, initProcess, NoOperation.biConsumer(), commandArray);
+
+    }
+
+    /**
      * Run the commands received.
      *
      * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
@@ -217,17 +263,46 @@ public final class CommandRunner {
         return runCommand(createProcessBuilder, outputLogic, commandArray.getCommand());
     }
 
-        /**
-         * Run the commands received.
-         *
-         * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
-         * @param outputLogic Must hold the logic on dealing with the output and error result.
-         * @param command The commands to be executed.
-         * @return The exit code after the completion of the process.
-         *
-         * @throws MissingCommandException Thrown with no command was passed.
-         */
+    /**
+     * Start a process based on the command received.
+     *
+     * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+     * @param initProcess Manually initialize the instance of Process.
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws MissingCommandException Thrown with no command was passed.
+     *
+     * @since 2.13.0
+     */
+    public static int startProcess(final Supplier<ProcessBuilder> createProcessBuilder,
+                                 final Consumer<Process> initProcess,
+                                 final ICommandArray commandArray) throws
+            MissingCommandException {
+        return startProcess(createProcessBuilder, initProcess, NoOperation.biConsumer(),
+                commandArray);
+    }
+
+    /**
+     * Run the commands received.
+     *
+     * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+     * @param outputLogic Must hold the logic on dealing with the output and error result.
+     * @param command The commands to be executed.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws MissingCommandException Thrown with no command was passed.
+     */
     public static int runCommand(final Supplier<ProcessBuilder> createProcessBuilder,
+                                 final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final String ... command) throws
+            MissingCommandException {
+
+        return processor(createProcessBuilder, NoOperation.consumer(), outputLogic, command);
+    }
+
+    private static int processor(final Supplier<ProcessBuilder> createProcessBuilder,
+                                 final Consumer<Process> initProcess,
                                  final BiConsumer<InputStream, InputStream> outputLogic,
                                  final String ... command) throws
             MissingCommandException {
@@ -241,6 +316,7 @@ public final class CommandRunner {
             builder.command(command);
 
             final var process = builder.start();
+            initProcess.accept(process);
             try (var output = process.getInputStream();
                  var error = process.getErrorStream()) {
                 outputLogic.accept(output, error);
@@ -252,6 +328,28 @@ public final class CommandRunner {
             System.err.println(ioe.getMessage());
             return ERROR_EXIT_CODE;
         }
+    }
+
+    /**
+     * Start a process based on the command received.
+     *
+     * @param createProcessBuilder Manually creates an instance of ProcessBuilder.
+     * @param initProcess Manually initialize the instance of Process.
+     * @param outputLogic Must hold the logic on dealing with the output and error result.
+     * @param commandArray An implementation of ICommandArray.
+     * @return The exit code after the completion of the process.
+     *
+     * @throws MissingCommandException Thrown with no command was passed.
+     *
+     * @since 2.13.0
+     */
+    public static int startProcess
+    (final Supplier<ProcessBuilder> createProcessBuilder,
+                                 final Consumer<Process> initProcess,
+                                 final BiConsumer<InputStream, InputStream> outputLogic,
+                                 final ICommandArray commandArray) throws
+            MissingCommandException {
+        return processor(createProcessBuilder, initProcess, outputLogic, commandArray.getCommand());
     }
 
 }
