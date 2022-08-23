@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.13.0 : 2022-08-23
+
+### Added
+
+* Update the CommandRunner to have access to the Process object via the startProcess method.
+
 ## 2.12.0 : 2022-08-16
 
 ### Added
