@@ -111,7 +111,7 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void outputTestICommandArrayProcess() throws IOException, MissingCommandException {
+    public void outputTestICommandArrayProcess() throws IOException, MissingCommandException, CommandRunnerException {
         var command = CommandArray.getBuilder().setCommand("dummy").build();
         var mOutput = new Mutable<>("");
 
@@ -160,8 +160,11 @@ public class CommandRunnerTest {
     }
 
     @Test
-    public void usingConsumerStartProcess() throws MissingCommandException {
-        assertEquals(CommandRunner.ERROR_EXIT_CODE, CommandRunner.startProcess(NoOperation.consumer(), CommandArray.getBuilder().setCommand("dummy").build()));
+    public void usingConsumerStartProcess() {
+        assertThrows(CommandRunnerException.class, () -> {
+            CommandRunner.startProcess(NoOperation.consumer(),
+                    CommandArray.getBuilder().setCommand("dummy").build());
+        });
     }
 
     @Test
@@ -191,7 +194,7 @@ public class CommandRunnerTest {
 
     @EnabledOnOs(OS.WINDOWS)
     @Test
-    public void defaultSuccessOutputLogicICommandArrayStartProcess() throws MissingCommandException {
+    public void defaultSuccessOutputLogicICommandArrayStartProcess() throws MissingCommandException, CommandRunnerException {
         var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
         assertEquals(0, CommandRunner.startProcess((___process) -> {
             var onExit = ___process.onExit();
@@ -205,12 +208,19 @@ public class CommandRunnerTest {
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
-        }, command));
+        }, command).exitValue());
     }
 
     @EnabledOnOs(OS.WINDOWS)
     @Test
-    public void defaultSuccessOutputLogicICommandArrayStartProcess2() throws MissingCommandException {
+    public void startProcess() throws MissingCommandException, CommandRunnerException, ExecutionException, InterruptedException {
+        var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
+        assertEquals(0, CommandRunner.startProcess(command).onExit().get().exitValue());
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void defaultSuccessOutputLogicICommandArrayStartProcess2() throws MissingCommandException, CommandRunnerException {
         var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
         assertEquals(0, CommandRunner.startProcess(NoOperation.consumer(), (___process) -> {
             var onExit = ___process.onExit();
@@ -224,7 +234,7 @@ public class CommandRunnerTest {
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
-        }, command));
+        }, command).exitValue());
     }
 
     @EnabledOnOs(OS.WINDOWS)
