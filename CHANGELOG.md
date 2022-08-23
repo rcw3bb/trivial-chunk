@@ -1,6 +1,12 @@
 # Changelog
 
-## 2.13.0 : 2022-08-23
+## 2.13.1 : 2022-08-24
+
+### Changed
+
+* Update the variants of startProcess  to return an instance of Process.
+
+## 2.13.0 : 2022-08-23 *(Do not use)*
 
 ### Added
 
