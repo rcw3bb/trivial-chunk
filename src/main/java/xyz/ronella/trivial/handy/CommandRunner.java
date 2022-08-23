@@ -257,7 +257,7 @@ public final class CommandRunner {
             final var builder = new ProcessBuilder();
             initProcessBuilder.accept(builder);
             return builder;
-        }, initProcess, NoOperation.biConsumer(), commandArray);
+        }, initProcess, DEFAULT_OUTPUT_LOGIC, commandArray);
 
     }
 
@@ -296,7 +296,7 @@ public final class CommandRunner {
                                  final Consumer<Process> initProcess,
                                  final ICommandArray commandArray) throws
             MissingCommandException, CommandRunnerException {
-        return startProcess(createProcessBuilder, initProcess, NoOperation.biConsumer(),
+        return startProcess(createProcessBuilder, initProcess, DEFAULT_OUTPUT_LOGIC,
                 commandArray);
     }
 

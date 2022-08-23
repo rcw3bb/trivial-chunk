@@ -113,9 +113,12 @@ public class CommandRunnerTest {
     @Test
     public void outputTestICommandArrayProcess() throws IOException, MissingCommandException, CommandRunnerException {
         var command = CommandArray.getBuilder().setCommand("dummy").build();
+        var outputStream = new ByteArrayInputStream("Mocked output".getBytes());
         var mOutput = new Mutable<>("");
 
         var process = Mockito.mock(Process.class);
+        Mockito.when(process.getInputStream()).thenReturn(outputStream);
+        Mockito.when(process.getErrorStream()).thenReturn(error);
         Mockito.when(process.exitValue()).thenReturn(0);
 
         Mockito.when(builder.start()).thenReturn(process);
@@ -216,6 +219,17 @@ public class CommandRunnerTest {
     public void startProcess() throws MissingCommandException, CommandRunnerException, ExecutionException, InterruptedException {
         var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
         assertEquals(0, CommandRunner.startProcess(command).onExit().get().exitValue());
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void docStartProcess() {
+        var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
+        try {
+            CommandRunner.startProcess(command).onExit().get().exitValue();
+        } catch (InterruptedException | ExecutionException | MissingCommandException | CommandRunnerException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @EnabledOnOs(OS.WINDOWS)
