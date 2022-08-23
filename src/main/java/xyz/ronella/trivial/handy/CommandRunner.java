@@ -343,8 +343,7 @@ public final class CommandRunner {
      *
      * @since 2.13.0
      */
-    public static int startProcess
-    (final Supplier<ProcessBuilder> createProcessBuilder,
+    public static int startProcess(final Supplier<ProcessBuilder> createProcessBuilder,
                                  final Consumer<Process> initProcess,
                                  final BiConsumer<InputStream, InputStream> outputLogic,
                                  final ICommandArray commandArray) throws
