@@ -70,47 +70,54 @@ This is the only class can can **create an instance of CommandArray**.
 | addPArg/addPArgs | Use this to add argument(s) to the program.                  |
 | addZArg/addZArgs | Use this to add argument(s) that will become available after the argument(s) added to the command. |
 
-## The runCommand Method
+## The runCommand and startProcess Methods
 
 Any variant of **runCommand** method is responsible for creating a process based on the command passed to it. 
+
+Any variant of **startProcess** methods behaves like the runCommand method with an exception that you have **access to the Process object**.
 
 This method will return the **exit code** of the completed process.
 
 | Signature                                                    |
 | ------------------------------------------------------------ |
-| public static int **runCommand**(BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray commandArray) throws NoCommandException |
-| public static int **runCommand**(BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws NoCommandException |
-| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws NoCommandException |
-| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws  NoCommandException |
-| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, ICommandArray **commandArray**) throws NoCommandException |
-| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, String ... **command**) throws NoCommandException |
-| public static int **runCommand**(ICommandArray **commandArray**) throws NoCommandException |
-| public static int **runCommand**(String... **command**) throws NoCommandException |
-| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws  NoCommandException |
-| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws NoCommandException |
-| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, ICommandArray **commandArray**) throws NoCommandException |
-| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, String... **command**) throws NoCommandException |
+| public static int **runCommand**(BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray commandArray) throws MissingCommandException |
+| public static int **runCommand**(BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws MissingCommandException |
+| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws  MissingCommandException |
+| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **runCommand**(Consumer<ProcessBuilder> **initProcessBuilder**, String ... **command**) throws MissingCommandException |
+| public static int **runCommand**(ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **runCommand**(String... **command**) throws MissingCommandException |
+| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws  MissingCommandException |
+| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws MissingCommandException |
+| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, String... **command**) throws MissingCommandException |
+| public static int **startProcess**(Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **startProcess**(Consumer<ProcessBuilder> **initProcessBuilder**, Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **startProcess**(Supplier<ProcessBuilder> **createProcessBuilder**, Consumer<Process> **initProcess**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **startProcess**(Supplier<ProcessBuilder> **createProcessBuilder**, Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException |
 
 ### Parameters
 
 | Parameter            | Description                                                  |
 | -------------------- | ------------------------------------------------------------ |
-| command              | This is the parameter that is common to all the runCommand methods variant. Emptiness of this will throw NoCommandException. <br /><br />This parameter must **have the command** from which the process will be based on. |
+| command              | This is the parameter that is common to all the runCommand and startProcess methods variant. Emptiness of this will throw MissingCommandException. <br /><br />This parameter must **have the command** from which the process will be based on. |
 | commandArray         | An **implementation of ICommandArray interface**.            |
 | createProcessBuilder | This parameter allows you to **create an instance of a ProcessBuilder** that will be used to generate an instance of Process. |
-| initProcessBuilder   | This parameter allows you to **add more initialization on the ProcessBuilder** that the runCommand provided. |
+| initProcess          | This parameter allows you to **add more initialization on the Process object**. |
+| initProcessBuilder   | This parameter allows you to **add more initialization on the ProcessBuilder**. |
 | outputLogic          | This parameter allows you to **capture the input and error streams** of the process. |
 
 ### Fields
 
 | Field                | Description                                                  |
 | -------------------- | ------------------------------------------------------------ |
-| DEFAULT_OUTPUT_LOGIC | For all the runCommand variants without the outputLogic parameter this is the logic used.<br /><br />The output logic is just **printing out the output and error string**. |
+| DEFAULT_OUTPUT_LOGIC | For all the runCommand and startProcess variants without the outputLogic parameter this is the logic used.<br /><br />The output logic is just **printing out the output and error string**. |
 | ERROR_EXIT_CODE      | The one being **returned by the runCommand** if an **IOException was throw** when starting the process. |
 
-### NoCommandException
+### MissingCommandException
 
-The NoCommandException is being thrown if there is no command to create a process from.
+The MissingCommandException is being thrown if there is no command to create a process from.
 
 ## Sample Usage
 
@@ -121,7 +128,7 @@ try {
             addArgs("cmd").
             build();
     CommandRunner.runCommand(command);
-} catch (NoCommandException e) {
+} catch (MissingCommandException e) {
     e.printStackTrace();
 }
 ```
