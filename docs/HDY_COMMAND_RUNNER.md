@@ -72,11 +72,9 @@ This is the only class can can **create an instance of CommandArray**.
 
 ## The runCommand and startProcess Methods
 
-Any variant of **runCommand** method is responsible for creating a process based on the command passed to it. 
+Any variant of **runCommand** method is responsible for creating a process based on the command passed to it. This method will return the **exit code** of the completed process.
 
-Any variant of **startProcess** methods behaves like the runCommand method with an exception that you have **access to the Process object**.
-
-This method will return the **exit code** of the completed process.
+Any variant of **startProcess** methods behaves like the runCommand method with an exception that you have **access to the Process object** and returns an **instance of Process**.
 
 | Signature                                                    |
 | ------------------------------------------------------------ |
@@ -92,10 +90,11 @@ This method will return the **exit code** of the completed process.
 | public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, BiConsumer<InputStream, InputStream> **outputLogic**, String ... **command**) throws MissingCommandException |
 | public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, ICommandArray **commandArray**) throws MissingCommandException |
 | public static int **runCommand**(Supplier<ProcessBuilder> **createProcessBuilder**, String... **command**) throws MissingCommandException |
-| public static int **startProcess**(Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException |
-| public static int **startProcess**(Consumer<ProcessBuilder> **initProcessBuilder**, Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException |
-| public static int **startProcess**(Supplier<ProcessBuilder> **createProcessBuilder**, Consumer<Process> **initProcess**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws MissingCommandException |
-| public static int **startProcess**(Supplier<ProcessBuilder> **createProcessBuilder**, Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException |
+| public static int **startProcess**(Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException, CommandRunnerException |
+| public static int **startProcess**(Consumer<ProcessBuilder> **initProcessBuilder**, Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException, CommandRunnerException |
+| public static Process **startProcess**(ICommandArray **commandArray**) throws MissingCommandException, CommandRunnerException |
+| public static int **startProcess**(Supplier<ProcessBuilder> **createProcessBuilder**, Consumer<Process> **initProcess**, BiConsumer<InputStream, InputStream> **outputLogic**, ICommandArray **commandArray**) throws MissingCommandException, CommandRunnerException |
+| public static int **startProcess**(Supplier<ProcessBuilder> **createProcessBuilder**, Consumer<Process> **initProcess**, ICommandArray **commandArray**) throws MissingCommandException, CommandRunnerException |
 
 ### Parameters
 
@@ -115,18 +114,21 @@ This method will return the **exit code** of the completed process.
 | DEFAULT_OUTPUT_LOGIC | For all the runCommand and startProcess variants without the outputLogic parameter this is the logic used.<br /><br />The output logic is just **printing out the output and error string**. |
 | ERROR_EXIT_CODE      | The one being **returned by the runCommand** if an **IOException was throw** when starting the process. |
 
+### CommandRunnerException
+
+The CommandRunnerException must be handled for any variant of startProcess methods.
+
 ### MissingCommandException
 
 The MissingCommandException is being thrown if there is no command to create a process from.
 
 ## Sample Usage
 
+### Simple usage of runCommand
+
 ```java
 try {
-    var command = CommandArray.getBuilder().
-            setProgram("where").
-            addArgs("cmd").
-            build();
+    var command = CommandArray.getBuilder().setProgram("where").addArgs("cmd").build();
     CommandRunner.runCommand(command);
 } catch (MissingCommandException e) {
     e.printStackTrace();
@@ -138,5 +140,24 @@ try {
 ```
 C:\Windows\System32\cmd.exe
 ```
+
+### Simple usage of startProcess
+
+```java
+var command = CommandArray.getBuilder().setCommand("where").addArg("cmd").build();
+try {
+    CommandRunner.startProcess(command).onExit().get().exitValue();
+} catch (InterruptedException | ExecutionException | MissingCommandException | CommandRunnerException e) {
+    throw new RuntimeException(e);
+}
+```
+
+**Expected Output**
+
+```
+C:\Windows\System32\cmd.exe
+```
+
+
 
 [Table of Contents](USER_GUIDE_TOC.md)
