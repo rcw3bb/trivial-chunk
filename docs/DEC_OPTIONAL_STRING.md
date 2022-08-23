@@ -36,7 +36,7 @@ A decorator for Optional of type String that gives more string specific simplifi
 ```java
 var text="NotBlank";
 final var controlText = new Mutable<>("");
-new OptionalString(Optional.of(text)).ifPresentNotBlank(___text -> controlText.set("NotBlank"));
+new OptionalString(Optional.of(text)).ifPresentNotBlank(controlText::set);
 
 System.out.println(controlText.get());
 ```

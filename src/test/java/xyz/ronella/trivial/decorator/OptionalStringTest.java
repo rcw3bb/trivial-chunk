@@ -172,7 +172,7 @@ public class OptionalStringTest {
     public void docSample() {
         var text="NotBlank";
         final var controlText = new Mutable<>("");
-        new OptionalString(Optional.of(text)).ifPresentNotBlank(___text -> controlText.set("NotBlank"));
+        new OptionalString(Optional.of(text)).ifPresentNotBlank(controlText::set);
 
         System.out.println(controlText.get());
     }
