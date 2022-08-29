@@ -39,6 +39,7 @@ final public class PathFinder {
     /**
      * The InputStream of the resolved file.
      * @param process The logic to process the InputStream.
+     * @throws IOException Thrown if there's an issue creating an instance of InputStream.
      */
     public void processInputStream(final Consumer<InputStream> process) throws IOException {
         var optInputStream = Optional.<InputStream>empty();
