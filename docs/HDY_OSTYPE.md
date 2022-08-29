@@ -1,6 +1,6 @@
 ## OSType Enumeration
 
-An enumeration of that contains the following:
+An enumeration of OSes as follows:
 
 | Enum           | Description             |
 | -------------- | ----------------------- |
