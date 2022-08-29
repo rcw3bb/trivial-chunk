@@ -23,6 +23,7 @@
 * [LogicMapper](HDY_LOGIC_MAPPER.md)
 * [NPESilencer](HDY_NPE_SILENCER.md)
 * [OSType](HDY_OSTYPE.md)
+* [PathFinder](HDY_PATH_FINDER.md)
 * [RegExMatcher](HDY_REGEX_MATCHER.md)
 * [Require](HDY_REQUIRE_CLASS.md)
 * [BooleanSupplierKeyedMapExecutor](HDY_BOOLEAN_KEY_MAP_EXEC.md)

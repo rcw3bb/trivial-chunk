@@ -54,13 +54,13 @@ This is the only class can can **create an instance of CommandArray**.
 
 #### Parameters
 
-|         |                                                              |
-| ------- | ------------------------------------------------------------ |
-| arg     | The argument to be added.                                    |
-| args    | The collection of arguments to be added.                     |
-| command | The command for the program.                                 |
-| program | The program to execute.                                      |
-| when    | The logic to must return true for the argument(s) to be added. |
+| Parameter | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| arg       | The argument to be added.                                    |
+| args      | The collection of arguments to be added.                     |
+| command   | The command for the program.                                 |
+| program   | The program to execute.                                      |
+| when      | The logic to must return true for the argument(s) to be added. |
 
 ### Usage of Add Methods
 
