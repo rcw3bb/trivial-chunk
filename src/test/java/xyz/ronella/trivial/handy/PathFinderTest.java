@@ -103,7 +103,16 @@ public class PathFinderTest {
     }
 
     @Test
-    public void docTest() throws IOException {
+    public void docTest1() throws IOException {
+final var pathFinder = PathFinder.getBuilder("test2.txt")
+        .addPaths(List.of("src/test/resources/pathfinder/dir1", "src/test/resources/pathfinder"))
+        .build();
+final var file = pathFinder.getFile().get();
+System.out.println(file.getAbsolutePath());
+    }
+
+    @Test
+    public void docTest2() throws IOException {
         final var pathFinder = PathFinder.getBuilder("module-info.class")
                 .setFallbackToClassloader(true)
                 .build();

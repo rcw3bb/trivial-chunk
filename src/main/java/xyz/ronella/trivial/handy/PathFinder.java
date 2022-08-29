@@ -72,7 +72,7 @@ final public class PathFinder {
 
         private final String filename;
         private final List<File> files;
-        public boolean fallbackToCL;
+        private boolean fallbackToCL;
 
         private PathFinderBuilder(final String filename) {
             this.filename = filename;
