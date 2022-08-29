@@ -14,7 +14,7 @@ A library of trivial codes.
    | ----------- | ------------------ |
    | Group ID    | xyz.ronella.casual |
    | Artifact ID | trivial-chunk      |
-   | Version     | 2.13.1             |
+   | Version     | 2.14.0            |
 
    > Using gradle, this can be added as a dependency entry like the following:
    >

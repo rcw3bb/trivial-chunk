@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.14.0 : 2022-08-29
+
+### Added
+
+* Introduce a handy PathFinder.
+
 ## 2.13.1 : 2022-08-24
 
 ### Changed
