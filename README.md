@@ -19,7 +19,7 @@ A library of trivial codes.
    > Using gradle, this can be added as a dependency entry like the following:
    >
    > ```groovy
-   > implementation 'xyz.ronella.casual:trivial-chunk:2.13.1'
+   > implementation 'xyz.ronella.casual:trivial-chunk:2.14.0'
    > ```
    >
    
