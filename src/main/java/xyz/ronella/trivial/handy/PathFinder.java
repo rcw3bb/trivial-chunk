@@ -37,11 +37,26 @@ final public class PathFinder {
     }
 
     /**
-     * The InputStream of the resolved file.
+     * The InputStream of the resolved file. This method can use the ClassLoader as fallback.
      * @param process The logic to process the InputStream.
      * @throws IOException Thrown if there's an issue creating an instance of InputStream.
      */
     public void processInputStream(final Consumer<InputStream> process) throws IOException {
+        final var optInputStream = getInputStream();
+
+        if (optInputStream.isPresent()) {
+            try(var inputStream = optInputStream.get()) {
+                process.accept(inputStream);
+            }
+        }
+    }
+
+    /**
+     * Find the first existence of the file as InputStream. This method can use the ClassLoader as fallback.
+     * @return The InputStream of the file.
+     * @since 2.15.0
+     */
+    public Optional<InputStream> getInputStream() throws IOException {
         var optInputStream = Optional.<InputStream>empty();
 
         if (getFile().isPresent()) {
@@ -49,12 +64,7 @@ final public class PathFinder {
         } else if (fallbackToCL) {
             optInputStream = Optional.ofNullable(ClassLoader.getSystemResourceAsStream(filename));
         }
-
-        if (optInputStream.isPresent()) {
-            try(var inputStream = optInputStream.get()) {
-                process.accept(inputStream);
-            }
-        }
+        return optInputStream;
     }
 
     /**

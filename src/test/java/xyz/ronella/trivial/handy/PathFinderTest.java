@@ -92,6 +92,15 @@ public class PathFinderTest {
     }
 
     @Test
+    public void fileISDoesExistsWithCL() throws IOException {
+        final var pathFinder = PathFinder.getBuilder("module-info.class")
+                .setFallbackToClassloader(true)
+                .build();
+        final var inputStream = pathFinder.getInputStream();
+        assertTrue(inputStream.isPresent());
+    }
+
+    @Test
     public void fileDoesExistsInPath() throws IOException {
         final var pathFinder = PathFinder.getBuilder("test.txt")
                 .addPaths("src/test/resources/pathfinder/dir1")
@@ -103,12 +112,22 @@ public class PathFinderTest {
     }
 
     @Test
+    public void fileISDoesExistsInPath() throws IOException {
+        final var pathFinder = PathFinder.getBuilder("test.txt")
+                .addPaths("src/test/resources/pathfinder/dir1")
+                .setFallbackToClassloader(true)
+                .build();
+        final var inputStream = pathFinder.getInputStream();
+        assertTrue(inputStream.isPresent());
+    }
+
+    @Test
     public void docTest1() throws IOException {
-final var pathFinder = PathFinder.getBuilder("test2.txt")
-        .addPaths(List.of("src/test/resources/pathfinder/dir1", "src/test/resources/pathfinder"))
-        .build();
-final var file = pathFinder.getFile().get();
-System.out.println(file.getAbsolutePath());
+        final var pathFinder = PathFinder.getBuilder("test2.txt")
+                .addPaths(List.of("src/test/resources/pathfinder/dir1", "src/test/resources/pathfinder"))
+                .build();
+        final var file = pathFinder.getFile().get();
+        System.out.println(file.getAbsolutePath());
     }
 
     @Test
