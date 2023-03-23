@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.15.0 : 2023-03-24
+
+### Added
+
+* Add getInputStream to PathFinder.
+
 ## 2.14.0 : 2022-08-29
 
 ### Added

@@ -13,9 +13,17 @@ The getFile() method will return the first existence of the file based on the su
 |------|
 | public Optional<File> getFile() |
 
+#### getInputStream() Method
+
+The getInputStream() method will return the first existence of the file InputStream based on the supplied paths using the builder class. This method can fallback to ClassLoader when indicated using setFallbackToClassloader method.
+
+| Signature                                                    |
+| ------------------------------------------------------------ |
+| public Optional<InputStream> getInputStream() throws IOException |
+
 #### processInputStream Method
 
-The processInputStream is the method to use for supplying a logic for processing the file InputStream. 
+The processInputStream is the method to use for supplying a logic for processing the file InputStream.  This method can fallback to ClassLoader when indicated using setFallbackToClassloader method.
 
 | Signature |
 |------|
@@ -43,7 +51,7 @@ PathFinder.getBuilder(<filename>)
 | Parameter    | Description                                                  |
 | ------------ | ------------------------------------------------------------ |
 | dirs         | The a list or array of directories where to find the file existence. |
-| fallbackToCL | If you are using the PathFinder.processInputStream() method, you can use this to also check the ClassLoader for the existence of the file. |
+| fallbackToCL | If you are using the PathFinder.processInputStream() or PathFinder.getInputStream method, you can use this to also check the ClassLoader for the existence of the file. |
 
 ## Sample Usage
 
@@ -58,6 +66,18 @@ System.out.println(file.getAbsolutePath());
 ```
 
 > This will return the file in dir1 if it exists there otherwise it will return the file in pathfinder directory if it exists.
+
+### Usage of getInputStream method
+
+```java
+final var pathFinder = PathFinder.getBuilder("test2.txt")
+        .addPaths(List.of("src/test/resources/pathfinder/dir1", "src/test/resources/pathfinder"))
+        .build();
+final var inputStream = pathFinder.getInputStream().get();
+System.out.println(inputStream);
+```
+
+> This will return the file InputStream in dir1 if it exists there otherwise it will return the file InputStream in pathfinder directory if it exists.
 
 ### Usage of processInputStream method
 

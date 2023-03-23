@@ -137,4 +137,13 @@ public class PathFinderTest {
                 .build();
         pathFinder.processInputStream(System.out::println);
     }
+
+    @Test
+    public void docTest3() throws IOException {
+        final var pathFinder = PathFinder.getBuilder("test2.txt")
+                .addPaths(List.of("src/test/resources/pathfinder/dir1", "src/test/resources/pathfinder"))
+                .build();
+        final var inputStream = pathFinder.getInputStream().get();
+        System.out.println(inputStream);
+    }
 }
