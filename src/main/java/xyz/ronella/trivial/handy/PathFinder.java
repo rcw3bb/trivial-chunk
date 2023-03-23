@@ -54,6 +54,7 @@ final public class PathFinder {
     /**
      * Find the first existence of the file as InputStream. This method can use the ClassLoader as fallback.
      * @return The InputStream of the file.
+     * @throws IOException Thrown if there's an issue creating an instance of InputStream.
      * @since 2.15.0
      */
     public Optional<InputStream> getInputStream() throws IOException {
