@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'xyz.ronella.casual'
-version '2.14.0'
+version '2.15.0-SNAPSHOT'
 
 sourceCompatibility = 1.11
 
