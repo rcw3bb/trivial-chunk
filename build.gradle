@@ -6,6 +6,7 @@ plugins {
     id 'signing'
     id 'jacoco'
     id 'pmd'
+    id "io.snyk.gradle.plugin.snykplugin" version "0.4"
 }
 
 group 'xyz.ronella.casual'
@@ -19,6 +20,14 @@ pmd {
     rulesMinimumPriority = 5
     ruleSetFiles = files('config/pmd/custom.xml')
     ruleSets = []
+}
+
+snyk {
+    arguments = '--all-sub-projects'
+    severity = 'low'
+    api = "${snykToken}"
+    autoDownload = true
+    autoUpdate = true
 }
 
 repositories {
