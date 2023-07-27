@@ -1,7 +1,5 @@
 package xyz.ronella.trivial.decorator;
 
-import xyz.ronella.trivial.functional.LogicalAnd;
-
 import java.math.BigDecimal;
 
 /**
@@ -72,7 +70,21 @@ public class BigDecimalPlus {
      * @param firstNumber The firstNumber to where the decorated BigDecimal must be greater.
      * @return Return An instance of LogicalAnd that accepts the secondNumber where the decorated BigDecimal must be less than.
      */
-    public LogicalAnd<BigDecimal> between(final BigDecimal firstNumber) {
+    public LogicalAND between(final BigDecimal firstNumber) {
         return (___secondNumber) -> greaterThan(firstNumber) && lessThan(___secondNumber);
     }
+
+    /**
+     * The implementation must be used for concatenating boolean expression derived from BigDecimal.
+     */
+    @FunctionalInterface
+    public interface LogicalAND {
+        /**
+         * Must have the logic to return boolean output that complies with AND logical relationship.
+         * @param object An instance to check.
+         * @return Returns boolean.
+         */
+        Boolean and(BigDecimal object);
+    }
+
 }
