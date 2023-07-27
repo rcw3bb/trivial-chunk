@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
  * @author Ron Webb
  * @since 2.16.0
  */
-public final class ExecutableFinder {
+public final class CommandLocator {
 
-    private ExecutableFinder() {
+    private CommandLocator() {
     }
 
     private static String getFinder(final OSType osType) {
@@ -33,15 +33,15 @@ public final class ExecutableFinder {
     }
 
     /**
-     * Create an instance of the File based on the discovered filename location.
-     * @param executable The executable to find.
+     * Return the location of the file as File.
+     * @param command The command to locate.
      * @return An optional instance of File.
      */
-    public static Optional<File> getExecutable(final String executable) {
+    public static Optional<File> locateAsFile(final String command) {
         final var osType = OSType.identify();
         final var finder = getFinder(osType);
         final var sbFQFN = new StringBuilder();
-        Optional<File> execOutput = Optional.empty();;
+        Optional<File> execOutput = Optional.empty();
         try {
             CommandRunner.runCommand((___output, ___error) -> {
                 try(var output = new BufferedReader(new InputStreamReader(___output)))  {
@@ -50,7 +50,7 @@ public final class ExecutableFinder {
                 catch (IOException exception) {
                     //Do nothing.
                 }
-            }, finder, executable);
+            }, finder, command);
             var fqfn = sbFQFN.toString();
             if (fqfn.length() > 0) {
                 if (OSType.Windows == osType) {
@@ -65,6 +65,15 @@ public final class ExecutableFinder {
             //Do nothing.
         }
         return execOutput;
+    }
+
+    /**
+     * Return the location of the file as string.
+     * @param command The command to locate.
+     * @return An optional String.
+     */
+    public static Optional<String> locateAsString(final String command) {
+        return locateAsFile(command).map(File::getAbsolutePath);
     }
 
 }
