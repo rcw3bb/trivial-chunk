@@ -128,7 +128,7 @@ The MissingCommandException is being thrown if there is no command to create a p
 
 ```java
 try {
-    var command = CommandArray.getBuilder().setProgram("where").addArgs("cmd").build();
+    var command = CommandArray.getBuilder().setProgram("where").addArgs(List.of("cmd").build();
     CommandRunner.runCommand(command);
 } catch (MissingCommandException e) {
     e.printStackTrace();
