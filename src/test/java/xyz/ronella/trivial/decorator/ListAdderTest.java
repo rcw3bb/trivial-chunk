@@ -75,7 +75,7 @@ public class ListAdderTest {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> true, expected);
+        adder.addAllWhen(expected).when(() -> true);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
@@ -95,7 +95,7 @@ public class ListAdderTest {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> false, expected);
+        adder.addAllWhen(expected).when(() -> false);
 
         assertEquals(0, testList.size());
     }
@@ -105,7 +105,7 @@ public class ListAdderTest {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> true, 0, expected);
+        adder.addAllWhen(0, expected).when(()-> true);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
@@ -125,8 +125,7 @@ public class ListAdderTest {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> false, 0, expected);
-
+        adder.addAllWhen(0, expected).when(()-> false);
         assertEquals(0, testList.size());
     }
 
@@ -161,7 +160,7 @@ public class ListAdderTest {
     public void addAllGeneratedWhenTrue() {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> true, ()-> List.of("Generated"));
+        adder.addAllWhen(()-> List.of("Generated")).when(()-> true);
 
         assertEquals("Generated", testList.get(0));
     }
@@ -170,7 +169,7 @@ public class ListAdderTest {
     public void addAllGeneratedWhenFalse() {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> false, ()-> List.of("Generated"));
+        adder.addAllWhen(()-> List.of("Generated")).when(()-> false);
 
         assertTrue(testList.isEmpty());
     }
@@ -189,7 +188,7 @@ public class ListAdderTest {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> true, 0, ()-> expected);
+        adder.addAllWhen(0, ()-> expected).when(()-> true);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
@@ -199,7 +198,7 @@ public class ListAdderTest {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.addAll(()-> false, 0, ()-> expected);
+        adder.addAllWhen(0, ()-> expected).when(()-> false);
 
         assertEquals(0, testList.size());
     }
@@ -239,6 +238,22 @@ public class ListAdderTest {
         adder.add( 0, ()-> "Generated");
 
         assertEquals("Generated", testList.get(0));
+    }
+
+    @Test
+    public void addElementWhenTrue() {
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addWhen( "Element").when(() -> Boolean.TRUE);
+        assertEquals("Element", testList.get(0));
+    }
+
+    @Test
+    public void addElementWhenFalse() {
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addWhen( "Element").when(() -> Boolean.FALSE);
+        assertTrue(testList.isEmpty());
     }
 
 }
