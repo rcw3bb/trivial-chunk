@@ -26,6 +26,7 @@
         <exclude name="LinguisticNaming"/>
         <exclude name="GenericsNaming"/>
         <exclude name="UnnecessaryConstructor"/>
+        <exclude name="ShortClassName"/>
     </rule>
     <rule ref="category/java/design.xml" >
         <exclude name="LawOfDemeter"/>
