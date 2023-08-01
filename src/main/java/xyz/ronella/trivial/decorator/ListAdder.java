@@ -95,6 +95,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * Add all the elements when the condition was met.
      * @param elements The elements to be added.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
+     *
+     * @since 2.16.0
      */
     public WhenThenReturn<Boolean> addAllWhen(final Collection<? extends TYPE_ELEMENT> elements) {
         return (___when) -> ___when.getAsBoolean() && list.addAll(elements);
@@ -119,6 +121,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * Add all the elements when the condition was met.
      * @param generateElements The logic that will generate the elements.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
+     *
+     * @since 2.16.0
      */
     public WhenThenReturn<Boolean> addAllWhen(final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
         return (___when) -> ___when.getAsBoolean() && list.addAll(generateElements.get());
@@ -210,6 +214,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index The index to add the elements.
      * @param elements The elements to be added.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
+     *
+     * @since 2.16.0
      */
     public WhenThenReturn<Boolean> addAllWhen(final int index,
                                               final Collection<? extends TYPE_ELEMENT> elements) {
@@ -236,6 +242,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index The index to add the elements.
      * @param generateElements The logic that will generate the elements.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
+     *
+     * @since 2.16.0
      */
     public WhenThenReturn<Boolean> addAllWhen(final int index,
                                               final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
@@ -268,6 +276,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * Add an item when condition was met.
      * @param element The element to add conditionally.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
+     *
+     * @since 2.16.0
      */
     public WhenThenReturn<Boolean> addWhen(final TYPE_ELEMENT element) {
         return ___when -> {
@@ -283,6 +293,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index The exact location where to add the element.
      * @param element The element to add conditionally.
      * @return An implementation of WhenThen that update the list if the condition was met.
+     *
+     * @since 2.16.0
      */
     public WhenThen addWhen(final int index, final TYPE_ELEMENT element) {
         return ___when -> {
@@ -296,6 +308,8 @@ public class ListAdder<TYPE_ELEMENT> {
      * Add the generated element when condition was met.
      * @param generateElement The logic that will generate the element.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
+     *
+     * @since 2.16.0
      */
     public WhenThenReturn<Boolean> addWhen(final Supplier<TYPE_ELEMENT> generateElement) {
         return ___when -> ___when.getAsBoolean() && list.add(generateElement.get());
