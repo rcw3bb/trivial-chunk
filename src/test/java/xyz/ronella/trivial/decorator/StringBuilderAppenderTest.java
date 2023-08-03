@@ -142,101 +142,97 @@ public class StringBuilderAppenderTest {
 
     @Test
     public void truthConditionFullMethod() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE, "Test"
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen("Test"
                 , ___builder -> ___builder.append("+")
-                , ___builder -> ___builder.append("-"));
+                , ___builder -> ___builder.append("-")).when(()-> Boolean.TRUE);
         assertEquals("+Test-", builder.toString());
     }
 
     @Test
     public void falseConditionFullMethod() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE, "Test"
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen("Test"
                 , ___builder -> ___builder.append("+")
-                , ___builder -> ___builder.append("-"));
+                , ___builder -> ___builder.append("-")).when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void truthConditionBeforeAppend() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE, "Test"
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen("Test"
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.TRUE);
         assertEquals("+Test", builder.toString());
     }
 
     @Test
     public void falseConditionBeforeAppend() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE, "Test"
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen("Test"
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void truthConditionAppendOnly() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE, "Test");
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen( "Test").when(()-> Boolean.TRUE);
         assertEquals("Test", builder.toString());
     }
 
     @Test
     public void falseConditionAppendOnly() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE, "Test"
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen("Test"
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void truthConditionCustomFullMethod() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE
-                , ___builder-> ___builder.append("Test")
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen(
+                ___builder-> ___builder.append("Test")
                 , ___builder -> ___builder.append("+")
-                , ___builder -> ___builder.append("-"));
+                , ___builder -> ___builder.append("-")).when(()-> Boolean.TRUE);
         assertEquals("+Test-", builder.toString());
     }
 
     @Test
     public void falseConditionCustomFullMethod() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE
-                , ___builder-> ___builder.append("Test")
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen(
+                ___builder-> ___builder.append("Test")
                 , ___builder -> ___builder.append("+")
-                , ___builder -> ___builder.append("-"));
+                , ___builder -> ___builder.append("-")).when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void truthConditionBeforeCustomAppend() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE
-                , ___builder-> ___builder.append("Test")
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen(___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.TRUE);
         assertEquals("+Test", builder.toString());
     }
 
     @Test
     public void falseConditionBeforeCustomeAppend() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE
-                , ___builder-> ___builder.append("Test")
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen( ___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void truthConditionCustomAppendOnly() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.TRUE
-                , ___builder-> ___builder.append("Test"));
+        var builder = new StringBuilderAppender(new StringBuilder())
+                .appendWhen(___builder-> ___builder.append("Test")).when(()-> Boolean.TRUE);
         assertEquals("Test", builder.toString());
     }
 
     @Test
     public void falseConditionCustomAppendOnly() {
-        var builder = new StringBuilderAppender(new StringBuilder()).append(()-> Boolean.FALSE
-                , ___builder-> ___builder.append("Test")
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender(new StringBuilder()).appendWhen(___builder-> ___builder.append("Test")
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void acceptingAString() {
-        var builder = new StringBuilderAppender("").append(()-> Boolean.TRUE
-                , "Test"
-                , ___builder -> ___builder.append("+"));
+        var builder = new StringBuilderAppender("").appendWhen("Test"
+                , ___builder -> ___builder.append("+")).when(()-> Boolean.TRUE);
         assertEquals("+Test", builder.toString());
     }
 
@@ -255,27 +251,27 @@ public class StringBuilderAppenderTest {
 
     @Test
     public void multipleTextsConditionalTrueWithBeforeAppend() {
-        var builder = new StringBuilderAppender("").append(()-> Boolean.TRUE, ___builder -> ___builder.append("+"),
-                "test1", "test2", "test3");
+        var builder = new StringBuilderAppender("").appendWhen(___builder -> ___builder.append("+"),
+                "test1", "test2", "test3").when(()-> Boolean.TRUE);
         assertEquals("+test1+test2+test3", builder.toString());
     }
 
     @Test
     public void multipleTextsConditionalFalseWithBeforeAppend() {
-        var builder = new StringBuilderAppender("").append(()-> Boolean.FALSE, ___builder -> ___builder.append("+"),
-                "test1", "test2", "test3");
+        var builder = new StringBuilderAppender("").appendWhen(___builder -> ___builder.append("+"),
+                "test1", "test2", "test3").when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
     @Test
     public void multipleConditionalTrueTexts() {
-        var builder = new StringBuilderAppender("").append(()-> Boolean.TRUE, "test1", "test2");
+        var builder = new StringBuilderAppender("").appendWhen("test1", "test2").when(()-> Boolean.TRUE);
         assertEquals("test1test2", builder.toString());
     }
 
     @Test
     public void multipleConditionalFalseTexts() {
-        var builder = new StringBuilderAppender("").append(()-> Boolean.FALSE, "test1", "test2");
+        var builder = new StringBuilderAppender("").appendWhen("test1", "test2").when(()-> Boolean.FALSE);
         assertEquals("", builder.toString());
     }
 
