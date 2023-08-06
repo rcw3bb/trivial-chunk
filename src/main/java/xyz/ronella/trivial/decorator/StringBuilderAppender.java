@@ -178,10 +178,10 @@ public class StringBuilderAppender {
         return this;
     }
 
-    private WhenThen conditionLogic(final Sink logic) {
+    private WhenThen<StringBuilder> conditionLogic(final Sink logic) {
         return ___when ->
         Optional.ofNullable(___when).ifPresent(___condition -> {
-            if (___condition.getAsBoolean()) {
+            if (___condition.test(builder)) {
                 logic.plummet();
             }
         });
@@ -206,7 +206,7 @@ public class StringBuilderAppender {
     public StringBuilderAppender append(final BooleanSupplier condition, final String text,
                                         final Consumer<StringBuilder> beforeAppend,
                                         final Consumer<StringBuilder> afterAppend) {
-        return appendWhen(text, beforeAppend, afterAppend).when(condition);
+        return appendWhen(text, beforeAppend, afterAppend).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -219,7 +219,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final String text, final Consumer<StringBuilder> beforeAppend,
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text, final Consumer<StringBuilder> beforeAppend,
                                                             final Consumer<StringBuilder> afterAppend) {
         return ___when -> {
             conditionLogic(()-> append(text, beforeAppend, afterAppend)).when(___when);
@@ -258,7 +258,7 @@ public class StringBuilderAppender {
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final String text,
                                         final Consumer<StringBuilder> beforeAppend) {
-        return appendWhen(text, beforeAppend).when(condition);
+        return appendWhen(text, beforeAppend).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -272,7 +272,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final String text,
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text,
                                         final Consumer<StringBuilder> beforeAppend) {
         return ___when -> {
             conditionLogic(()-> append(text, beforeAppend)).when(___when);
@@ -305,7 +305,7 @@ public class StringBuilderAppender {
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final String text) {
-        return appendWhen(text).when(condition);
+        return appendWhen(text).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -317,7 +317,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final String text) {
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text) {
         return ___when -> {
             conditionLogic(() -> builder.append(text)).when(___when);
             return this;
@@ -388,7 +388,7 @@ public class StringBuilderAppender {
                                         final Consumer<StringBuilder> beforeAppend,
                                         final Consumer<StringBuilder> afterAppend) {
 
-        return appendWhen(updateLogic, beforeAppend, afterAppend).when(condition);
+        return appendWhen(updateLogic, beforeAppend, afterAppend).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -402,7 +402,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic,
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic,
                                         final Consumer<StringBuilder> beforeAppend,
                                         final Consumer<StringBuilder> afterAppend) {
         return ___when -> {
@@ -442,7 +442,7 @@ public class StringBuilderAppender {
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
                                         final Consumer<StringBuilder> beforeAppend) {
-        return appendWhen(updateLogic, beforeAppend).when(condition);
+        return appendWhen(updateLogic, beforeAppend).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -455,10 +455,10 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic,
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic,
                                         final Consumer<StringBuilder> beforeAppend) {
         return ___when -> {
-            conditionLogic(() -> append(updateLogic, beforeAppend)).when(___when);
+            conditionLogic(() -> append(updateLogic, beforeAppend)).when(___when::test);
             return this;
         };
     }
@@ -490,7 +490,7 @@ public class StringBuilderAppender {
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic) {
-        return appendWhen(updateLogic).when(condition);
+        return appendWhen(updateLogic).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -502,7 +502,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic) {
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic) {
         return ___when -> {
             conditionLogic(() -> append(updateLogic)).when(___when);
             return this;
@@ -580,7 +580,7 @@ public class StringBuilderAppender {
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
                                         final Consumer<StringBuilder> afterAppend,
                                         final String ... texts) {
-        return appendWhen(beforeAppend, afterAppend, texts).when(condition);
+        return appendWhen(beforeAppend, afterAppend, texts).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -595,14 +595,14 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend,
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend,
                                         final Consumer<StringBuilder> afterAppend,
                                         final String ... texts) {
 
         return ___when -> {
             Optional.ofNullable(texts).ifPresent(___texts -> {
                 Arrays.asList(___texts).forEach(___text -> {
-                    appendWhen(___text, beforeAppend, afterAppend).when(___when);
+                    appendWhen(___text, beforeAppend, afterAppend).when(___when::test);
                 });
             });
 
@@ -627,7 +627,7 @@ public class StringBuilderAppender {
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
                                         final String ... texts) {
-        return appendWhen(beforeAppend, null, texts).when(condition);
+        return appendWhen(beforeAppend, null, texts).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -641,7 +641,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend,
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend,
                                         final String ... texts) {
         return ___when -> appendWhen(beforeAppend, null, texts).when(___when);
     }
@@ -660,7 +660,7 @@ public class StringBuilderAppender {
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final String ... texts) {
-        return appendWhen(texts).when(condition);
+        return appendWhen(texts).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -672,7 +672,7 @@ public class StringBuilderAppender {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<StringBuilderAppender> appendWhen(final String ... texts) {
+    public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String ... texts) {
         return appendWhen(null, texts);
     }
 

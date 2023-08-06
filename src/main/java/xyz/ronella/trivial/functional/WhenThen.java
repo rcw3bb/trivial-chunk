@@ -1,7 +1,7 @@
 package xyz.ronella.trivial.functional;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * Must have the implementation to process a task when the condition was met.
@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  * @since 2.16.0
  */
 @FunctionalInterface
-public interface WhenThen extends Consumer<BooleanSupplier> {
+public interface WhenThen<TYPE_ARG> extends Consumer<Predicate<TYPE_ARG>> {
 
     /**
      * Must hold the logic to process a task when the condition was met.
@@ -19,14 +19,14 @@ public interface WhenThen extends Consumer<BooleanSupplier> {
      *
      * @param condition The condition that must be true to do the task.
      */
-    void when(BooleanSupplier condition);
+    void when(Predicate<TYPE_ARG> condition);
 
     /**
      * Accepts just redirect the call to implementation.
      * @param condition the input argument
      */
     @Override
-    default void accept(final BooleanSupplier condition) {
+    default void accept(final Predicate<TYPE_ARG> condition) {
         when(condition);
     }
 }

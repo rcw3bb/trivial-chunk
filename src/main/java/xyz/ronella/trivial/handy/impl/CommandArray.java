@@ -37,11 +37,11 @@ public final class CommandArray implements ICommandArray {
         final var lstCommand = new ArrayList<String>();
         final var lstAddrCommand = new ListAdder<>(lstCommand);
 
-        lstAddrCommand.addWhen(program).when(()-> null!=program);
-        lstAddrCommand.addAllWhen(progArgs).when(()-> !progArgs.isEmpty());
-        lstAddrCommand.addWhen(command).when(()-> null!=command);
-        lstAddrCommand.addAllWhen(arguments).when(()-> !arguments.isEmpty());
-        lstAddrCommand.addAllWhen(zArguments).when(()-> !zArguments.isEmpty());
+        lstAddrCommand.addWhen(program).when(___ -> null!=program);
+        lstAddrCommand.addAllWhen(progArgs).when(___-> !progArgs.isEmpty());
+        lstAddrCommand.addWhen(command).when(___ -> null!=command);
+        lstAddrCommand.addAllWhen(arguments).when(___-> !arguments.isEmpty());
+        lstAddrCommand.addAllWhen(zArguments).when(___-> !zArguments.isEmpty());
 
         return lstCommand.toArray(new String[] {});
     }

@@ -39,7 +39,7 @@ public class ListAdder<TYPE_ELEMENT> {
      */
     @Deprecated
     public boolean add(final BooleanSupplier when, final TYPE_ELEMENT element) {
-        return addWhen(element).when(when);
+        return addWhen(element).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -53,7 +53,7 @@ public class ListAdder<TYPE_ELEMENT> {
      */
     @Deprecated
     public boolean add(final BooleanSupplier when, final Supplier<TYPE_ELEMENT> generateElement) {
-        return addWhen(generateElement).when(when);
+        return addWhen(generateElement).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -88,7 +88,7 @@ public class ListAdder<TYPE_ELEMENT> {
      */
     @Deprecated
     public boolean addAll(final BooleanSupplier when, final Collection<? extends TYPE_ELEMENT> elements) {
-        return addAllWhen(elements).when(when);
+        return addAllWhen(elements).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -98,8 +98,8 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<Boolean> addAllWhen(final Collection<? extends TYPE_ELEMENT> elements) {
-        return (___when) -> ___when.getAsBoolean() && list.addAll(elements);
+    public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addAllWhen(final Collection<? extends TYPE_ELEMENT> elements) {
+        return (___when) -> ___when.test(list) && list.addAll(elements);
     }
 
     /**
@@ -114,7 +114,7 @@ public class ListAdder<TYPE_ELEMENT> {
     @Deprecated
     public boolean addAll(final BooleanSupplier when,
                           final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        return addAllWhen(generateElements).when(when);
+        return addAllWhen(generateElements).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -124,8 +124,8 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<Boolean> addAllWhen(final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        return (___when) -> ___when.getAsBoolean() && list.addAll(generateElements.get());
+    public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addAllWhen(final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
+        return (___when) -> ___when.test(list) && list.addAll(generateElements.get());
     }
 
     /**
@@ -159,7 +159,7 @@ public class ListAdder<TYPE_ELEMENT> {
      */
     @Deprecated
     public void add(final BooleanSupplier when, final int index, final TYPE_ELEMENT element) {
-        addWhen(index, element).when(when);
+        addWhen(index, element).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -172,7 +172,7 @@ public class ListAdder<TYPE_ELEMENT> {
      */
     @Deprecated
     public void add(final BooleanSupplier when, final int index, final Supplier<TYPE_ELEMENT> generateElement) {
-        addWhen(index, generateElement).when(when);
+        addWhen(index, generateElement).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -206,7 +206,7 @@ public class ListAdder<TYPE_ELEMENT> {
     @Deprecated
     public boolean addAll(final BooleanSupplier when, final int index,
                           final Collection<? extends TYPE_ELEMENT> elements) {
-        return addAllWhen(index, elements).when(when);
+        return addAllWhen(index, elements).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -217,9 +217,9 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<Boolean> addAllWhen(final int index,
+    public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addAllWhen(final int index,
                                               final Collection<? extends TYPE_ELEMENT> elements) {
-        return (___when) -> ___when.getAsBoolean() && list.addAll(index, elements);
+        return (___when) -> ___when.test(list) && list.addAll(index, elements);
     }
 
     /**
@@ -234,7 +234,7 @@ public class ListAdder<TYPE_ELEMENT> {
     @Deprecated
     public boolean addAll(final BooleanSupplier when, final int index,
                           final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        return addAllWhen(index, generateElements).when(when);
+        return addAllWhen(index, generateElements).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -245,9 +245,9 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<Boolean> addAllWhen(final int index,
+    public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addAllWhen(final int index,
                                               final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        return (___when) -> ___when.getAsBoolean() && list.addAll(index, generateElements.get());
+        return (___when) -> ___when.test(list) && list.addAll(index, generateElements.get());
     }
 
     /**
@@ -279,9 +279,9 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<Boolean> addWhen(final TYPE_ELEMENT element) {
+    public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addWhen(final TYPE_ELEMENT element) {
         return ___when -> {
-            if (___when.getAsBoolean()) {
+            if (___when.test(list)) {
                 return list.add(element);
             }
             return false;
@@ -296,9 +296,9 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThen addWhen(final int index, final TYPE_ELEMENT element) {
+    public WhenThen<List<TYPE_ELEMENT>> addWhen(final int index, final TYPE_ELEMENT element) {
         return ___when -> {
-            if (___when.getAsBoolean()) {
+            if (___when.test(list)) {
                 list.add(index, element);
             }
         };
@@ -311,8 +311,13 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
-    public WhenThenReturn<Boolean> addWhen(final Supplier<TYPE_ELEMENT> generateElement) {
-        return ___when -> ___when.getAsBoolean() && list.add(generateElement.get());
+    public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addWhen(final Supplier<TYPE_ELEMENT> generateElement) {
+        return ___when -> {
+            if (___when.test(list)) {
+                return list.add(generateElement.get());
+            }
+            return false;
+        };
     }
 
     /**
@@ -321,9 +326,9 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElement The logic that will generate the element.
      * @return An implementation of WhenThen that update the list if the condition was met.
      */
-    public WhenThen addWhen(final int index, final Supplier<TYPE_ELEMENT> generateElement) {
+    public WhenThen<List<TYPE_ELEMENT>> addWhen(final int index, final Supplier<TYPE_ELEMENT> generateElement) {
         return ___when -> {
-            if (___when.getAsBoolean()) {
+            if (___when.test(list)) {
                 list.add(index, generateElement.get());
             }
         };
