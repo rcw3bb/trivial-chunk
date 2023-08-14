@@ -1,6 +1,6 @@
 # BigDecimalPlus Class
 
-A convenience class for **operating with BigDecimal**.
+A decorator class for **operating with BigDecimal**.
 
 ## Constructor
 
