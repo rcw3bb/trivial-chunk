@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.16.0 : 2023-08-14
+
+### Added
+
+* Add BigDecimalPlus implementation.
+* Add WhenThen and WhenThenReturn functional interfaces.
+* Add MapPutter implementation.
+* Add TextFile implementation.
+* Add CommandLocator implementation.
+* Add EndOfLine enumeration.
+
+### Changed
+
+* Update ListAdders and StringBuilderAppender to use WhenThen and WhenThenReturn interfaces.
+
 ## 2.15.0 : 2023-03-24
 
 ### Added
