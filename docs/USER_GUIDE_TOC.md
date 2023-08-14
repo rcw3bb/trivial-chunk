@@ -17,7 +17,7 @@
 
 * [BigDecimalPlus](DEC_BIGDECIMAL_PLUS.md)
 
-  A decorator for BigDecimal that provides some convenience methods.
+  A decorator class for **operating with BigDecimal**.
 
 * [CloseableLock](DEC_CLOSEABLE_LOCK.md)
 
@@ -26,6 +26,10 @@
 * [ListAdder](DEC_LIST_ADDER.md)
 
   A decorator of List implementation that exposes **conditional add methods** and ability to **add calculated elements**.
+
+* [MapPutter](DEC_MAP_PUTTER.md)
+
+  A decorator of Map implementation that exposes **conditional put methods** and ability to **put calculated elements**.
 
 * [Mutable](DEC_MUTABLE.md)
 
