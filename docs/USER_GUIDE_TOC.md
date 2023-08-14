@@ -15,6 +15,10 @@
 
 ### Decorator
 
+* [BigDecimalPlus](DEC_BIGDECIMAL_PLUS.md)
+
+  A decorator for BigDecimal that provides some convenience methods.
+
 * [CloseableLock](DEC_CLOSEABLE_LOCK.md)
 
   **Wrapping the Lock implementation with CloseableLock makes it Closeable** 
