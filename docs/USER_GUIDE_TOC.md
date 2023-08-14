@@ -43,6 +43,10 @@
 
   A decorator for StringBuilder that gives you a chance to add **pre-append** and **post-append** logic on every append operation.
 
+* [TextFile](DEC_TEXTFILE.md)
+
+  A decorator class for **operating with TextFile**.
+
 ### Functional
 * [Sink Interface](FNC_SINK_INTERFACE.md)
 
