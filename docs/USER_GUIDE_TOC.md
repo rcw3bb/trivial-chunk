@@ -44,6 +44,14 @@
 
   The class that supplies a do nothing implementation of some of the functional interfaces. This is created so that you don't have to create it yourself.
 
+* [WhenThen Interface](FNC_WHEN_THEN_INTERFACE.md)
+
+  A consumer interface that provides when method that doesn't return a value.
+
+* [WhenThenReturn Iterface](FNC_WHEN_THEN_RETURN_INTERFACE.md)
+
+  A functional interface that provides when method that return a value.
+
 ### Handy Tools
 * [CommandRunner](HDY_COMMAND_RUNNER.md)
 
