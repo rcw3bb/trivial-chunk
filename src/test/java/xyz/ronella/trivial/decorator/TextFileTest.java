@@ -5,6 +5,7 @@ import xyz.ronella.trivial.handy.OSType;
 import xyz.ronella.trivial.handy.PathFinder;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,6 +37,20 @@ public class TextFileTest {
         final var fileString = pathFinder.getFile().get().getAbsolutePath();
         final var textFile = new TextFile(fileString);
         final var text = textFile.getText();
+        assertEquals(expectation, text);
+    }
+
+    @Test
+    public void testTextWindowsContentCharSet() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var pathFinder = PathFinder.getBuilder("textfile-windows.txt")
+                .addPaths(List.of("src/test/resources", "src/test/resources/pathfinder"))
+                .build();
+        final var fileString = pathFinder.getFile().get().getAbsolutePath();
+        final var textFile = new TextFile(fileString);
+        final var text = textFile.getText(StandardCharsets.UTF_8);
         assertEquals(expectation, text);
     }
 
