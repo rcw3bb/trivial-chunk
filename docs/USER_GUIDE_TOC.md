@@ -73,6 +73,10 @@
 
   A collection of logic implementations.
 
+* [EndOfLine](HDY_END_OF_LINE.md)
+
+  An enumeration of EndOfLine.
+
 * [LogicMapper](HDY_LOGIC_MAPPER.md)
 
   Creates a map of conditions and logic where all the conditions that evaluated to true will perform its corresponding logic.
