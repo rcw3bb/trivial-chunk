@@ -13,19 +13,33 @@ public enum OSType {
     /**
      * Indicates that the OS type is Windows.
      */
-    Windows,
+    Windows(EndOfLine.CRLF),
     /**
      * Indicates that the OS type is Linux.
      */
-    Linux,
+    Linux(EndOfLine.LF),
     /**
      * Indicates that the OS type is Mac.
      */
-    Mac,
+    Mac(EndOfLine.CR),
     /**
      * Indicates that the OS type cannot be determined.
      */
-    Unknown;
+    Unknown(EndOfLine.SYSTEM);
+
+    private final EndOfLine eol;
+
+    OSType(final EndOfLine eol) {
+        this.eol = eol;
+    }
+
+    /**
+     * The end of line associated with the OS.
+     * @return An instance of EndOfLine.
+     */
+    public EndOfLine getEOL() {
+        return eol;
+    }
 
     /**
      * Identifies the current OS where the code is running.
