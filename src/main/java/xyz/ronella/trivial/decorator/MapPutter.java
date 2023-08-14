@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * A class the wraps a Map to have put methods with condition.
+ * A class that wraps a Map to have put methods with condition.
  *
  * @param <TYPE_KEY>> The type of key that the map uses.
  * @param <TYPE_VALUE> The type of value that the key holds.
