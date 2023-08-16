@@ -65,6 +65,10 @@
   A functional interface that provides when method that return a value.
 
 ### Handy Tools
+* [CommandLocator](HDY_COMMAND_LOCATOR.md)
+
+  A convenience class for **locating a command**.
+
 * [CommandRunner](HDY_COMMAND_RUNNER.md)
 
   A convenience class for **creating operating system process**.
