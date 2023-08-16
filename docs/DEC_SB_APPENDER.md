@@ -28,29 +28,32 @@ A decorator for StringBuilder that gives you a chance to add **pre-append** and 
 
 | Signature |
 |--------|
-| public StringBuilderAppender append(String text) |
-| public StringBuilderAppender append(String ... texts) |
-| public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend) |
-| public StringBuilderAppender append(Consumer<StringBuilder> beforeAppend, String ... texts) |
-| public StringBuilderAppender append(String text, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend) |
-| public StringBuilderAppender append(Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend, String ... texts) |
-| public StringBuilderAppender append(BooleanSupplier condition, String text) |
-| public StringBuilderAppender append(BooleanSupplier condition, String ... texts) |
-| public StringBuilderAppender append(BooleanSupplier condition, String text, Consumer<StringBuilder> beforeAppend) |
-| public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> beforeAppend, String ... texts) |
-| public StringBuilderAppender append(BooleanSupplier condition, String text, Consumer<StringBuilder> beforeAppend,                                 Consumer<StringBuilder> afterAppend) |
-| public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend, String ... texts) |
-| public StringBuilderAppender append(Consumer<StringBuilder> updateLogic) |
-| public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) |
-| public StringBuilderAppender append(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend,                                     Consumer<StringBuilder> afterAppend) |
-| public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic) |
-| public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) |
-| public StringBuilderAppender append(BooleanSupplier condition, Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend) |
-| public StringBuilderAppender clear() //Clears the content of the internal StringBuilder. |
-| public StringBuilderAppender replace(CharSequence target, CharSequence replacement) //Replacement |
-| public StringBuilderAppender threadSafe() //Make the appending task threadsafe. |
-| public String toString() //The String representation of the internal StringBuilder that the decorator is holding. |
-| public StringBuilder getStringBuilder() //Access the internal StringBuilder that the decorator is holding. |
+| public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic) |
+| public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic,                                    final Consumer<StringBuilder> beforeAppend) |
+| public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic, final Consumer<StringBuilder> beforeAppend, final Consumer<StringBuilder> afterAppend) |
+| public StringBuilderAppender append(final Consumer<StringBuilder> beforeAppend,                                    final Consumer<StringBuilder> afterAppend, final String ... texts) |
+| public StringBuilderAppender append(final Consumer<StringBuilder> beforeAppend, final String ... texts) |
+| public StringBuilderAppender append(final String text) |
+| public StringBuilderAppender append(final String text, final Consumer<StringBuilder> beforeAppend) |
+| public StringBuilderAppender append(final String text, final Consumer<StringBuilder> beforeAppend, final Consumer<StringBuilder> afterAppend) |
+| public StringBuilderAppender append(final String ... texts)  |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic, final Consumer<StringBuilder> beforeAppend) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic, final Consumer<StringBuilder> beforeAppend,                                    final Consumer<StringBuilder> afterAppend) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend, final Consumer<StringBuilder> afterAppend, final String ... texts) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend, final String ... texts) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text, final Consumer<StringBuilder> beforeAppend) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text, final Consumer<StringBuilder> beforeAppend, final Consumer<StringBuilder> afterAppend) |
+| public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String ... texts) |
+| public StringBuilderAppender clear()                         |
+| public StringBuilder getStringBuilder()                      |
+| public StringBuilderAppender replace(final CharSequence target, final CharSequence replacement) |
+| public StringBuilderAppender threadSafe()                    |
+
+**WhenThen/WhenThenReturn Interfaces**
+
+For this decorator the both WhenThen and WhenThenReturn interfaces, the **when methods** provide the wrapped StringBuilder instance.
 
 **Parameters**
 
@@ -60,7 +63,6 @@ A decorator for StringBuilder that gives you a chance to add **pre-append** and 
 | texts | The texts to be appended where each invokes the beforeAppend and afterAppend logics. |
 | beforeAppend | Must hold the pre-append logic that can override the default pre-append logic. |
 | afterAppend | Must hold the post-append logic that can override the default post-append logic. |
-| condition | Must be evaluated to true before the append can be done. |
 | updateLogic | Must be evaluated to something that will perform an append. |
 | target | The target text with the builder to replace. |
 | replacement | The replacement of the target text. |
