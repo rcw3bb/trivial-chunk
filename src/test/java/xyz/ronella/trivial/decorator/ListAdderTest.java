@@ -256,4 +256,14 @@ public class ListAdderTest {
         assertTrue(testList.isEmpty());
     }
 
+    @Test
+    public void testDocumentation() {
+        var list = new ArrayList<String>();
+        var lstAdder = new ListAdder<>(list);
+        lstAdder.addWhen("Sample1").when(___-> true);
+        lstAdder.addWhen("Sample2").when(___-> false);
+        lstAdder.addWhen("Sample3").when(___-> true);
+        System.out.printf("List: %s%n", list);
+    }
+
 }
