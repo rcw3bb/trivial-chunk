@@ -27,4 +27,8 @@ Windows
 
 > Assuming you run the print command on windows OS.
 
+## The getEOL() Instance method
+
+The getEOL() method returns the associated EndOfLine instance for a particular OS.
+
 [Table of Contents](USER_GUIDE_TOC.md)
