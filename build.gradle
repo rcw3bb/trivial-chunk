@@ -19,7 +19,7 @@ java {
 
 pmd {
     consoleOutput = true
-    toolVersion = "6.45.0"
+    toolVersion = "6.55.0"
     rulesMinimumPriority = 5
     ruleSetFiles = files('config/pmd/custom.xml')
     ruleSets = []
