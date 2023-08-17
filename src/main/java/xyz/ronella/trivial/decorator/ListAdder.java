@@ -49,7 +49,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElement The logic that will generate the element.
      * @return Specified in List.add
      *
-     * @deprecated Use addWhen(Supplier<TYPE_ELEMENT>) instead.
+     * @deprecated Use addWhen(Supplier&lt;TYPE_ELEMENT&gt;) instead.
      */
     @Deprecated
     public boolean add(final BooleanSupplier when, final Supplier<TYPE_ELEMENT> generateElement) {
@@ -84,7 +84,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param elements Specified in List.addAll
      * @return Specified in List.addAll
      *
-     * @deprecated Use addAllWhen(Collection<? extends TYPE_ELEMENT> elements) instead.
+     * @deprecated Use addAllWhen(Collection&lt;? extends TYPE_ELEMENT&gt; elements) instead.
      */
     @Deprecated
     public boolean addAll(final BooleanSupplier when, final Collection<? extends TYPE_ELEMENT> elements) {
@@ -109,7 +109,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElements The logic that will generate the elements.
      * @return Specified in List.addAll
      *
-     * @deprecated Use addAllWhen(Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) instead.
+     * @deprecated Use addAllWhen(Supplier&lt;Collection&lt;? extends TYPE_ELEMENT&gt;&gt; generateElements) instead.
      */
     @Deprecated
     public boolean addAll(final BooleanSupplier when,
@@ -168,7 +168,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param index Specified in List.add
      * @param generateElement The logic that will generate the element.
      *
-     * @deprecated Use addWhen(int, Supplier<TYPE_ELEMENT>) instead.
+     * @deprecated Use addWhen(int, Supplier&lt;TYPE_ELEMENT&gt;) instead.
      */
     @Deprecated
     public void add(final BooleanSupplier when, final int index, final Supplier<TYPE_ELEMENT> generateElement) {
@@ -201,7 +201,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param elements Specified in List.add
      * @return Specified in List.addAll
      *
-     * @deprecated Use addAllWhen(int index, Collection<? extends TYPE_ELEMENT> elements) instead.
+     * @deprecated Use addAllWhen(int index, Collection&lt;? extends TYPE_ELEMENT&gt; elements) instead.
      */
     @Deprecated
     public boolean addAll(final BooleanSupplier when, final int index,
@@ -229,7 +229,7 @@ public class ListAdder<TYPE_ELEMENT> {
      * @param generateElements The logic that will generate the elements.
      * @return Specified in List.addAll
      *
-     * @deprecated Use addAllWhen(int index, Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) instead.
+     * @deprecated Use addAllWhen(int index, Supplier&lt;CollectionU&lt;? extends TYPE_ELEMENT&gt;&gt; generateElements) instead.
      */
     @Deprecated
     public boolean addAll(final BooleanSupplier when, final int index,

@@ -200,7 +200,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      *
-     * @deprecated Use appendWhen(String text, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend) instead.
+     * @deprecated Use appendWhen(String text, Consumer&lt;StringBuilder&gt; beforeAppend, Consumer&lt;StringBuilder&gt; afterAppend) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final String text,
@@ -253,7 +253,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      *
-     * @deprecated Use appendWhen(String text, Consumer<StringBuilder> beforeAppend) instead.
+     * @deprecated Use appendWhen(String text, Consumer&lt;StringBuilder&gt; beforeAppend) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final String text,
@@ -381,7 +381,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      *
-     * @deprecated Use appendWhen(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend) instead.
+     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; updateLogic, Consumer&lt;StringBuilder&gt; beforeAppend, Consumer&lt;StringBuilder&gt; afterAppend) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
@@ -437,7 +437,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      *
-     * @deprecated Use appendWhen(Consumer<StringBuilder> updateLogic, Consumer<StringBuilder> beforeAppend) instead.
+     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; updateLogic, Consumer&lt;StringBuilder&gt; beforeAppend) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
@@ -486,7 +486,7 @@ public class StringBuilderAppender {
      *
      * @since 2.0.0
      *
-     * @deprecated Use appendWhen(Consumer<StringBuilder> updateLogic) instead.
+     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; updateLogic) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic) {
@@ -574,7 +574,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      *
-     * @deprecated Use appendWhen(Consumer<StringBuilder> beforeAppend, Consumer<StringBuilder> afterAppend, String ... texts) instead.
+     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; beforeAppend, Consumer&lt;StringBuilder&gt; afterAppend, String ... texts) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
@@ -622,7 +622,7 @@ public class StringBuilderAppender {
      *
      * @since 2.1.0
      *
-     * @deprecated Use appendWhen(Consumer<StringBuilder> beforeAppend, String ... texts) instead.
+     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; beforeAppend, String ... texts) instead.
      */
     @Deprecated
     public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,

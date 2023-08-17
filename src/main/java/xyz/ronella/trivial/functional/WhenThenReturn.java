@@ -18,6 +18,7 @@ public interface WhenThenReturn<TYPE_ARG, TYPE_OUTPUT> extends Function<Predicat
      * The Then part of WhenThen is the actual implementation of when.
      *
      * @param condition The condition that must be true to generate the output.
+     * @return An instance of the TYPE_OUTPUT.
      */
     TYPE_OUTPUT when(Predicate<TYPE_ARG> condition);
 
