@@ -134,6 +134,7 @@ test {
     dependsOn pmdMain
     finalizedBy jacocoTestReport
     finalizedBy('snyk-test')
+    finalizedBy javadoc
 }
 
 pmdTest.enabled = false
