@@ -13,8 +13,8 @@ group 'xyz.ronella.casual'
 version '2.17.0-SNAPSHOT'
 
 java {
-    targetCompatibility = JavaVersion.VERSION_11
-    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 pmd {
