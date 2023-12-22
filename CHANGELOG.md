@@ -4,6 +4,7 @@
 
 ### Added
 
+* Now requires java 17.
 * New Require.objects method that support custom error message using RequireObject record.
 
 ## 2.16.0 : 2023-08-14
