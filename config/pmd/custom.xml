@@ -28,6 +28,7 @@
         <exclude name="UnnecessaryConstructor"/>
         <exclude name="ShortClassName"/>
     </rule>
+    <rule ref="category/java/codestyle.xml/UnnecessaryImport" />
     <rule ref="category/java/design.xml" >
         <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
