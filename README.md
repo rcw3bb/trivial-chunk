@@ -4,7 +4,7 @@ A library of trivial codes.
 
 ## Requires
 
-* Java 11
+* Java 17
 
 ## Usage
 
@@ -14,15 +14,12 @@ A library of trivial codes.
    | ----------- | ------------------ |
    | Group ID    | xyz.ronella.casual |
    | Artifact ID | trivial-chunk      |
-   | Version     | 2.16.0            |
+   | Version     | 2.17.0            |
 
-   > Using gradle, this can be added as a dependency entry like the following:
-   >
-   > ```groovy
-   > implementation 'xyz.ronella.casual:trivial-chunk:2.16.0'
-   > ```
-   >
-   
+   Visit the following `maven repository` for more information about adding this as a dependency:
+
+   https://mvnrepository.com/artifact/xyz.ronella.casual/trivial-chunk
+
 2. Include the following to your **module-info.java**:
 
    ```java
