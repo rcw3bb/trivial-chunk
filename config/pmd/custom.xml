@@ -38,9 +38,10 @@
             <property name="maxmethods" value="20" />
         </properties>
     </rule>
-    <rule ref="category/java/design.xml/ExcessiveMethodLength">
+    <rule ref="category/java/design.xml/NcssCount">
         <properties>
-            <property name="minimum" value="30" />
+            <property name="methodReportLevel" value="30" />
+            <property name="classReportLevel" value="500" />
         </properties>
     </rule>
     <rule ref="category/java/design.xml/ExcessiveParameterList">
@@ -65,7 +66,7 @@
         </properties>
     </rule>
     <rule ref="category/java/errorprone.xml">
-        <exclude name="BeanMembersShouldSerialize"/>
+        <exclude name="NonSerializableClass"/>
     </rule>
     <rule ref="category/java/multithreading.xml" />
     <rule ref="category/java/performance.xml" />
