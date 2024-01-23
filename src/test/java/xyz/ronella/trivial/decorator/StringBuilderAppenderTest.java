@@ -329,6 +329,13 @@ public class StringBuilderAppenderTest {
         assertEquals("+World-", builder.toString());
     }
 
+    @Test void appendWhenSingleText() {
+        var builder = new StringBuilderAppender(___builder -> ___builder.append(!___builder.isEmpty() ? ", " : ""));
+        builder.appendWhen("a").when(___ -> true);
+        builder.appendWhen("b").when(___ -> true);
+        assertEquals("a, b", builder.toString());
+    }
+
     @Test
     public void replaceThreadSafe() {
         var builder = new StringBuilderAppender(

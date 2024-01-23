@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.17.1 : 2023-01-24
+
+### Changed
+
+* Make the behavior of appendWhen(String) the same as the others.
+
 ## 2.17.0 : 2023-12-23
 
 ### Added

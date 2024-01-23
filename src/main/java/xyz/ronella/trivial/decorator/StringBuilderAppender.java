@@ -319,7 +319,7 @@ public class StringBuilderAppender {
      */
     public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final String text) {
         return ___when -> {
-            conditionLogic(() -> builder.append(text)).when(___when);
+            conditionLogic(() -> this.append(text)).when(___when);
             return this;
         };
     }
