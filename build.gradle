@@ -10,7 +10,7 @@ plugins {
 }
 
 group 'xyz.ronella.casual'
-version '2.17.1'
+version VERSION
 
 java {
     targetCompatibility = JavaVersion.VERSION_17
