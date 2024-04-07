@@ -2,6 +2,8 @@ package xyz.ronella.trivial.handy.impl;
 
 import xyz.ronella.trivial.decorator.ListAdder;
 import xyz.ronella.trivial.handy.ICommandArray;
+import xyz.ronella.trivial.handy.Require;
+import xyz.ronella.trivial.handy.RequireObject;
 
 import java.util.*;
 import java.util.function.BooleanSupplier;
@@ -47,6 +49,45 @@ public final class CommandArray implements ICommandArray {
     }
 
     /**
+     * Wrap the string command to become an instance of command array.
+     *
+     * @param delim   The delimiter regex to use to split the command.
+     * @param command The command to wrap.
+     * @return An instance of CommandArray.
+     * @since 2.18.0
+     */
+    public static CommandArray wrap(final String delim, final String command) {
+        Require.objects(
+                new RequireObject(delim, "The delim parameter cannot be null"),
+                new RequireObject(command, "The command parameter cannot be null")
+        );
+
+        final var splitCommand = command.split(delim);
+        final var builder = CommandArray.getBuilder();
+
+        for (int index = 0; index < splitCommand.length; index++) {
+            if (index == 0) {
+                builder.setCommand(splitCommand[index]);
+            } else {
+                builder.addArg(splitCommand[index]);
+            }
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Wrap the string command to become an instance of command array.
+     *
+     * @param command The command to wrap.
+     * @return An instance of CommandArray.
+     * @since 2.18.0
+     */
+    public static CommandArray wrap(final String command) {
+        return wrap(" ", command);
+    }
+
+    /**
      * Return the builder of the CommandArray.
      *
      * @return An instance of CommandArrayBuilder.
@@ -77,6 +118,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * The method that can create an instance of CommandArray.
+         *
          * @return An instance of CommandArray.
          */
         public CommandArray build() {
@@ -85,6 +127,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the program name to be executed.
+         *
          * @param program The name of the program.
          * @return An instance of CommandArrayBuilder
          */
@@ -95,6 +138,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the command to be run with the program.
+         *
          * @param command The name of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -105,6 +149,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments of the program itself.
+         *
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -115,6 +160,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments of the program itself.
+         *
          * @param when Only apply the method when this returns true.
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
@@ -128,6 +174,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts an argument of the program itself.
+         *
          * @param arg The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -138,8 +185,9 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts an argument of the program itself.
+         *
          * @param when Only apply the method when this returns true.
-         * @param arg The argument of the command.
+         * @param arg  The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
         public CommandArrayBuilder addPArg(final BooleanSupplier when, final String arg) {
@@ -151,6 +199,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments of the command.
+         *
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -161,6 +210,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments of the command.
+         *
          * @param when Only apply the method when this returns true.
          * @param args The argument of the command.
          * @return An instance of CommandArrayBuilder
@@ -174,6 +224,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments of the command.
+         *
          * @param arg The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -184,8 +235,9 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments of the command.
+         *
          * @param when Only apply the method when this returns true.
-         * @param arg The argument of the command.
+         * @param arg  The argument of the command.
          * @return An instance of CommandArrayBuilder
          */
         public CommandArrayBuilder addArg(final BooleanSupplier when, final String arg) {
@@ -197,6 +249,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments that must be at the end of the command arguments.
+         *
          * @param args The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -207,6 +260,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts the arguments that must be at the end of the command arguments.
+         *
          * @param when Only apply the method when this returns true.
          * @param args The last arguments of the command.
          * @return An instance of CommandArrayBuilder
@@ -220,6 +274,7 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts an argument that must be at the end of the command arguments.
+         *
          * @param arg The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
@@ -230,8 +285,9 @@ public final class CommandArray implements ICommandArray {
 
         /**
          * Accepts an argument that must be at the end of the command arguments.
+         *
          * @param when Only apply the method when this returns true.
-         * @param arg The last arguments of the command.
+         * @param arg  The last arguments of the command.
          * @return An instance of CommandArrayBuilder
          */
         public CommandArrayBuilder addZArg(final BooleanSupplier when, final String arg) {
@@ -240,5 +296,5 @@ public final class CommandArray implements ICommandArray {
             }
             return this;
         }
-    }
+   }
 }
