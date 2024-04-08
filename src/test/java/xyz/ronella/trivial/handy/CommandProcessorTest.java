@@ -242,5 +242,19 @@ public class CommandProcessorTest {
         assertEquals(0, output.get());
     }
 
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void docExampleWithoutOutputHandler() {
+        final var output = CommandProcessor.process(CommandArray.wrap("where cmd"));
+        System.out.println(output.orElse(-1));
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    public void docExampleToCaptureOutputAsString() {
+        final var status = CommandProcessor.process(CommandProcessor.ProcessOutputHandler.outputToString(),
+                CommandArray.wrap("where cmd"));
+        System.out.println(status.orElse("No output"));
+    }
 
 }

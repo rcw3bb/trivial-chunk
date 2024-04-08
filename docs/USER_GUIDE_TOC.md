@@ -69,9 +69,15 @@
 
   A convenience class for **locating a command**.
 
-* [CommandRunner](HDY_COMMAND_RUNNER.md)
+* [CommandRunner](HDY_COMMAND_RUNNER.md) (Deprecated)
 
   A convenience class for **creating operating system process**.
+
+  This is a deprecated class, use [CommandProcessor](HDY_COMMAND_PROCESSOR.md) instead.
+
+* [CommandProcessor](HDY_COMMAND_PROCESSOR.md)
+
+  A convenience class for **creating operating system process** with customizable output logic.
 
 * [Conditions](HDY_CONDITIONS.md)
 
