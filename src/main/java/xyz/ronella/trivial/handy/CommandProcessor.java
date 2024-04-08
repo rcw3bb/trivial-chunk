@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * A utility class for running executable commands.
@@ -182,7 +179,10 @@ final public class CommandProcessor {
         private static String streamToString(final InputStream inputStream) {
             final var outputScanner = new Scanner(inputStream);
             final var delim = "\n";
-            final var sbOutput = new StringBuilderAppender(___sb -> ___sb.append(!___sb.isEmpty() ? delim : ""));
+
+            final var sbOutput = new StringBuilderAppender(___sb ->
+                    new StringBuilderAppender(___sb).appendWhen(delim).when(Predicate.not(CharSequence::isEmpty)));
+
             outputScanner.useDelimiter(delim);
 
             while (outputScanner.hasNextLine()) {
@@ -225,7 +225,7 @@ final public class CommandProcessor {
          * @param streams The logic process the streams.
          * @return The exit code of the command.
          */
-        public static Function<Process, Integer> captureStreams(BiConsumer<InputStream, InputStream> streams) {
+        public static Function<Process, Integer> captureStreams(final BiConsumer<InputStream, InputStream> streams) {
             return (___process) -> {
                 try (var output = ___process.getInputStream();
                      var error = ___process.getErrorStream()) {
@@ -244,7 +244,7 @@ final public class CommandProcessor {
          * @param outputs The logic process the output strings.
          * @return The exit code of the command.
          */
-        public static Function<Process, Integer> captureOutputs(BiConsumer<String, String> outputs) {
+        public static Function<Process, Integer> captureOutputs(final BiConsumer<String, String> outputs) {
             return captureStreams((___output, ___error) ->
                     outputs.accept(streamToString(___output), streamToString(___error)));
         }

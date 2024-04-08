@@ -9,6 +9,7 @@
 
     <exclude-pattern>.*/StringBuilderAppender\.java</exclude-pattern>
     <exclude-pattern>.*/CommandRunner\.java</exclude-pattern>
+    <exclude-pattern>.*/CommandProcessor\.java</exclude-pattern>
     <exclude-pattern>.*/NPESilencer\.java</exclude-pattern>
     <exclude-pattern>.*/OSType.*</exclude-pattern>
     <exclude-pattern>.*/RegExMatcher\.java</exclude-pattern>
@@ -28,7 +29,6 @@
         <exclude name="UnnecessaryConstructor"/>
         <exclude name="ShortClassName"/>
     </rule>
-    <rule ref="category/java/codestyle.xml/UnnecessaryImport" />
     <rule ref="category/java/design.xml" >
         <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
