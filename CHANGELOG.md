@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.18.1 : 2024-04-08
+
+### Added
+
+* Implement CommandProcessor.
+* Add CommandArray.wrap method the can convert a string command to and instance of ICommandArray.
+
+### Changed
+
+* Deprecate CommandRunner in favor of CommandProcessor.
+
 ## 2.17.1 : 2023-01-24
 
 ### Changed
