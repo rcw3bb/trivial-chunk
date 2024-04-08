@@ -1,5 +1,7 @@
 package xyz.ronella.trivial.handy;
 
+import xyz.ronella.trivial.handy.impl.CommandArray;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -40,19 +42,11 @@ public final class CommandLocator {
     public static Optional<File> locateAsFile(final String command) {
         final var osType = OSType.identify();
         final var finder = getFinder(osType);
-        final var sbFQFN = new StringBuilder();
         Optional<File> execOutput = Optional.empty();
         try {
-            CommandRunner.runCommand((___output, ___error) -> {
-                try(var output = new BufferedReader(new InputStreamReader(___output)))  {
-                    sbFQFN.append(output.lines().collect(Collectors.joining("\n")));
-                }
-                catch (IOException exception) {
-                    //Do nothing.
-                }
-            }, finder, command);
-            var fqfn = sbFQFN.toString();
-            if (fqfn.length() > 0) {
+            var fqfn = CommandProcessor.process(CommandProcessor.ProcessOutputHandler.outputToString(),
+                    CommandArray.wrap(String.format("%s %s", finder, command))).orElse("");
+            if (!fqfn.isEmpty()) {
                 if (OSType.Windows == osType) {
                     fqfn = fqfn.split("\\r\\n")[0]; //Just the first valid entry of where.
                 }
@@ -61,7 +55,7 @@ public final class CommandLocator {
                     execOutput = Optional.of(fileExec);
                 }
             }
-        } catch (MissingCommandException e) {
+        } catch (CommandProcessorException e) {
             //Do nothing.
         }
         return execOutput;
