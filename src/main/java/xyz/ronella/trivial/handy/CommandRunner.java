@@ -16,6 +16,7 @@ import java.util.function.Supplier;
  * @since 2.5.0
  * @deprecated Use CommandProcessor instead.
  */
+@Deprecated
 public final class CommandRunner {
 
     /**

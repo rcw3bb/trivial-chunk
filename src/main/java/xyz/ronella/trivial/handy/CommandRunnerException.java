@@ -7,6 +7,7 @@ package xyz.ronella.trivial.handy;
  * @since 2.14.0
  * @deprecated Use CommandProcessorException instead.
  */
+@Deprecated
 public class CommandRunnerException extends Exception {
 
     private static final long serialVersionUID = -1570448112945466784L;
