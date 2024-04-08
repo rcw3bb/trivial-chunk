@@ -5,6 +5,7 @@ package xyz.ronella.trivial.handy;
  *
  * @author Ron Webb
  * @since 2.14.0
+ * @deprecated Use CommandProcessorException instead.
  */
 public class CommandRunnerException extends Exception {
 
