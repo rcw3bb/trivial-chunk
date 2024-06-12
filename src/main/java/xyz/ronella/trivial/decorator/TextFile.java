@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  * A class that wraps a File class that must be holding a reference to a text file.
@@ -73,7 +74,10 @@ public class TextFile {
      */
     public String getText(final Charset charset, final EndOfLine endOfLine) throws IOException {
         try(var scanner = new Scanner(file, charset)) {
-            final var sbText = new StringBuilderAppender(___sb -> ___sb.append(___sb.length() > 0 ? endOfLine.eol() : ""));
+            final var sbText = new StringBuilderAppender(___sb -> new StringBuilderAppender(___sb)
+                    .appendWhen(endOfLine.eol())
+                    .when(Predicate.not(StringBuilder::isEmpty)));
+
             while (scanner.hasNextLine()) {
                 final var line = scanner.nextLine();
                 sbText.append(line);
