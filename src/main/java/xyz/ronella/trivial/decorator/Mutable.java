@@ -15,6 +15,14 @@ public class Mutable<TYPE_OBJECT> {
     private TYPE_OBJECT object;
 
     /**
+     * Create an instance of Mutable.
+     * @since 2.19.0
+     */
+    public Mutable() {
+        // Allow the creation without an object to carry.
+    }
+
+    /**
      * Creates an instance of Mutable.
      *
      * @param object The immutable object to carry.

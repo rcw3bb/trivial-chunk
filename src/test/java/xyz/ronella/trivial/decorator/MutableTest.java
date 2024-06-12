@@ -47,4 +47,13 @@ public class MutableTest {
         consumer.accept("World");
         assertEquals("World", mutable.get());
     }
+
+    @Test
+    public void defaultConstructor() {
+        var mutable = new Mutable<String>();
+        assertNull(mutable.get());
+        Consumer<String> consumer = mutable::set;
+        consumer.accept("World");
+        assertEquals("World", mutable.get());
+    }
 }
