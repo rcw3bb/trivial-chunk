@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.handy;
 
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * The enumerator that identifies the OSType.
@@ -13,24 +15,29 @@ public enum OSType {
     /**
      * Indicates that the OS type is Windows.
      */
-    Windows(EndOfLine.CRLF),
+    Windows(EndOfLine.CRLF,
+            System.getenv("APPDATA")),
     /**
      * Indicates that the OS type is Linux.
      */
-    Linux(EndOfLine.LF),
+    Linux(EndOfLine.LF,
+            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/.local"),
     /**
      * Indicates that the OS type is Mac.
      */
-    Mac(EndOfLine.CR),
+    Mac(EndOfLine.CR,
+            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/Library/Application Support"),
     /**
      * Indicates that the OS type cannot be determined.
      */
-    Unknown(EndOfLine.SYSTEM);
+    Unknown(EndOfLine.SYSTEM, null);
 
     private final EndOfLine eol;
+    private final String appDataDir;
 
-    OSType(final EndOfLine eol) {
+    OSType(final EndOfLine eol, final String appDataDir) {
         this.eol = eol;
+        this.appDataDir = appDataDir;
     }
 
     /**
@@ -42,21 +49,46 @@ public enum OSType {
     }
 
     /**
+     * The application data directory associated with the OS.
+     * @return The application data directory.
+     *
+     * @since 2.19.0
+     */
+    public Optional<String> getAppDataDir() {
+        return Optional.ofNullable(appDataDir);
+    }
+
+    /**
      * Identifies the current OS where the code is running.
      *
      * @return An instance of OSType.
      */
     public static OSType identify() {
         final var osName = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-        if (osName.contains("win")) {
-            return OSType.Windows;
-        }
-        else if (osName.contains("mac")) {
-            return OSType.Mac;
-        }
-        else if (osName.contains("nux") || osName.contains("nix") || osName.contains("aix")) {
-            return OSType.Linux;
-        }
-        return OSType.Unknown;
+        return OSType.of(osName);
+    }
+
+    /**
+     * Identifies the OS type based on the OS name.
+     *
+     * @param osName The OS name.
+     * @return An instance of OSType.
+     *
+     * @since 2.19.0
+     */
+    public static OSType of(final String osName) {
+        return Arrays.stream(OSType.values()).filter(___osType-> {
+            final var lowerOsName = osName.toLowerCase(Locale.ROOT);
+            if (lowerOsName.contains("win")) {
+                return ___osType == OSType.Windows;
+            }
+            else if (lowerOsName.contains("mac")) {
+                return ___osType == OSType.Mac;
+            }
+            else if (lowerOsName.contains("nux") || lowerOsName.contains("nix") || lowerOsName.contains("aix")) {
+                return ___osType == OSType.Linux;
+            }
+            return false;
+        }).findFirst().orElse(OSType.Unknown);
     }
 }
