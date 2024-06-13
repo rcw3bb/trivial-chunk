@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.handy.EndOfLine;
 import xyz.ronella.trivial.handy.OSType;
 import xyz.ronella.trivial.handy.PathFinder;
 
@@ -73,42 +74,42 @@ public class TextFileTest {
     public void testWindowEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-windows.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine().get());
+        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testLinuxEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-unix.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Linux.getEOL(), textFile.getEndOfLine().get());
+        assertEquals(OSType.Linux.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testMacEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-mac.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Mac.getEOL(), textFile.getEndOfLine().get());
+        assertEquals(OSType.Mac.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testMacSingleLineEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-mac-oneline.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Mac.getEOL(), textFile.getEndOfLine().get());
+        assertEquals(OSType.Mac.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testEmptyEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-empty.txt");
         final var textFile = new TextFile(file);
-        assertTrue(textFile.getEndOfLine().isEmpty());
+        assertEquals(EndOfLine.SYSTEM, textFile.getEndOfLine());
     }
 
     @Test
     public void testNoNextLineEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-no-nextline.txt");
         final var textFile = new TextFile(file);
-        assertTrue(textFile.getEndOfLine().isEmpty());
+        assertEquals(EndOfLine.SYSTEM, textFile.getEndOfLine());
     }
 
 }

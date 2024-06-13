@@ -5,7 +5,6 @@ import xyz.ronella.trivial.handy.EndOfLine;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -93,8 +92,8 @@ public class TextFile {
      * @since 2.19.0
      */
     @SuppressWarnings({"PMD.AvoidFileStream", "PMD.EmptyCatchBlock"})
-    public Optional<EndOfLine> getEndOfLine() throws IOException {
-        Optional<EndOfLine> output = Optional.empty();
+    public EndOfLine getEndOfLine() throws IOException {
+        EndOfLine output = EndOfLine.SYSTEM;
 
         try (var raf = new RandomAccessFile(file, "r")) {
             byte byteRead = raf.readByte();
@@ -102,17 +101,17 @@ public class TextFile {
             while (byteRead != -1) {
                 sbFirstLine.append((char) byteRead);
                 if (sbFirstLine.toString().endsWith("\r")) {
-                    output = /*Assume that it is already CR */ Optional.of(EndOfLine.CR);
+                    output = /*Assume that it is already CR */ EndOfLine.CR;
 
                     byteRead = /* Read the next byte to check if LF is the next character. */ raf.readByte();
                     sbFirstLine.append((char) byteRead);
                     if (byteRead != -1 && sbFirstLine.toString().endsWith("\r\n")) {
-                        output = Optional.of(EndOfLine.CRLF);
+                        output = EndOfLine.CRLF;
                         break;
                     }
                     break;
                 } else if (sbFirstLine.toString().endsWith("\n")) {
-                    output = Optional.of(EndOfLine.LF);
+                    output = EndOfLine.LF;
                     break;
                 }
                 byteRead = raf.readByte();
