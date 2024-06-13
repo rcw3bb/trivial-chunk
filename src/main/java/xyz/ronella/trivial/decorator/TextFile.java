@@ -89,6 +89,8 @@ public class TextFile {
      * Return the line ending of the file.
      * @return An instance of EndOfLine.
      * @throws IOException Can throw this exception.
+     *
+     * @since 2.19.0
      */
     @SuppressWarnings({"PMD.AvoidFileStream", "PMD.EmptyCatchBlock"})
     public Optional<EndOfLine> getEndOfLine() throws IOException {
