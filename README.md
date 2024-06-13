@@ -11,10 +11,10 @@ A library of trivial codes.
 1. Add the following **maven** dependency to your project:
 
    | Property    | Value              |
-   | ----------- | ------------------ |
+   | ----------- |--------------------|
    | Group ID    | xyz.ronella.casual |
    | Artifact ID | trivial-chunk      |
-   | Version     | 2.18.0             |
+   | Version     | 2.19.0             |
 
    Visit the following `maven repository` for more information about adding this as a dependency:
 

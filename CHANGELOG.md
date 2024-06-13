@@ -10,7 +10,7 @@
 * Add OSType to provide the application data directory.
 * Add EndOfLine can now be provided by the TextFile.
 
-## 2.18.1 : 2024-04-09
+## 2.18.0 : 2024-04-09
 
 ### New
 

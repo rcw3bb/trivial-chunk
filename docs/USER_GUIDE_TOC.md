@@ -23,6 +23,10 @@
 
   **Wrapping the Lock implementation with CloseableLock makes it Closeable** 
 
+* [FileNomen](DEC_FILENOMEN.md)
+
+  A decorator class for **operating with File** to extract the filename and the extension.
+
 * [ListAdder](DEC_LIST_ADDER.md)
 
   A decorator of List implementation that exposes **conditional add methods** and ability to **add calculated elements**.

@@ -9,6 +9,22 @@ An enumeration of OSes as follows:
 | OSType.Mac     | Indicates a mac OS.     |
 | OSType.Unknown | Unidentified OS.        |
 
+### OSType.of(osName) Static method
+
+A convenience method that returns the OSType instance based on the osName.
+
+**Sample Usage**
+
+```java
+System.out.println(OSType.of("Windows"));
+```
+
+Expected Output
+
+```
+Windows
+```
+
 ### OSType.identify() Static method
 
 A convenience method that identifies the current OS where the current code is being run.

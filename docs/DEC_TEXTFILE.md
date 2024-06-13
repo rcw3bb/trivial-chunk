@@ -20,6 +20,7 @@ A decorator class for **operating with TextFile**.
 
 | Signatures |
 |--------|
+| public EndOfLine **getEndOfLine()** throws IOException |
 | public String **getText**() throws IOException |
 | public String **getText**(final Charset **charset**) throws IOException |
 | public String **getText**(final Charset **charset**, final EndOfLine **endOfLine**) throws IOException |

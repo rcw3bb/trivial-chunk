@@ -5,6 +5,7 @@ A convenience class that **accepts an immutable object and making it possible to
 
 | Signature |
 |---------|
+| public **Mutable**() |
 | public **Mutable**(TYPE_OBJECT **object**) |
 
 ### **Parameter**

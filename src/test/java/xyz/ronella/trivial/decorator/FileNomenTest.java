@@ -50,4 +50,11 @@ public class FileNomenTest {
         assertEquals("txt", nomen.getExtension().get());
     }
 
+    @Test
+    public void docSample() {
+        final var file = new File("TestFile.txt");
+        final var nomen = new FileNomen(file);
+        System.out.printf("Filename: %s.%s%n", nomen.getFilename().get(), nomen.getExtension().get());
+    }
+
 }
