@@ -2,11 +2,10 @@ package xyz.ronella.trivial.decorator;
 
 import xyz.ronella.trivial.handy.EndOfLine;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -84,6 +83,42 @@ public class TextFile {
             }
             return sbText.toString();
         }
+    }
+
+    /**
+     * Return the line ending of the file.
+     * @return An instance of EndOfLine.
+     * @throws IOException Can throw this exception.
+     */
+    @SuppressWarnings({"PMD.AvoidFileStream", "PMD.EmptyCatchBlock"})
+    public Optional<EndOfLine> getEndOfLine() throws IOException {
+        Optional<EndOfLine> output = Optional.empty();
+
+        try (var raf = new RandomAccessFile(file, "r")) {
+            byte byteRead = raf.readByte();
+            final var sbFirstLine = new StringBuilder();
+            while (byteRead != -1) {
+                sbFirstLine.append((char) byteRead);
+                if (sbFirstLine.toString().endsWith("\r")) {
+                    output = /*Assume that it is already CR */ Optional.of(EndOfLine.CR);
+
+                    byteRead = /* Read the next byte to check if LF is the next character. */ raf.readByte();
+                    sbFirstLine.append((char) byteRead);
+                    if (byteRead != -1 && sbFirstLine.toString().endsWith("\r\n")) {
+                        output = Optional.of(EndOfLine.CRLF);
+                        break;
+                    }
+                    break;
+                } else if (sbFirstLine.toString().endsWith("\n")) {
+                    output = Optional.of(EndOfLine.LF);
+                    break;
+                }
+                byteRead = raf.readByte();
+            }
+        } catch (EOFException e) {
+            //If end of file was reached without detecting any line ending. The output will be empty as expected.
+        }
+        return output;
     }
 
 }
