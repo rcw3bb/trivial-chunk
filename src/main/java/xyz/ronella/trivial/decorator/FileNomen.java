@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * @since 2.19.0
  * @author Ron Webb
  */
-public class Nomen {
+public class FileNomen {
 
     private final File file;
 
@@ -21,7 +21,7 @@ public class Nomen {
      * Creates an instance of a Nomen.
      * @param file An instance of File.
      */
-    public Nomen(final File file) {
+    public FileNomen(final File file) {
         this.file = file;
     }
 
