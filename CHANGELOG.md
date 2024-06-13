@@ -1,8 +1,18 @@
 # Changelog
 
+## 2.19.0 : 2024-06-14
+
+### New
+
+* Add default constructor to Mutable.
+* Add FileNomen to extract file name and extension.
+* Add OSType.of() method to get the OSType based on the name provided.
+* Add OSType to provide the application data directory.
+* Add EndOfLine can now be provided by the TextFile.
+
 ## 2.18.1 : 2024-04-09
 
-### Added
+### New
 
 * Implement CommandProcessor.
 * Add CommandArray.wrap method the can convert a string command to and instance of ICommandArray.
@@ -19,14 +29,14 @@
 
 ## 2.17.0 : 2023-12-23
 
-### Added
+### New
 
 * Now requires java 17.
 * New Require.objects method that support custom error message using RequireObject record.
 
 ## 2.16.0 : 2023-08-14
 
-### Added
+### New
 
 * Add BigDecimalPlus implementation.
 * Add WhenThen and WhenThenReturn functional interfaces.
@@ -41,13 +51,13 @@
 
 ## 2.15.0 : 2023-03-24
 
-### Added
+### New
 
 * Add getInputStream to PathFinder.
 
 ## 2.14.0 : 2022-08-29
 
-### Added
+### New
 
 * Introduce a handy PathFinder.
 
@@ -59,26 +69,26 @@
 
 ## 2.13.0 : 2022-08-23 *(Do not use)*
 
-### Added
+### New
 
 * Update the CommandRunner to have access to the Process object via the startProcess method.
 
 ## 2.12.0 : 2022-08-16
 
-### Added
+### New
 
 * Introduce OptionalString decorator.
 
 ## 2.11.0 : 2022-06-20
 
-### Added
+### New
 
 * Introduce IMatcherConfig to be used with RegExMatcher.
 * More NoOperation methods.
 
 ## 2.10.0 : 2022-06-03
 
-### Added
+### New
 
 * Introduce ICommandArray to be used along side CommandRunner.
 * Add ListAdder implementation.
@@ -86,26 +96,26 @@
 
 ## 2.9.0 : 2022-05-20
 
-### Added
+### New
 
 * Add CloseableLock implementation.
 * Add Mutable implementation.
 
 ## 2.8.0 : 2022-05-18
 
-### Added
+### New
 
 * Add replace method to StringBuilderAppender. 
 
 ## 2.7.0 : 2022-05-18
 
-### Added
+### New
 
 * Add clear method to StringBuilderAppender. 
 
 ## 2.6.0 : 2022-05-17
 
-### Added
+### New
 
 * The find and match methods are added in RegExMatcher. 
 
@@ -121,7 +131,7 @@
 
 ## 2.5.0 : 2022-05-10 *(Publishing error)*
 
-### Added
+### New
 
 * CommandRunner implementation.
 * RegExMatcher implementation.
@@ -132,20 +142,20 @@
 
 ## 2.4.0 : 2021-12-13
 
-### Added
+### New
 
 * BooleanSupplierKeyedMapExecutor and BooleanSupplierKeyedMapFactory logic mapper.
 
 ## 2.3.0 : 2021-05-14
 
-### Added
+### New
 
 * NPESilencer implementation.
 * Require implementation
 
 ## 2.2.0 : 2021-05-09
 
-### Added
+### New
 
 * NoOperation implementation of some core functional interfaces.
 * Sink interface now has default drainTo method.
@@ -153,7 +163,7 @@
 
 ## 2.1.0 : 2021-04-28
 
-### Added
+### New
 
 * StringBuilderAppender can now accepts String in the constructor.
 * StringBuilderAppender have a default internal StringBuilder if neither StringBuilder or String was passed in the contructor.
@@ -161,7 +171,7 @@
 
 ## 2.0.0 : 2021-04-26
 
-### Added
+### New
 
 * toString method to StringBuilderAppender.
 * addInlineLogic method to LogicMapper.
@@ -178,19 +188,19 @@
 
 ## 1.3.0 : 2021-04-22
 
-### Added
+### New
 
 * LogicMapper now has initial and final logic.
 
 ## 1.2.0 : 2021-04-21
 
-### Added
+### New
 
 * OSType enum
 
 ## 1.1.0 : 2019-12-01
 
-### Added
+### New
 
 * LogicOR and LogicAND commands.
 * Handy Conditions.
