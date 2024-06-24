@@ -198,34 +198,23 @@ public class TextFile {
      *
      * @since 2.19.0
      */
-    @SuppressWarnings({"PMD.AvoidFileStream", "PMD.EmptyCatchBlock"})
-    public EndOfLine getEndOfLine() throws IOException {
+     public EndOfLine getEndOfLine() throws IOException {
         EndOfLine output = EndOfLine.SYSTEM;
 
-        try (var raf = new RandomAccessFile(file, "r")) {
-            byte byteRead = raf.readByte();
-            final var sbFirstLine = new StringBuilder();
-            while (byteRead != -1) {
-                sbFirstLine.append((char) byteRead);
-                if (sbFirstLine.toString().endsWith("\r")) {
-                    output = /*Assume that it is already CR */ EndOfLine.CR;
+        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+            final var bytes = new byte[(int) raf.length()];
+            raf.readFully(bytes);
+            final var content = new String(bytes, charset);
 
-                    byteRead = /* Read the next byte to check if LF is the next character. */ raf.readByte();
-                    sbFirstLine.append((char) byteRead);
-                    if (byteRead != -1 && sbFirstLine.toString().endsWith("\r\n")) {
-                        output = EndOfLine.CRLF;
-                        break;
-                    }
-                    break;
-                } else if (sbFirstLine.toString().endsWith("\n")) {
-                    output = EndOfLine.LF;
-                    break;
-                }
-                byteRead = raf.readByte();
+            if (content.contains("\r\n")) {
+                output = EndOfLine.CRLF;
+            } else if (content.contains("\n")) {
+                output = EndOfLine.LF;
+            } else if (content.contains("\r")) {
+                output = EndOfLine.CR;
             }
-        } catch (EOFException e) {
-            //If end of file was reached without detecting any line ending. The output will be empty as expected.
         }
+
         return output;
     }
 

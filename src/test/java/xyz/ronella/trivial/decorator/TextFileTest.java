@@ -127,7 +127,7 @@ public class TextFileTest {
     }
 
     @Test
-    public void setTextWithLineEndinString() throws IOException {
+    public void setTextWithLineEndingString() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
                 "Line 3.";
@@ -144,6 +144,34 @@ public class TextFileTest {
     public void testWindowEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-windows.txt");
         final var textFile = new TextFile(file);
+        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+    }
+
+    @Test
+    public void testWindowEOLUTF16LE() throws IOException {
+        final var file = new File("src/test/resources/textfile-windows-utf16-le.txt");
+        final var textFile = new TextFile(file, StandardCharsets.UTF_16LE);
+        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+    }
+
+    @Test
+    public void testWindowEOLUTF16LEBOM() throws IOException {
+        final var file = new File("src/test/resources/textfile-windows-utf16-le-bom.txt");
+        final var textFile = new TextFile(file, StandardCharsets.UTF_16LE);
+        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+    }
+
+    @Test
+    public void testWindowEOLUTF16BE() throws IOException {
+        final var file = new File("src/test/resources/textfile-windows-utf16-be.txt");
+        final var textFile = new TextFile(file, StandardCharsets.UTF_16BE);
+        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+    }
+
+    @Test
+    public void testWindowEOLUTF16BEBOM() throws IOException {
+        final var file = new File("src/test/resources/textfile-windows-utf16-be-bom.txt");
+        final var textFile = new TextFile(file, StandardCharsets.UTF_16BE);
         assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
     }
 
