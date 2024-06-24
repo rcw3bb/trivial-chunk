@@ -4,6 +4,8 @@ import xyz.ronella.trivial.functional.NoOperation;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.functional.impl.StringBuilderDelim;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StringBuilderAppenderTest {
@@ -345,4 +347,20 @@ public class StringBuilderAppenderTest {
         builder.threadSafe().replace("Hello", "World");
         assertEquals("+World-", builder.toString());
     }
+
+    @Test
+    public void appendDelimNonEmpty() {
+        var builder = new StringBuilderAppender(new StringBuilderDelim<>(", "))
+                .append("Hello")
+                .append("World");
+        assertEquals("Hello, World", builder.toString());
+    }
+
+    @Test
+    public void appendDelimEmpty() {
+        var builder = new StringBuilderAppender(new StringBuilderDelim<>(", "))
+                .append("Hello");
+        assertEquals("Hello", builder.toString());
+    }
+
 }
