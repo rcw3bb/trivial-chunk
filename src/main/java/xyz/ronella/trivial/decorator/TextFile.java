@@ -5,6 +5,7 @@ import xyz.ronella.trivial.handy.EndOfLine;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -17,13 +18,15 @@ import java.util.function.Predicate;
 public class TextFile {
 
     private final File file;
+    private final Charset charset;
+    private final EndOfLine endOfLine;
 
     /**
      * Creates an instance of a text file.
      * @param file An instance of File.
      */
     public TextFile(final File file) {
-        this.file = file;
+        this(file, StandardCharsets.UTF_8, EndOfLine.SYSTEM);
     }
 
     /**
@@ -31,7 +34,77 @@ public class TextFile {
      * @param filename The filename.
      */
     public TextFile(final String filename) {
-        this(new File(filename));
+        this(filename, StandardCharsets.UTF_8, EndOfLine.SYSTEM);
+    }
+
+    /**
+     * Creates an instance of a text file.
+     * @param filename The filename.
+     * @param endOfLine The character set to use.
+     *
+     * @since 2.20.0
+     */
+    public TextFile(final String filename, final EndOfLine endOfLine) {
+        this(filename, StandardCharsets.UTF_8, endOfLine);
+    }
+
+    /**
+     * Creates an instance of a text file.
+     * @param filename The filename.
+     * @param charset The character set to use.
+     *
+     * @since 2.20.0
+     */
+    public TextFile(final String filename, final Charset charset) {
+        this(filename, charset, EndOfLine.SYSTEM);
+    }
+
+    /**
+     * Creates an instance of a text file.
+     * @param filename The filename.
+     * @param charset The character set to use.
+     * @param endOfLine The character set to use.
+     *
+     * @since 2.20.0
+     */
+    public TextFile(final String filename, final Charset charset, final EndOfLine endOfLine) {
+        this(new File(filename), charset, endOfLine);
+    }
+
+    /**
+     * Creates an instance of a text file.
+     * @param file The filename.
+     * @param charset The character set to use.
+     *
+     * @since 2.20.0
+     */
+    public TextFile(final File file, final Charset charset) {
+        this(file, charset, EndOfLine.SYSTEM);
+    }
+
+    /**
+     * Creates an instance of a text file.
+     * @param file The filename.
+     * @param endOfLine The character set to use.
+     *
+     * @since 2.20.0
+     */
+    public TextFile(final File file, final EndOfLine endOfLine) {
+        this(file, StandardCharsets.UTF_8, endOfLine);
+    }
+
+    /**
+     * Creates an instance of a text file.
+     * @param file The filename.
+     * @param charset The character set to use.
+     * @param endOfLine The character set to use.
+     *
+     * @since 2.20.0
+     */
+    public TextFile(final File file, final Charset charset, final EndOfLine endOfLine) {
+        this.file = file;
+        this.charset = charset;
+        this.endOfLine = endOfLine;
     }
 
     /**
@@ -40,7 +113,17 @@ public class TextFile {
      * @throws FileNotFoundException Can throw this exception.
      */
     public String getText() throws IOException {
-        return getText(StandardCharsets.UTF_8, EndOfLine.SYSTEM);
+        try(var scanner = new Scanner(file, charset)) {
+            final var sbText = new StringBuilderAppender(___sb -> new StringBuilderAppender(___sb)
+                    .appendWhen(endOfLine.eol())
+                    .when(Predicate.not(StringBuilder::isEmpty)));
+
+            while (scanner.hasNextLine()) {
+                final var line = scanner.nextLine();
+                sbText.append(line);
+            }
+            return sbText.toString();
+        }
     }
 
     /**
@@ -48,7 +131,9 @@ public class TextFile {
      * @param endOfLine An instance of EndOfLine.
      * @return The text content.
      * @throws FileNotFoundException Can throw this exception.
+     * @deprecated Use the constructor to set the endOfLine instead.
      */
+    @Deprecated
     public String getText(final EndOfLine endOfLine) throws IOException {
         return getText(StandardCharsets.UTF_8, endOfLine);
     }
@@ -58,7 +143,9 @@ public class TextFile {
      * @param charset The character set to use.
      * @return The text content.
      * @throws FileNotFoundException Can throw this exception.
+     * @deprecated Use the constructor to set the charset instead.
      */
+    @Deprecated
     public String getText(final Charset charset) throws IOException {
         return getText(charset, EndOfLine.SYSTEM);
     }
@@ -69,7 +156,9 @@ public class TextFile {
      * @param endOfLine An instance of EndOfLine.
      * @return The text content.
      * @throws FileNotFoundException Can throw this exception.
+     * @deprecated Use the constructor to set the charset and endOfLine instead.
      */
+    @Deprecated
     public String getText(final Charset charset, final EndOfLine endOfLine) throws IOException {
         try(var scanner = new Scanner(file, charset)) {
             final var sbText = new StringBuilderAppender(___sb -> new StringBuilderAppender(___sb)
@@ -81,6 +170,24 @@ public class TextFile {
                 sbText.append(line);
             }
             return sbText.toString();
+        }
+    }
+
+    /**
+     * Set the text content of the file.
+     * @param text The text content.
+     * @throws IOException Can throw this exception.
+     *
+     * @since 2.20.0
+     */
+    public void setText(final String text) throws IOException {
+        try (var writer = Files.newBufferedWriter(file.toPath(), charset);
+             var scanner = new Scanner(text)) {
+
+            while (scanner.hasNextLine()) {
+                writer.write(scanner.nextLine());
+                writer.write(endOfLine.eol());
+            }
         }
     }
 

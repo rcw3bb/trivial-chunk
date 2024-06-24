@@ -71,6 +71,76 @@ public class TextFileTest {
     }
 
     @Test
+    public void setTextContentOnly() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var file = new File("src/test/resources/dummy.txt");
+        final var textFile = new TextFile(file);
+        textFile.setText(expectation);
+        final var text = textFile.getText();
+        assertEquals(expectation, text);
+        file.delete();
+        assertFalse(file.exists());
+    }
+
+    @Test
+    public void setTextWithCharset() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var file = new File("src/test/resources/dummy.txt");
+        final var textFile = new TextFile(file, StandardCharsets.UTF_16);
+        textFile.setText(expectation);
+        final var text = textFile.getText();
+        assertEquals(expectation, text);
+        file.delete();
+        assertFalse(file.exists());
+    }
+
+    @Test
+    public void setTextWithLineEnding() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var file = new File("src/test/resources/dummy.txt");
+        final var textFile = new TextFile(file, EndOfLine.CRLF);
+        textFile.setText(expectation);
+        final var text = textFile.getText();
+        assertEquals(expectation, text);
+        file.delete();
+        assertFalse(file.exists());
+    }
+
+    @Test
+    public void setTextWithCharsetString() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var file = new File("src/test/resources/dummy.txt");
+        final var textFile = new TextFile(file.getAbsolutePath(), StandardCharsets.UTF_16);
+        textFile.setText(expectation);
+        final var text = textFile.getText();
+        assertEquals(expectation, text);
+        file.delete();
+        assertFalse(file.exists());
+    }
+
+    @Test
+    public void setTextWithLineEndinString() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var file = new File("src/test/resources/dummy.txt");
+        final var textFile = new TextFile(file.getAbsolutePath(), EndOfLine.CRLF);
+        textFile.setText(expectation);
+        final var text = textFile.getText();
+        assertEquals(expectation, text);
+        file.delete();
+        assertFalse(file.exists());
+    }
+
+    @Test
     public void testWindowEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-windows.txt");
         final var textFile = new TextFile(file);
