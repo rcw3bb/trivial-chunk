@@ -6,7 +6,7 @@ plugins {
     id 'signing'
     id 'jacoco'
     id 'pmd'
-    id "io.snyk.gradle.plugin.snykplugin" version "0.5"
+    id "io.snyk.gradle.plugin.snykplugin" version "0.6.1"
 }
 
 group 'xyz.ronella.casual'
