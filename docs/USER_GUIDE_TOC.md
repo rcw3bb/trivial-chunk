@@ -60,6 +60,10 @@
 
   The class that supplies a do nothing implementation of some of the functional interfaces. This is created so that you don't have to create it yourself.
 
+* [StringBuilderDelim](FNC_STRING_BUILDER_DELIM.md)
+
+  An implementation of the Consumer functional interface that appends a delimiter between each element added with the accepted StringBuilder instance.
+
 * [WhenThen Interface](FNC_WHEN_THEN_INTERFACE.md)
 
   A consumer interface that provides when method that doesn't return a value.

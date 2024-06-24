@@ -7,7 +7,13 @@ A decorator class for **operating with TextFile**.
 | Signatures |
 |---------|
 | public **TextFile**(final File **file**) |
+| public **TextFile**(final File **file**, final Charset **charset**) |
+| public **TextFile**(final File **file**, final Charset **charset**, final EndOfLine **endOfLine**) |
+| public **TextFile**(final File **file**, final EndOfLine **endOfLine**) |
 | public **TextFile**(final String **filename**) |
+| public **TextFile**(final String **filename**, final Charset **charset**) |
+| public **TextFile**(final String **filename**, final Charset **charset**, final EndOfLine **endOfLine**) |
+| public **TextFile**(final String **filename**, final EndOfLine **endOfLine**) |
 
 ### **Parameter**
 
@@ -15,6 +21,8 @@ A decorator class for **operating with TextFile**.
 | --------- | ----------------------------------------- |
 | file | An instance of the File to wrap. |
 | filename | The filename to operate on. |
+| charset | The character set to use with the text file. The default is **StandardCharsets.UTF_8**. |
+| endOfLine | The end of line to use with the text file. The default is what ever the wrapped EOL of the file. |
 
 ## Main Methods
 
@@ -22,16 +30,13 @@ A decorator class for **operating with TextFile**.
 |--------|
 | public EndOfLine **getEndOfLine()** throws IOException |
 | public String **getText**() throws IOException |
-| public String **getText**(final Charset **charset**) throws IOException |
-| public String **getText**(final Charset **charset**, final EndOfLine **endOfLine**) throws IOException |
-| public String **getText**(final EndOfLine **endOfLine**) throws IOException |
+| public void **setText**(final String **text**) throws IOException |
 
 ### **Parameter**s
 
 | Parameter | Descriptions              |
 | --------- | ------------------------- |
-| charset | An instance of the Charset to use. If not set it is defaulted to **StandardCharsets.UTF_8**. |
-| endOfLine | An instance of the EndOfLine to use. If not set it is defaulted to **EndOfLine.SYSTEM**. |
+| text | The text to set the content of the wrapped file. |
 
 **Sample Usage**
 

@@ -9,22 +9,6 @@ An enumeration of OSes as follows:
 | OSType.Mac     | Indicates a mac OS.     |
 | OSType.Unknown | Unidentified OS.        |
 
-### OSType.of(osName) Static method
-
-A convenience method that returns the OSType instance based on the osName.
-
-**Sample Usage**
-
-```java
-System.out.println(OSType.of("Windows"));
-```
-
-Expected Output
-
-```
-Windows
-```
-
 ### OSType.identify() Static method
 
 A convenience method that identifies the current OS where the current code is being run.
@@ -46,5 +30,37 @@ Windows
 ## The getEOL() Instance method
 
 The getEOL() method returns the associated EndOfLine instance for a particular OS.
+
+### OSType.of(String osName) Static method
+
+A convenience method that returns the OSType instance based on the osName.
+
+**Sample Usage**
+
+```java
+System.out.println(OSType.of("Windows"));
+```
+
+Expected Output
+
+```
+Windows
+```
+
+### OSType.of(EndOfLine eol) Static method
+
+A convenience method that returns the OSType instance based on the EndOfLine.
+
+**Sample Usage**
+
+```java
+System.out.println(OSType.of(EndOfLine.CRLF));
+```
+
+Expected Output
+
+```
+Windows
+```
 
 [Table of Contents](USER_GUIDE_TOC.md)
