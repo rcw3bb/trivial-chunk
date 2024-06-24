@@ -169,6 +169,21 @@ public class TextFileTest {
     }
 
     @Test
+    public void testWindowEmpty() throws IOException {
+        final var file = new File("src/test/resources/textfile-empty.txt");
+        final var textFile = new TextFile(file);
+        assertEquals(OSType.Unknown.getEOL(), textFile.getEndOfLine());
+    }
+
+    @Test
+    public void testNonExistentFile() throws IOException {
+        final var file = new File("src/test/resources/non-existent.txt");
+        final var textFile = new TextFile(file);
+        assertDoesNotThrow(textFile::getEndOfLine);
+        assertEquals(EndOfLine.SYSTEM, textFile.getEndOfLine());
+    }
+
+    @Test
     public void testWindowEOLUTF16BEBOM() throws IOException {
         final var file = new File("src/test/resources/textfile-windows-utf16-be-bom.txt");
         final var textFile = new TextFile(file, StandardCharsets.UTF_16BE);

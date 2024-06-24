@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -26,7 +27,7 @@ public class TextFile {
      * @param file An instance of File.
      */
     public TextFile(final File file) {
-        this(file, StandardCharsets.UTF_8, EndOfLine.SYSTEM);
+        this(file, StandardCharsets.UTF_8, /*EndOfLine*/ null);
     }
 
     /**
@@ -34,7 +35,7 @@ public class TextFile {
      * @param filename The filename.
      */
     public TextFile(final String filename) {
-        this(filename, StandardCharsets.UTF_8, EndOfLine.SYSTEM);
+        this(filename, StandardCharsets.UTF_8, /*EndOfLine*/ null);
     }
 
     /**
@@ -56,7 +57,7 @@ public class TextFile {
      * @since 2.20.0
      */
     public TextFile(final String filename, final Charset charset) {
-        this(filename, charset, EndOfLine.SYSTEM);
+        this(filename, charset, /*EndOfLine*/ null);
     }
 
     /**
@@ -79,7 +80,7 @@ public class TextFile {
      * @since 2.20.0
      */
     public TextFile(final File file, final Charset charset) {
-        this(file, charset, EndOfLine.SYSTEM);
+        this(file, charset, /*EndOfLine*/ null);
     }
 
     /**
@@ -104,7 +105,7 @@ public class TextFile {
     public TextFile(final File file, final Charset charset, final EndOfLine endOfLine) {
         this.file = file;
         this.charset = charset;
-        this.endOfLine = endOfLine;
+        this.endOfLine = Optional.ofNullable(endOfLine).orElse(getEndOfLine());
     }
 
     /**
@@ -194,11 +195,11 @@ public class TextFile {
     /**
      * Return the line ending of the file.
      * @return An instance of EndOfLine.
-     * @throws IOException Can throw this exception.
      *
      * @since 2.19.0
      */
-     public EndOfLine getEndOfLine() throws IOException {
+     @SuppressWarnings("PMD.AvoidCatchingGenericException")
+     final public EndOfLine getEndOfLine() {
         EndOfLine output = EndOfLine.SYSTEM;
 
         try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
@@ -213,6 +214,9 @@ public class TextFile {
             } else if (content.contains("\r")) {
                 output = EndOfLine.CR;
             }
+        }
+        catch (Exception exception) {
+            output = EndOfLine.SYSTEM;
         }
 
         return output;
