@@ -91,4 +91,21 @@ public enum OSType {
             return false;
         }).findFirst().orElse(OSType.Unknown);
     }
+
+    /**
+     * Identifies the OS type based on the end of line.
+     *
+     * @param eol The end of line.
+     * @return An instance of OSType.
+     *
+     * @since 2.20.0
+     */
+    public static OSType of(final EndOfLine eol) {
+        return switch (eol) {
+            case CRLF -> OSType.Windows;
+            case LF -> OSType.Linux;
+            case CR -> OSType.Mac;
+            default -> OSType.Unknown;
+        };
+    }
 }

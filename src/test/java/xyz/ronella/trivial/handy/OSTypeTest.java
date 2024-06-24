@@ -110,4 +110,19 @@ public class OSTypeTest {
         assertTrue(OSType.Unknown.getAppDataDir().isEmpty());
     }
 
+    @Test
+    public void windowsByEOL() {
+        assertEquals(OSType.Windows, OSType.of(EndOfLine.CRLF));
+    }
+
+    @Test
+    public void linuxByEOL() {
+        assertEquals(OSType.Linux, OSType.of(EndOfLine.LF));
+    }
+
+    @Test
+    public void macByEOL() {
+        assertEquals(OSType.Mac, OSType.of(EndOfLine.CR));
+    }
+
 }
