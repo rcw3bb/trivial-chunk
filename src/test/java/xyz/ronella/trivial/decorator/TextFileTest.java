@@ -225,4 +225,19 @@ public class TextFileTest {
         assertEquals(EndOfLine.SYSTEM, textFile.getEndOfLine());
     }
 
+    @Test
+    public void callingSetTextTwice() throws IOException {
+        final var expectation = "Line 1.\r\n" +
+                "Line 2.\r\n" +
+                "Line 3.";
+        final var file = new File("src/test/resources/textfile-nonempty.txt");
+        final var textFile = new TextFile(file.getAbsolutePath(), EndOfLine.CRLF);
+        textFile.setText(expectation);
+        textFile.setText(expectation);
+        final var text = textFile.getText();
+        assertEquals(expectation, text);
+        file.delete();
+        assertFalse(file.exists());
+    }
+
 }
