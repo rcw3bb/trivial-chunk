@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.20.0 : 2024-06-25
+
+### New
+
+* Update on TextFile class with the following:
+  * Update the constructor allow initialization of encoding and line ending.
+  * Add the setText method.
+  * getEndOfLine considers encoding.
+
+* OSType to support identifying the OS based on EndOfLine.
+* Add StringBuilderDelim implementation to support StringBuilderAppender.
+
 ## 2.19.0 : 2024-06-14
 
 ### New
