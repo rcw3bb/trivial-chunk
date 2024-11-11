@@ -1,0 +1,9 @@
+[versions]
+module-plugin-version = { require = "latest.release" }
+publish-plugin-version = { require = "latest.release" }
+snyk-version = { require = "latest.release" }
+
+[plugins]
+moduleplugin = { id = "org.javamodularity.moduleplugin", version.ref = "module-plugin-version" }
+publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "publish-plugin-version" }
+snyk = { id = "io.snyk.gradle.plugin.snykplugin", version.ref = "snyk-version" }
