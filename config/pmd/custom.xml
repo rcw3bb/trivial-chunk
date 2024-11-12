@@ -20,6 +20,14 @@
     <exclude-pattern>.*/CloseableLock\.java</exclude-pattern>
     <exclude-pattern>.*/ListAdder\.java</exclude-pattern>
     <exclude-pattern>.*/CommandLocator\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedPredicate\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedSupplier\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedSink\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedFunction\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedConsumer\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedBiPredicate\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedBiFunction\.java</exclude-pattern>
+    <exclude-pattern>.*/CheckedBiConsumer\.java</exclude-pattern>
 
     <rule ref="category/java/bestpractices.xml" />
     <rule ref="category/java/codestyle.xml" >

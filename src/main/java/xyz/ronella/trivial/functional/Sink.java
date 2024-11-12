@@ -12,7 +12,7 @@ import java.util.Objects;
 public interface Sink {
 
     /**
-     * Must a logic that doesn't expects an argument and a return value.
+     * Must a logic that doesn't expect an argument and a return value.
      */
     void plummet();
 
