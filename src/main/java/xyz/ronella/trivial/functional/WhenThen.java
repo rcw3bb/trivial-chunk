@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * @since 2.16.0
  */
 @FunctionalInterface
-public interface WhenThen<TYPE_ARG> extends Consumer<Predicate<TYPE_ARG>> {
+public interface WhenThen<T> extends Consumer<Predicate<T>> {
 
     /**
      * Must hold the logic to process a task when the condition was met.
@@ -19,14 +19,14 @@ public interface WhenThen<TYPE_ARG> extends Consumer<Predicate<TYPE_ARG>> {
      *
      * @param condition The condition that must be true to do the task.
      */
-    void when(Predicate<TYPE_ARG> condition);
+    void when(Predicate<T> condition);
 
     /**
      * Accepts just redirect the call to implementation.
      * @param condition the input argument
      */
     @Override
-    default void accept(final Predicate<TYPE_ARG> condition) {
+    default void accept(final Predicate<T> condition) {
         when(condition);
     }
 }

@@ -5,30 +5,30 @@ import java.util.function.Predicate;
 /**
  * A functional interface that will test an argument and can throw an exception.
  *
- * @param <TYPE> The type of the argument.
- * @param <EXCEPTION> The type of the exception.
+ * @param <T> The type of the argument.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedPredicate<TYPE, EXCEPTION extends Exception> {
+public interface CheckedPredicate<T, X extends Exception> {
 
     /**
      * Tests the argument.
      *
      * @param arg The argument.
      * @return The result of the test.
-     * @throws EXCEPTION The exception.
+     * @throws X The exception.
      */
-    boolean checkedTest(TYPE arg) throws EXCEPTION;
+    boolean checkedTest(T arg) throws X;
 
     /**
      * Return as a Predicate.
      *
      * @return The Predicate.
      */
-    default Predicate<TYPE> asPredicate() {
+    default Predicate<T> asPredicate() {
         return arg -> {
             try {
                 return checkedTest(arg);
@@ -42,12 +42,12 @@ public interface CheckedPredicate<TYPE, EXCEPTION extends Exception> {
      * Builder of CheckedPredicate.
      *
      * @param logic The logic to build the CheckedPredicate.
-     * @param <TYPE> The type of the argument.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <T> The type of the argument.
+     * @param <X> The type of the exception.
      * @return The CheckedPredicate.
      */
-    static <TYPE, EXCEPTION extends Exception> CheckedPredicate<TYPE, EXCEPTION> of(
-            final CheckedPredicate<TYPE, EXCEPTION> logic) {
+    static <T, X extends Exception> CheckedPredicate<T, X> of(
+            final CheckedPredicate<T, X> logic) {
         return logic;
     }
 

@@ -5,16 +5,16 @@ import java.util.function.BiFunction;
 /**
  * A functional interface that will accept two arguments and can throw an exception.
  *
- * @param <TYPE1> The type of the first argument.
- * @param <TYPE2> The type of the second argument.
- * @param <RETURN> The type of the return.
- * @param <EXCEPTION> The type of the exception.
+ * @param <T1> The type of the first argument.
+ * @param <T2> The type of the second argument.
+ * @param <R> The type of the return.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedBiFunction<TYPE1, TYPE2, RETURN, EXCEPTION extends Exception> {
+public interface CheckedBiFunction<T1, T2, R, X extends Exception> {
 
     /**
      * Processes the arguments.
@@ -22,16 +22,16 @@ public interface CheckedBiFunction<TYPE1, TYPE2, RETURN, EXCEPTION extends Excep
      * @param arg1 The first argument.
      * @param arg2 The second argument.
      * @return The return.
-     * @throws EXCEPTION The exception.
+     * @throws X The exception.
      */
-    RETURN checkedApply(TYPE1 arg1, TYPE2 arg2) throws EXCEPTION;
+    R checkedApply(T1 arg1, T2 arg2) throws X;
 
     /**
      * Return as a BiFunction.
      *
      * @return The BiFunction.
      */
-    default BiFunction<TYPE1, TYPE2, RETURN> asBiFunction() {
+    default BiFunction<T1, T2, R> asBiFunction() {
         return (arg1, arg2) -> {
             try {
                 return checkedApply(arg1, arg2);
@@ -46,14 +46,14 @@ public interface CheckedBiFunction<TYPE1, TYPE2, RETURN, EXCEPTION extends Excep
      *
      * @param logic The logic to build the CheckedBiFunction.
      *
-     * @param <TYPE1> The type of the first argument.
-     * @param <TYPE2> The type of the second argument.
-     * @param <RETURN> The type of the return.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <T1> The type of the first argument.
+     * @param <T2> The type of the second argument.
+     * @param <R> The type of the return.
+     * @param <X> The type of the exception.
      * @return The CheckedBiFunction.
      */
-    static <TYPE1, TYPE2, RETURN, EXCEPTION extends Exception> CheckedBiFunction<TYPE1, TYPE2, RETURN, EXCEPTION> of(
-            final CheckedBiFunction<TYPE1, TYPE2, RETURN, EXCEPTION> logic) {
+    static <T1, T2, R, X extends Exception> CheckedBiFunction<T1, T2, R, X> of(
+            final CheckedBiFunction<T1, T2, R, X> logic) {
         return logic;
     }
 

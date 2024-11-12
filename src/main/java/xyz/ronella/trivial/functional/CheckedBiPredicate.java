@@ -5,15 +5,15 @@ import java.util.function.BiPredicate;
 /**
  * A functional interface that will accept two arguments and can throw an exception.
  *
- * @param <TYPE1> The type of the first argument.
- * @param <TYPE2> The type of the second argument.
- * @param <EXCEPTION> The type of the exception.
+ * @param <T1> The type of the first argument.
+ * @param <T2> The type of the second argument.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedBiPredicate<TYPE1, TYPE2, EXCEPTION extends Exception> {
+public interface CheckedBiPredicate<T1, T2, X extends Exception> {
 
     /**
     * Tests the arguments.
@@ -21,16 +21,16 @@ public interface CheckedBiPredicate<TYPE1, TYPE2, EXCEPTION extends Exception> {
     * @param arg1 The first argument.
     * @param arg2 The second argument.
     * @return The result.
-    * @throws EXCEPTION The exception.
+    * @throws X The exception.
     */
-    boolean checkedTest(TYPE1 arg1, TYPE2 arg2) throws EXCEPTION;
+    boolean checkedTest(T1 arg1, T2 arg2) throws X;
 
     /**
      * Return as a BiPredicate.
      *
      * @return The BiPredicate.
      */
-    default BiPredicate<TYPE1, TYPE2> asBiPredicate() {
+    default BiPredicate<T1, T2> asBiPredicate() {
         return (___arg1, ___arg2) -> {
             try {
                 return checkedTest(___arg1, ___arg2);
@@ -45,13 +45,13 @@ public interface CheckedBiPredicate<TYPE1, TYPE2, EXCEPTION extends Exception> {
      *
      * @param logic The logic to build the CheckedBiPredicate.
      *
-     * @param <TYPE1> The type of the first argument.
-     * @param <TYPE2> The type of the second argument.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <T1> The type of the first argument.
+     * @param <T2> The type of the second argument.
+     * @param <X> The type of the exception.
      * @return The CheckedBiPredicate.
      */
-    static <TYPE1, TYPE2, EXCEPTION extends Exception> CheckedBiPredicate<TYPE1, TYPE2, EXCEPTION> of(
-            final CheckedBiPredicate<TYPE1, TYPE2, EXCEPTION> logic) {
+    static <T1, T2, X extends Exception> CheckedBiPredicate<T1, T2, X> of(
+            final CheckedBiPredicate<T1, T2, X> logic) {
         return logic;
     }
 

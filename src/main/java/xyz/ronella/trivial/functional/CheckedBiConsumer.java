@@ -5,31 +5,31 @@ import java.util.function.BiConsumer;
 /**
  * A functional interface that will accept two arguments and can throw an exception.
  *
- * @param <TYPE1> The type of the first argument.
- * @param <TYPE2> The type of the second argument.
- * @param <EXCEPTION> The type of the exception.
+ * @param <T1> The type of the first argument.
+ * @param <T2> The type of the second argument.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedBiConsumer<TYPE1, TYPE2, EXCEPTION extends Exception> {
+public interface CheckedBiConsumer<T1, T2, X extends Exception> {
 
     /**
      * Accepts the arguments.
      *
      * @param arg1 The first argument.
      * @param arg2 The second argument.
-     * @throws EXCEPTION The exception.
+     * @throws X The exception.
      */
-    void checkedAccept(TYPE1 arg1, TYPE2 arg2) throws EXCEPTION;
+    void checkedAccept(T1 arg1, T2 arg2) throws X;
 
     /**
      * Return as a BiConsumer.
      *
      * @return The BiConsumer.
      */
-    default BiConsumer<TYPE1, TYPE2> asBiConsumer() {
+    default BiConsumer<T1, T2> asBiConsumer() {
         return (arg1, arg2) -> {
             try {
                 checkedAccept(arg1, arg2);
@@ -44,13 +44,13 @@ public interface CheckedBiConsumer<TYPE1, TYPE2, EXCEPTION extends Exception> {
      *
      * @param logic The logic to build the CheckedBiConsumer.
      *
-     * @param <TYPE1> The type of the first argument.
-     * @param <TYPE2> The type of the second argument.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <T1> The type of the first argument.
+     * @param <T2> The type of the second argument.
+     * @param <X> The type of the exception.
      * @return The CheckedBiConsumer.
      */
-    static <TYPE1, TYPE2, EXCEPTION extends Exception> CheckedBiConsumer<TYPE1, TYPE2, EXCEPTION> of(
-            final CheckedBiConsumer<TYPE1, TYPE2, EXCEPTION> logic) {
+    static <T1, T2, X extends Exception> CheckedBiConsumer<T1, T2, X> of(
+            final CheckedBiConsumer<T1, T2, X> logic) {
         return logic;
     }
 }

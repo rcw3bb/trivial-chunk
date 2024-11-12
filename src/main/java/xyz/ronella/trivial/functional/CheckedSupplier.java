@@ -5,29 +5,29 @@ import java.util.function.Supplier;
 /**
  * A functional interface that will supply a value and can throw an exception.
  *
- * @param <RETURN> The type of the return.
- * @param <EXCEPTION> The type of the exception.
+ * @param <R> The type of the return.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedSupplier<RETURN, EXCEPTION extends Exception> {
+public interface CheckedSupplier<R, X extends Exception> {
 
     /**
      * Supplies the value.
      *
      * @return The value.
-     * @throws EXCEPTION The exception.
+     * @throws X The exception.
      */
-    RETURN checkedGet() throws EXCEPTION;
+    R checkedGet() throws X;
 
     /**
      * Return as a Supplier.
      *
      * @return The Supplier.
      */
-    default Supplier<RETURN> asSupplier() {
+    default Supplier<R> asSupplier() {
         return () -> {
             try {
                 return checkedGet();
@@ -41,12 +41,12 @@ public interface CheckedSupplier<RETURN, EXCEPTION extends Exception> {
      * Builder of CheckedSupplier.
      *
      * @param logic The logic to build the CheckedSupplier.
-     * @param <RETURN> The type of the return.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <R> The type of the return.
+     * @param <X> The type of the exception.
      * @return The CheckedSupplier.
      */
-    static <RETURN, EXCEPTION extends Exception> CheckedSupplier<RETURN, EXCEPTION> of(
-            final CheckedSupplier<RETURN, EXCEPTION> logic) {
+    static <R, X extends Exception> CheckedSupplier<R, X> of(
+            final CheckedSupplier<R, X> logic) {
         return logic;
     }
 

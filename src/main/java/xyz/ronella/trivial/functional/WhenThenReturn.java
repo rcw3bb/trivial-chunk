@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * @since 2.16.0
  */
 @FunctionalInterface
-public interface WhenThenReturn<TYPE_ARG, TYPE_OUTPUT> extends Function<Predicate<TYPE_ARG>, TYPE_OUTPUT> {
+public interface WhenThenReturn<T, R> extends Function<Predicate<T>, R> {
 
     /**
      * Must hold the logic to generate the output when the condition was met.
@@ -20,7 +20,7 @@ public interface WhenThenReturn<TYPE_ARG, TYPE_OUTPUT> extends Function<Predicat
      * @param condition The condition that must be true to generate the output.
      * @return An instance of the TYPE_OUTPUT.
      */
-    TYPE_OUTPUT when(Predicate<TYPE_ARG> condition);
+    R when(Predicate<T> condition);
 
     /**
      * Redirect the call to when implementation.
@@ -28,7 +28,7 @@ public interface WhenThenReturn<TYPE_ARG, TYPE_OUTPUT> extends Function<Predicat
      * @return The output of when implementation.
      */
     @Override
-    default TYPE_OUTPUT apply(final Predicate<TYPE_ARG> supplier) {
+    default R apply(final Predicate<T> supplier) {
         return when(supplier);
     }
 

@@ -3,20 +3,20 @@ package xyz.ronella.trivial.functional;
 /**
  * A functional interface that will accept no argument and can throw an exception.
  *
- * @param <EXCEPTION> The type of the exception.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedSink<EXCEPTION extends Exception> {
+public interface CheckedSink<X extends Exception> {
 
     /**
      * Process the argument.
      *
-     * @throws EXCEPTION The exception.
+     * @throws X The exception.
      */
-    void checkedPlummet() throws EXCEPTION;
+    void checkedPlummet() throws X;
 
     /**
      * Return as a Sink.
@@ -37,11 +37,11 @@ public interface CheckedSink<EXCEPTION extends Exception> {
      * Builder of CheckedSink.
      *
      * @param logic The logic to build the CheckedSink.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <X> The type of the exception.
      * @return The CheckedSink.
      */
-    static <EXCEPTION extends Exception> CheckedSink<EXCEPTION> of(
-            final CheckedSink<EXCEPTION> logic) {
+    static <X extends Exception> CheckedSink<X> of(
+            final CheckedSink<X> logic) {
         return logic;
     }
 }

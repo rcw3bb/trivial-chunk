@@ -5,29 +5,29 @@ import java.util.function.Consumer;
 /**
  * A functional interface that will accept an argument and can throw an exception.
  *
- * @param <TYPE> The type of the argument.
- * @param <EXCEPTION> The type of the exception.
+ * @param <T> The type of the argument.
+ * @param <X> The type of the exception.
  *
  * @author Ron Webb
  * @since 2.21.0
  */
 @FunctionalInterface
-public interface CheckedConsumer<TYPE, EXCEPTION extends Exception> {
+public interface CheckedConsumer<T, X extends Exception> {
 
     /**
      * Accepts the argument.
      *
      * @param arg The argument.
-     * @throws EXCEPTION The exception.
+     * @throws X The exception.
      */
-    void checkedAccept(TYPE arg) throws EXCEPTION;
+    void checkedAccept(T arg) throws X;
 
     /**
      * Return as a Consumer.
      *
      * @return The Consumer.
      */
-    default Consumer<TYPE> asConsumer() {
+    default Consumer<T> asConsumer() {
         return arg -> {
             try {
                 checkedAccept(arg);
@@ -41,12 +41,12 @@ public interface CheckedConsumer<TYPE, EXCEPTION extends Exception> {
      * Builder of CheckedConsumer.
      *
      * @param logic The logic to build the CheckedConsumer.
-     * @param <TYPE> The type of the argument.
-     * @param <EXCEPTION> The type of the exception.
+     * @param <T> The type of the argument.
+     * @param <X> The type of the exception.
      * @return The CheckedConsumer.
      */
-    static <TYPE, EXCEPTION extends Exception> CheckedConsumer<TYPE, EXCEPTION> of(
-            final CheckedConsumer<TYPE, EXCEPTION> logic) {
+    static <T, X extends Exception> CheckedConsumer<T, X> of(
+            final CheckedConsumer<T, X> logic) {
         return logic;
     }
 }
