@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.21.0 : 2024-11-14
+
+### New
+
+* Checked functional interfaces.
+* Update the no operation classes to include checked functional interfaces.
+
 ## 2.20.0 : 2024-06-25
 
 ### New
