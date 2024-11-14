@@ -1,0 +1,10 @@
+# This is a Gradle generated file for dependency locking.
+# Manual edits can break the build and are not advised.
+# This file is expected to be part of source control.
+gradle.plugin.io.snyk.gradle.plugin:snyk:0.7.0=classpath
+io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin:2.0.0=classpath
+io.github.gradle-nexus:publish-plugin:2.0.0=classpath
+io.snyk.gradle.plugin.snykplugin:io.snyk.gradle.plugin.snykplugin.gradle.plugin:0.7.0=classpath
+org.javamodularity.moduleplugin:org.javamodularity.moduleplugin.gradle.plugin:1.8.15=classpath
+org.javamodularity:moduleplugin:1.8.15=classpath
+empty=
