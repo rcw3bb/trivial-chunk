@@ -52,13 +52,13 @@
   A decorator class for **operating with TextFile**.
 
 ### Functional
-* [NoOperation Class](FNC_NO_OPERATION.md)
-
-  The class that supplies a do nothing implementation of some of the functional interfaces. This is created so that you don't have to create it yourself.
-
 * [Checked Functional](FNC_CHECKED_FUNCTIONAL.md)
 
   The checked functional interfaces provide a way to handle exceptions in functional interfaces.
+
+* [NoOperation Class](FNC_NO_OPERATION.md)
+
+  The class that supplies a do nothing implementation of some of the functional interfaces. This is created so that you don't have to create it yourself.
 
 * [Sink Interface](FNC_SINK_INTERFACE.md)
 
