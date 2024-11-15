@@ -33,7 +33,7 @@ public class FileNomen {
         Require.objects(file);
 
         final var fileName = file.getName();
-        final var dotIndex = fileName.lastIndexOf(".");
+        final var dotIndex = fileName.lastIndexOf('.');
 
         final Supplier<Optional<String>> noDotLogic = () -> Optional.of(dotIndex)
                 .filter(___dotIndex -> /* Absence of dot in the filename */ ___dotIndex == -1)
@@ -52,7 +52,7 @@ public class FileNomen {
         Require.objects(file);
 
         final var fileName = file.getName();
-        final var dotIndex = fileName.lastIndexOf(".");
+        final var dotIndex = fileName.lastIndexOf('.');
 
         final Supplier<Optional<String>> noDotLogic = () -> Optional.of(dotIndex)
                 .filter(___dotIndex -> ___dotIndex == -1)

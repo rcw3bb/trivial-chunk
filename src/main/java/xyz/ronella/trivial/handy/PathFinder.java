@@ -80,7 +80,7 @@ final public class PathFinder {
     /**
      * The only class that can create an instance of PathFinder.
      */
-    public static class PathFinderBuilder {
+    final public static class PathFinderBuilder {
 
         private final String filename;
         private final List<File> files;
