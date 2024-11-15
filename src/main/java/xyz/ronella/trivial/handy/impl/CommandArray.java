@@ -57,19 +57,27 @@ public final class CommandArray implements ICommandArray {
      * @since 2.18.0
      */
     public static CommandArray wrap(final String delim, final String command) {
-        Require.objects(
-                new RequireObject(delim, "The delim parameter cannot be null"),
-                new RequireObject(command, "The command parameter cannot be null")
-        );
+        Require.objects(new RequireObject(delim, "The delim parameter cannot be null"));
 
         final var splitCommand = command.split(delim);
-        final var builder = CommandArray.getBuilder();
+        return wrap(Arrays.stream(splitCommand).toList());
+    }
 
-        for (int index = 0; index < splitCommand.length; index++) {
+    /**
+     * Wrap a list of string command to become an instance of command array.
+     *
+     * @param command The command to wrap.
+     * @return An instance of CommandArray.
+     * @since 2.22.0
+     */
+    public static CommandArray wrap(final List<String> command) {
+        final var builder = getBuilder();
+
+        for (int index = 0; index < command.size(); index++) {
             if (index == 0) {
-                builder.setCommand(splitCommand[index]);
+                builder.setCommand(command.get(index));
             } else {
-                builder.addArg(splitCommand[index]);
+                builder.addArg(command.get(index));
             }
         }
 
