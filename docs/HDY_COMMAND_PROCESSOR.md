@@ -27,11 +27,15 @@ CommandArray.getBuilder()
 #### Syntax
 
 ```
-CommandArray.wrap(commandWithArgs) //The delimiter is a space.
+CommandArray.wrap(String commandWithArgs) //The delimiter is a space.
 ```
 
 ```
-CommandArray.wrap(delim, commandWithArgs) //Using a different delimited other than a space.
+CommandArray.wrap(String delim, String commandWithArgs) //Using a different delimited other than a space.
+```
+
+```
+CommandArray.wrap(List<String> commandWithArgs) //The command and arguments are in list.
 ```
 
 #### Example
