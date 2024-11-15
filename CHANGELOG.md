@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.22.0 : 2024-11-16
+
+### New
+
+* Add CommandArray.wrap(List<String> command)
+
 ## 2.21.0 : 2024-11-14
 
 ### New
