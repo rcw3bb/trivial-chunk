@@ -42,6 +42,16 @@ public class PathFinderTest {
     }
 
     @Test
+    @EnabledOnOs(OS.WINDOWS)
+    public void pathNoneEnvVar() {
+        final var pathFinder = PathFinder.getBuilder("System32")
+                .addEnvVars("NON_EXISTENT").build();
+
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
     public void pathEmptySysProps() {
         final var pathFinder = PathFinder.getBuilder("test.txt").addSysProps().build();
         assertTrue(pathFinder.getFile().isEmpty());
@@ -57,6 +67,15 @@ public class PathFinderTest {
         final var file = pathFinder.getFile();
         assertTrue(file.isPresent());
         assertTrue(file.get().isFile());
+    }
+
+    @Test
+    public void pathNonExistentSystemProp() {
+        final var pathFinder = PathFinder.getBuilder("test.txt")
+                .addSysProps("non-existent").build();
+
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
     }
 
     @Test
