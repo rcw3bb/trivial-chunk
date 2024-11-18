@@ -1,7 +1,6 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
-import xyz.ronella.trivial.handy.RequireAllException;
 
 import java.math.BigDecimal;
 

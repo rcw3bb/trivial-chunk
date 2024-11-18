@@ -8,7 +8,7 @@ public class RequireTest {
     @Test
     public void onlyParameterNull() {
         String param = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(param);
         });
     }
@@ -16,14 +16,14 @@ public class RequireTest {
     @Test
     public void onlyParameterNullWithRequireObject() {
         String param = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param, "Param cannot be null."));
         });
     }
 
     @Test
     public void nullRequireObjectPrimary() {
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(null);
         });
     }
@@ -31,7 +31,7 @@ public class RequireTest {
     @Test
     public void nullRequireObjectSubsequent() {
         String param = "HasValue";
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param, "Param cannot be null."), (RequireObject) null);
         });
     }
@@ -39,7 +39,7 @@ public class RequireTest {
     @Test
     public void nullSecondParameter() {
         String param = "HasValue";
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param, "Param cannot be null."), (RequireObject) null);
         });
     }
@@ -47,7 +47,7 @@ public class RequireTest {
     @Test
     public void onlyParameterNullWithRequireObjectNoMessage() {
         String param = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param));
         });
     }
@@ -56,7 +56,7 @@ public class RequireTest {
     public void twoParametersNullWithRequireObject() {
         String param1 = null;
         String param2 = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param1, "param1 cannot be null"),
                     new RequireObject(param2, "param2 cannot be null"));
         });
@@ -66,7 +66,7 @@ public class RequireTest {
     public void twoParametersNullWithRequireObjectNoMessage() {
         String param1 = null;
         String param2 = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param1), new RequireObject(param2));
         });
     }
@@ -75,7 +75,7 @@ public class RequireTest {
     public void twoParametersNull() {
         String param1 = null;
         String param2 = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(param1, param2);
         });
     }
@@ -84,7 +84,7 @@ public class RequireTest {
     public void firstParameterNonNull() {
         String param1 = "param1";
         String param2 = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(param1, param2);
         });
     }
@@ -93,7 +93,7 @@ public class RequireTest {
     public void firstParameterNonNullWithRequireObject() {
         String param1 = "param1";
         String param2 = null;
-        assertThrows(RequireAllException.class, ()-> {
+        assertThrows(ObjectRequiredException.class, ()-> {
             Require.objects(new RequireObject(param1, "param1 is required"), new RequireObject(param2, "param2 is required"));
         });
     }

@@ -7,7 +7,7 @@ import java.io.Serial;
  *
  * @author Ron Webb
  */
-public class RequireAllException extends RuntimeException {
+public class ObjectRequiredException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 8886147418746226040L;
@@ -17,7 +17,7 @@ public class RequireAllException extends RuntimeException {
      * @param throwable an instance of Throwable.
      * @since 2.17.0
      */
-    public RequireAllException(final Throwable throwable) {
+    public ObjectRequiredException(final Throwable throwable) {
         super(throwable);
     }
 

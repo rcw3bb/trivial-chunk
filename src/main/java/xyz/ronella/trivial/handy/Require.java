@@ -20,12 +20,12 @@ public final class Require {
      * @param param The required first parameter to check.
      * @param params The other parameters to check.
      *
-     * @throws RequireAllException This will be thrown when at least one of the parameters has thrown an NPE.
+     * @throws ObjectRequiredException This will be thrown when at least one of the parameters has thrown an NPE.
      *
      * @deprecated Use the objects method instead.
      */
     @Deprecated
-    public static void all(final Object param, final Object ... params) throws RequireAllException {
+    public static void all(final Object param, final Object ... params) throws ObjectRequiredException {
         objects(param, params);
     }
 
@@ -35,11 +35,11 @@ public final class Require {
      * @param obj The required first obj to check.
      * @param objs The other objects to check.
      *
-     * @throws RequireAllException This will be thrown when at least one of the parameters has thrown an NPE.
+     * @throws ObjectRequiredException This will be thrown when at least one of the parameters has thrown an NPE.
      *
      * @since 2.5.0
      */
-    public static void objects(final Object obj, final Object ... objs) throws RequireAllException {
+    public static void objects(final Object obj, final Object ... objs) throws ObjectRequiredException {
         objects(new RequireObject(obj), Arrays.stream(objs).map(RequireObject::new).toList().toArray(new RequireObject[] {}));
     }
 
@@ -50,11 +50,11 @@ public final class Require {
      * @param obj The required first obj to check.
      * @param objs The other objects to check.
      *
-     * @throws RequireAllException This will be thrown when at least one of the parameters has thrown an NPE.
+     * @throws ObjectRequiredException This will be thrown when at least one of the parameters has thrown an NPE.
      *
      * @since 2.17.0
      */
-    public static void objects(final RequireObject obj, final RequireObject ... objs) throws RequireAllException {
+    public static void objects(final RequireObject obj, final RequireObject ... objs) throws ObjectRequiredException {
         try {
             final var MSG_NULL = "RequireObject parameter(s) cannot be null";
             Objects.requireNonNull(obj, MSG_NULL);
@@ -72,7 +72,7 @@ public final class Require {
             }
         }
         catch(NullPointerException npe) {
-            throw new RequireAllException(npe);
+            throw new ObjectRequiredException(npe);
         }
     }
 
