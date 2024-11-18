@@ -1,5 +1,9 @@
 package xyz.ronella.trivial.decorator;
 
+import xyz.ronella.trivial.handy.Require;
+
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.function.BooleanSupplier;
 
@@ -52,8 +56,9 @@ public class CloseableLock implements AutoCloseable {
      * @param lockOnlyWhen The logic if lock will actually be needed.
      */
     public CloseableLock(final Lock lock, final boolean noLockCall, final BooleanSupplier lockOnlyWhen) {
+        Objects.requireNonNull(lock, "lock cannot be null");
         this.receivedLock = lock;
-        this.lockOnlyWhen = lockOnlyWhen;
+        this.lockOnlyWhen = Optional.ofNullable(lockOnlyWhen).orElse(() -> Boolean.TRUE);
         if (!noLockCall) {
             lock();
         }

@@ -5,6 +5,9 @@ import org.mockito.Mockito;
 
 import java.util.concurrent.locks.Lock;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class CloseableLockTest {
 
     @Test
@@ -169,5 +172,15 @@ public class CloseableLockTest {
             lock.unlock();
         }
         Mockito.verify(spyLock, Mockito.times(0)).unlock();
+    }
+
+    @Test
+    public void passedInNullLock() {
+        assertThrows(NullPointerException.class, () -> new CloseableLock(null));
+    }
+
+    @Test
+    public void passedNullWhen() {
+        assertDoesNotThrow(() -> new CloseableLock(Mockito.mock(Lock.class), false, null));
     }
 }
