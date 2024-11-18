@@ -1,11 +1,11 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.handy.RequireAllException;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BigDecimalPlusTest {
 
@@ -14,6 +14,11 @@ public class BigDecimalPlusTest {
         final var bd1 = new BigDecimalPlus(new BigDecimal(100));
         final var bd2 = new BigDecimal(200);
         assertTrue(bd1.lessThan(bd2));
+    }
+
+    @Test
+    public void constructorParamNull() {
+        assertThrows(NullPointerException.class, () -> new BigDecimalPlus(null));
     }
 
     @Test

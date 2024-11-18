@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * A decorator for BigDecimal.
@@ -17,6 +18,7 @@ public class BigDecimalPlus {
      * @param bigDecimal The BigDecimal instance to decorate.
      */
     public BigDecimalPlus(final BigDecimal bigDecimal) {
+        Objects.requireNonNull(bigDecimal, "bigDecimal cannot be null");
         this.bigDecimal = bigDecimal;
     }
 
