@@ -34,6 +34,15 @@ final public class PathFinder {
     }
 
     /**
+     * Get the list of files.
+     *
+     * @return An unmodifiable list of files.
+     */
+    /* default */ List<File> getFiles() {
+        return Collections.unmodifiableList(files);
+    }
+
+    /**
      * The InputStream of the resolved file. This method can use the ClassLoader as fallback.
      * @param process The logic to process the InputStream.
      * @throws IOException Thrown if there's an issue creating an instance of InputStream.
@@ -93,6 +102,7 @@ final public class PathFinder {
          * @return An instance of PathFinder.
          */
         public PathFinder build() {
+            Optional.ofNullable(filename).ifPresent(___filename -> files.add(new File(___filename)));
             return new PathFinder(this);
         }
 
@@ -102,7 +112,8 @@ final public class PathFinder {
          * @return An instance of PathFinderBuilder.
          */
         public PathFinderBuilder addPaths(final List<String> dirs) {
-            final var paths = dirs.stream()
+            final var paths = Optional.ofNullable(dirs).orElse(List.of()).stream()
+                    .filter(Objects::nonNull)
                     .map(___dir -> ___dir.split(File.pathSeparator))
                     .map(___dir -> {
 
@@ -111,11 +122,7 @@ final public class PathFinder {
                 final var firstEntry = dirList.remove(0);
                 return Paths.get(firstEntry, dirList.toArray(new String[]{})).toFile();
 
-            }).collect(Collectors.toList());
-
-            if (paths.isEmpty()) {
-                paths.add(new File(filename));
-            }
+            }).toList();
 
             files.addAll(paths);
             return this;
@@ -126,9 +133,25 @@ final public class PathFinder {
          *
          * @param envVars An array of environment variables.
          * @return An instance of PathFinderBuilder.
+         *
+         * @since 2.23.0
          */
         public PathFinderBuilder addEnvVars(final String ... envVars) {
-            return addPaths(Arrays.stream(envVars).map(System::getenv)
+            return addEnvVars(Arrays.stream(Optional.ofNullable(envVars)
+                    .orElse(List.<String>of().toArray(new String[] {}))).toList());
+        }
+
+        /**
+         * Adds paths from environment variables where to find the first existence of the filename.
+         *
+         * @param envVars A list of environment variables.
+         * @return An instance of PathFinderBuilder.
+         *
+         * @since 2.23.0
+         */
+        public PathFinderBuilder addEnvVars(final List<String> envVars) {
+            return addPaths(Optional.ofNullable(envVars).orElse(List.of()).stream()
+                    .map(System::getenv)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList()));
         }
@@ -138,9 +161,25 @@ final public class PathFinder {
          *
          * @param sysProps An array of system property names.
          * @return An instance of PathFinderBuilder.
+         *
+         * @since 2.23.0
          */
         public PathFinderBuilder addSysProps(final String ... sysProps) {
-            return addPaths(Arrays.stream(sysProps).map(System::getProperty)
+            return addSysProps(Arrays.stream(Optional.ofNullable(sysProps)
+                    .orElse(List.<String>of().toArray(new String[] {}))).toList());
+        }
+
+        /**
+         * Adds paths from system properties where to find the first existence of the filename.
+         *
+         * @param sysProps A list of system property names.
+         * @return An instance of PathFinderBuilder.
+         *
+         * @since 2.23.0
+         */
+        public PathFinderBuilder addSysProps(final List<String> sysProps) {
+            return addPaths(Optional.ofNullable(sysProps).orElse(List.of()).stream()
+                    .map(System::getProperty)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList()));
         }
@@ -151,7 +190,7 @@ final public class PathFinder {
          * @return An instance of PathFinderBuilder.
          */
         public PathFinderBuilder addPaths(final String ... dirs) {
-            addPaths(Arrays.asList(dirs));
+            addPaths(Arrays.asList(Optional.ofNullable(dirs).orElse(List.<String>of().toArray(new String[] {}))));
             return this;
         }
 

@@ -79,6 +79,92 @@ public class PathFinderTest {
     }
 
     @Test
+    @EnabledOnOs(OS.WINDOWS)
+    public void mixMode() {
+
+        System.setProperty("System32", "C:\\WINDOWS");
+
+        final var pathFinder = PathFinder.getBuilder("System32")
+                .addEnvVars("SystemRoot")
+                .addSysProps("System32")
+                .addPaths("C:\\WINDOWS")
+                .build();
+
+        final var files = pathFinder.getFiles();
+        assertEquals(4, files.size());
+        final var filePaths = files.subList(0,3);
+        final var lastEntry = files.get(files.size() - 1);
+        assertTrue(filePaths.stream()
+                .allMatch(___file -> new File("C:\\WINDOWS\\System32").equals(___file)));
+        assertEquals("System32", lastEntry.getName());
+    }
+
+    @Test
+    public void nullFileOnly() {
+        final var pathFinder = PathFinder.getBuilder(null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void nonExistentFile() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void existingFile() {
+        final var pathFinder = PathFinder.getBuilder(".gitignore").build();
+        final var file = pathFinder.getFile();
+        assertEquals(1, pathFinder.getFiles().size());
+        assertTrue(file.isPresent());
+        assertTrue(file.get().isFile());
+    }
+
+    @Test
+    public void nullArrayEnvVars() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addEnvVars((String[]) null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void nullListEnvVars() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addEnvVars((List<String>) null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void nullArrayPaths() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addPaths((String[]) null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void nullListPaths() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addPaths((List<String>) null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void nullArraySysProps() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addSysProps((String[]) null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void nullListSysProps() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addSysProps((List<String>) null).build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
     public void multiPathWithMatchingSecondUsingArray() {
         final var expectation = new File("src/test/resources/pathfinder/test2.txt");
         final var pathFinder = PathFinder.getBuilder("test2.txt")
@@ -173,7 +259,10 @@ public class PathFinderTest {
                 .addPaths("src/test/resources/pathfinder/dir1")
                 .setFallbackToClassloader(true)
                 .build();
+        final var files = pathFinder.getFiles();
         final var inputStream = pathFinder.getInputStream();
+
+        assertEquals(2, files.size());
         assertTrue(inputStream.isPresent());
     }
 
