@@ -2,6 +2,7 @@ package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import xyz.ronella.trivial.handy.ObjectRequiredException;
 
 import java.util.concurrent.locks.Lock;
 
@@ -176,7 +177,7 @@ public class CloseableLockTest {
 
     @Test
     public void passedInNullLock() {
-        assertThrows(NullPointerException.class, () -> new CloseableLock(null));
+        assertThrows(ObjectRequiredException.class, () -> new CloseableLock(null));
     }
 
     @Test

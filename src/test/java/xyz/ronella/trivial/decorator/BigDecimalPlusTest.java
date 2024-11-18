@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import xyz.ronella.trivial.handy.ObjectRequiredException;
 
 import java.math.BigDecimal;
 
@@ -17,7 +18,7 @@ public class BigDecimalPlusTest {
 
     @Test
     public void constructorParamNull() {
-        assertThrows(NullPointerException.class, () -> new BigDecimalPlus(null));
+        assertThrows(ObjectRequiredException.class, () -> new BigDecimalPlus(null));
     }
 
     @Test
