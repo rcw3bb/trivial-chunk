@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.handy;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import xyz.ronella.trivial.decorator.Mutable;
 
 import java.io.File;
@@ -20,6 +22,41 @@ public class PathFinderTest {
                 .build();
         final var file = pathFinder.getFile().get();
         assertEquals(expectation.getAbsolutePath(), file.getAbsolutePath());
+    }
+
+    @Test
+    public void pathEmptyEnvVars() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addEnvVars().build();
+        assertTrue(pathFinder.getFile().isEmpty());
+    }
+
+    @Test
+    @EnabledOnOs(OS.WINDOWS)
+    public void pathValidWindowEnvVar() {
+        final var pathFinder = PathFinder.getBuilder("System32")
+                .addEnvVars("SystemRoot").build();
+
+        final var file = pathFinder.getFile();
+        assertTrue(file.isPresent());
+        assertTrue(file.get().isDirectory());
+    }
+
+    @Test
+    public void pathEmptySysProps() {
+        final var pathFinder = PathFinder.getBuilder("test.txt").addSysProps().build();
+        assertTrue(pathFinder.getFile().isEmpty());
+    }
+
+    @Test
+    public void pathValidSystemProp() {
+        System.setProperty("dir1", "src/test/resources/pathfinder/dir1");
+
+        final var pathFinder = PathFinder.getBuilder("test.txt")
+                .addSysProps("dir1").build();
+
+        final var file = pathFinder.getFile();
+        assertTrue(file.isPresent());
+        assertTrue(file.get().isFile());
     }
 
     @Test

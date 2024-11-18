@@ -3,10 +3,7 @@ package xyz.ronella.trivial.handy;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -105,11 +102,15 @@ final public class PathFinder {
          * @return An instance of PathFinderBuilder.
          */
         public PathFinderBuilder addPaths(final List<String> dirs) {
-            final var paths = dirs.stream().map(___dir -> ___dir.split(File.pathSeparator)).map(___dir -> {
+            final var paths = dirs.stream()
+                    .map(___dir -> ___dir.split(File.pathSeparator))
+                    .map(___dir -> {
+
                 final var dirList = new ArrayList<>(Arrays.asList(___dir));
                 dirList.add(filename);
                 final var firstEntry = dirList.remove(0);
                 return Paths.get(firstEntry, dirList.toArray(new String[]{})).toFile();
+
             }).collect(Collectors.toList());
 
             if (paths.isEmpty()) {
@@ -118,6 +119,30 @@ final public class PathFinder {
 
             files.addAll(paths);
             return this;
+        }
+
+        /**
+         * Adds paths from environment variables where to find the first existence of the filename.
+         *
+         * @param envVars An array of environment variables.
+         * @return An instance of PathFinderBuilder.
+         */
+        public PathFinderBuilder addEnvVars(final String ... envVars) {
+            return addPaths(Arrays.stream(envVars).map(System::getenv)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList()));
+        }
+
+        /**
+         * Adds paths from system properties where to find the first existence of the filename.
+         *
+         * @param sysProps An array of system property names.
+         * @return An instance of PathFinderBuilder.
+         */
+        public PathFinderBuilder addSysProps(final String ... sysProps) {
+            return addPaths(Arrays.stream(sysProps).map(System::getProperty)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList()));
         }
 
         /**
