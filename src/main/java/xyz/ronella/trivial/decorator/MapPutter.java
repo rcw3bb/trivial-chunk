@@ -3,6 +3,8 @@ package xyz.ronella.trivial.decorator;
 import xyz.ronella.trivial.functional.NoOperation;
 import xyz.ronella.trivial.functional.WhenThen;
 import xyz.ronella.trivial.functional.WhenThenReturn;
+import xyz.ronella.trivial.handy.Require;
+import xyz.ronella.trivial.handy.RequireObject;
 
 import java.util.Map;
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class MapPutter<TYPE_KEY, TYPE_VALUE> {
      * @param map The map to wrap.
      */
     public MapPutter(final Map<TYPE_KEY, TYPE_VALUE> map) {
+        Require.objects(map);
         this.map = map;
     }
 
@@ -35,10 +38,14 @@ public class MapPutter<TYPE_KEY, TYPE_VALUE> {
      * @param valueLogic The logic to generate the value to associate with the key.
      * @return An implementation of WhenThenReturn that return previous value associated with the key when available if put is actually performed.
      */
-    public WhenThenReturn<Map<TYPE_KEY, TYPE_VALUE>, TYPE_VALUE> putWhen(final Supplier<TYPE_KEY> keyLogic, final Supplier<TYPE_VALUE> valueLogic) {
-        final var keySupplier = Optional.ofNullable(keyLogic).orElse(NoOperation.supplier());
-        final var valueSupplier = Optional.ofNullable(valueLogic).orElse(NoOperation.supplier());
-        return ___when -> ___when.test(map) ? map.put(keySupplier.get(), valueSupplier.get()) : null;
+    public WhenThenReturn<Map<TYPE_KEY, TYPE_VALUE>, TYPE_VALUE> putWhen(final Supplier<TYPE_KEY> keyLogic,
+                                                                         final Supplier<TYPE_VALUE> valueLogic) {
+        Require.objects(new RequireObject(keyLogic, "keyLogic cannot be null"),
+                new RequireObject(valueLogic, "valueLogic cannot be null"));
+        return ___when -> {
+            Require.objects(___when);
+            return ___when.test(map) ? map.put(keyLogic.get(), valueLogic.get()) : null;
+        };
     }
 
     /**
@@ -57,7 +64,8 @@ public class MapPutter<TYPE_KEY, TYPE_VALUE> {
      * @param value The value associated with the key.
      * @return An implementation of WhenThenReturn that return previous value associated with the key when available if put is actually performed.
      */
-    public WhenThenReturn<Map<TYPE_KEY, TYPE_VALUE>, TYPE_VALUE> putWhen(final Supplier<TYPE_KEY> keyLogic, final TYPE_VALUE value) {
+    public WhenThenReturn<Map<TYPE_KEY, TYPE_VALUE>, TYPE_VALUE> putWhen(final Supplier<TYPE_KEY> keyLogic,
+                                                                         final TYPE_VALUE value) {
         return putWhen(keyLogic, () -> value);
     }
 
@@ -77,8 +85,10 @@ public class MapPutter<TYPE_KEY, TYPE_VALUE> {
      * @return An implementation of WhenThen that accepts the condition if it is all good to absorb the map.
      */
     public WhenThen<Map<TYPE_KEY, TYPE_VALUE>> putAllWhen(final Supplier<Map<TYPE_KEY, TYPE_VALUE>> mapLogic) {
+        Require.objects(mapLogic);
         final var valueSupplier = Optional.ofNullable(mapLogic).orElse(NoOperation.supplier());
         return ___when -> {
+            Require.objects(___when);
             if (___when.test(map)) {
                 map.putAll(valueSupplier.get());
             }
