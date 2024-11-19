@@ -60,7 +60,10 @@ task testsJar(type: Jar, dependsOn: [testClasses]) {
     from sourceSets.test.output
 }
 
-jar.finalizedBy(javadocJar, sourcesJar, testsJar)
+jar {
+    dependsOn test
+    finalizedBy(javadocJar, sourcesJar, testsJar)
+}
 
 java {
     withJavadocJar()
