@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 import xyz.ronella.trivial.handy.EndOfLine;
+import xyz.ronella.trivial.handy.Require;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -103,8 +104,9 @@ public class TextFile {
      * @since 2.20.0
      */
     public TextFile(final File file, final Charset charset, final EndOfLine endOfLine) {
+        Require.objects(file);
         this.file = file;
-        this.charset = charset;
+        this.charset = Optional.ofNullable(charset).orElse(StandardCharsets.UTF_8);
         this.endOfLine = Optional.ofNullable(endOfLine).orElse(getEndOfLine());
     }
 

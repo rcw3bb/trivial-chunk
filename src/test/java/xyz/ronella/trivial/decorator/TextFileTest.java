@@ -3,6 +3,7 @@ package xyz.ronella.trivial.decorator;
 import org.junit.jupiter.api.Test;
 import xyz.ronella.trivial.handy.EndOfLine;
 import xyz.ronella.trivial.handy.OSType;
+import xyz.ronella.trivial.handy.ObjectRequiredException;
 import xyz.ronella.trivial.handy.PathFinder;
 
 import java.io.File;
@@ -26,6 +27,11 @@ public class TextFileTest {
         final var textFile = new TextFile(file);
         final var text = textFile.getText();
         assertEquals(expectation, text);
+    }
+
+    @Test
+    public void nullFile() {
+        assertThrows(ObjectRequiredException.class, () -> new TextFile((File) null));
     }
 
     @Test
