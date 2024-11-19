@@ -1,5 +1,8 @@
 package xyz.ronella.trivial.decorator;
 
+import xyz.ronella.trivial.handy.Require;
+import xyz.ronella.trivial.handy.RequireObject;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -18,6 +21,7 @@ public class OptionalString {
      * @param optional An instance Optional of type String.
      */
     public OptionalString(final Optional<String> optional) {
+        Require.objects(optional);
         this.optional = optional;
     }
 
@@ -43,6 +47,7 @@ public class OptionalString {
      * @throws NullPointerException If value is present and the given action is null
      */
     public void ifPresentNotBlank(final Consumer<String> action) {
+        Require.objects(action);
         optional.ifPresent(text -> {
             if (!text.isBlank()) {
                 action.accept(text);
@@ -56,6 +61,7 @@ public class OptionalString {
      * @throws NullPointerException If value is present and the given action is null
      */
     public void ifPresentNotEmpty(final Consumer<String> action) {
+        Require.objects(action);
         optional.ifPresent(text -> {
             if (!text.isEmpty()) {
                 action.accept(text);
@@ -70,6 +76,9 @@ public class OptionalString {
      * @throws NullPointerException If a value is present and the given action is null, or no value is present and the given empty-based action is null.
      */
     public void ifPresentNotBlankOrElse(final Consumer<String> action, final Runnable emptyAction) {
+        Require.objects(new RequireObject(action, "action cannot be null"),
+                new RequireObject(emptyAction, "emptyAction cannot be null"));
+
         String text = null;
 
         if (optional.isPresent() && !optional.get().isBlank()) {
@@ -86,6 +95,9 @@ public class OptionalString {
      * @throws NullPointerException If a value is present and the given action is null, or no value is present and the given empty-based action is null.
      */
     public void ifPresentNotEmptyOrElse(final Consumer<String> action, final Runnable emptyAction) {
+        Require.objects(new RequireObject(action, "action cannot be null"),
+                new RequireObject(emptyAction, "emptyAction cannot be null"));
+
         String text = null;
 
         if (optional.isPresent() && !optional.get().isEmpty()) {
