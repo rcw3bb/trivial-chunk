@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.decorator;
 
 import xyz.ronella.trivial.functional.NoOperation;
+
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
@@ -236,6 +238,11 @@ public class StringBuilderAppenderTest {
         var builder = new StringBuilderAppender("").appendWhen("Test"
                 , ___builder -> ___builder.append("+")).when(___ -> Boolean.TRUE);
         assertEquals("+Test", builder.toString());
+    }
+
+    @Test
+    public void acceptingANull() {
+        assertThrows(NoSuchElementException.class, () -> new StringBuilderAppender((String) null));
     }
 
     @Test

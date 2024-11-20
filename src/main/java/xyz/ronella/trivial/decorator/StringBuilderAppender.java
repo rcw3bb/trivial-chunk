@@ -3,12 +3,12 @@ package xyz.ronella.trivial.decorator;
 import xyz.ronella.trivial.functional.Sink;
 import xyz.ronella.trivial.functional.WhenThen;
 import xyz.ronella.trivial.functional.WhenThenReturn;
+import xyz.ronella.trivial.handy.Require;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 /**
@@ -51,7 +51,7 @@ public class StringBuilderAppender {
     public StringBuilderAppender(final String string,
                                  final Consumer<StringBuilder> defaultBeforeAppend,
                                  final Consumer<StringBuilder> defaultAfterAppend) {
-        this(new StringBuilder(string), defaultBeforeAppend, defaultAfterAppend);
+        this(new StringBuilder(Optional.ofNullable(string).orElseThrow()), defaultBeforeAppend, defaultAfterAppend);
     }
 
     /**
@@ -179,6 +179,7 @@ public class StringBuilderAppender {
     }
 
     private WhenThen<StringBuilder> conditionLogic(final Sink logic) {
+        Require.object(logic);
         return ___when ->
         Optional.ofNullable(___when).ifPresent(___condition -> {
             if (___condition.test(builder)) {
@@ -357,7 +358,7 @@ public class StringBuilderAppender {
     public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> updateLogic,
                                         final Consumer<StringBuilder> beforeAppend) {
         return ___when -> {
-            conditionLogic(() -> append(updateLogic, beforeAppend)).when(___when::test);
+            conditionLogic(() -> append(updateLogic, beforeAppend)).when(___when);
             return this;
         };
     }
@@ -406,11 +407,8 @@ public class StringBuilderAppender {
     public StringBuilderAppender append(final Consumer<StringBuilder> beforeAppend,
                                         final Consumer<StringBuilder> afterAppend,
                                         final String ... texts) {
-        Optional.ofNullable(texts).ifPresent(___texts -> {
-            Arrays.asList(___texts).forEach(___text -> {
-                append(___text, beforeAppend, afterAppend);
-            });
-        });
+        Optional.ofNullable(texts).ifPresent(___texts -> Arrays.asList(___texts)
+                .forEach(___text -> append(___text, beforeAppend, afterAppend)));
 
         return this;
     }
@@ -440,7 +438,7 @@ public class StringBuilderAppender {
      * @since 2.1.0
      */
     public StringBuilderAppender append(final String ... texts) {
-        return append((Consumer<StringBuilder>) null, texts);
+        return append(null, texts);
     }
 
     /**
@@ -460,11 +458,8 @@ public class StringBuilderAppender {
                                         final String ... texts) {
 
         return ___when -> {
-            Optional.ofNullable(texts).ifPresent(___texts -> {
-                Arrays.asList(___texts).forEach(___text -> {
-                    appendWhen(___text, beforeAppend, afterAppend).when(___when::test);
-                });
-            });
+            Optional.ofNullable(texts).ifPresent(___texts -> Arrays.asList(___texts)
+                    .forEach(___text -> appendWhen(___text, beforeAppend, afterAppend).when(___when)));
 
             return this;
         };
@@ -502,15 +497,12 @@ public class StringBuilderAppender {
     /**
      * Clears the content of the target string builder
      *
-     * @return An instance of StringBuilderAppender.
-     *
      * @since 2.7.0
      */
-    public StringBuilderAppender clear() {
+    protected void clear() {
         try(var ___ = new CloseableLock(instanceLock, this::isThreadSafe)) {
             builder.delete(0, builder.length());
         }
-        return this;
     }
 
     /**
