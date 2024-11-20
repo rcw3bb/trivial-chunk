@@ -89,10 +89,6 @@
 
   An enumeration of EndOfLine.
 
-* [LogicMapper](HDY_LOGIC_MAPPER.md)
-
-  Creates a map of conditions and logic where all the conditions that evaluated to true will perform its corresponding logic.
-
 * [NPESilencer](HDY_NPE_SILENCER.md)
 
   The class that collects expressions and evaluate them in sequence and return the output of very last expression. 
