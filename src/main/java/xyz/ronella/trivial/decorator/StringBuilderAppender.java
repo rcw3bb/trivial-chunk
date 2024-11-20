@@ -190,28 +190,6 @@ public class StringBuilderAppender {
     /**
      * Perform an append operation with pre-append and post-append logic.
      * This will override the default pre-append and post-append logic.
-     *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param text The text to be appended.
-     * @param beforeAppend The logic to perform before an append.
-     * @param afterAppend The logic to perform after an append.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.0.0
-     *
-     * @deprecated Use appendWhen(String text, Consumer&lt;StringBuilder&gt; beforeAppend, Consumer&lt;StringBuilder&gt; afterAppend) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final String text,
-                                        final Consumer<StringBuilder> beforeAppend,
-                                        final Consumer<StringBuilder> afterAppend) {
-        return appendWhen(text, beforeAppend, afterAppend).when(___ -> condition.getAsBoolean());
-    }
-
-    /**
-     * Perform an append operation with pre-append and post-append logic.
-     * This will override the default pre-append and post-append logic.
      * @param text The text to be appended.
      * @param beforeAppend The logic to perform before an append.
      * @param afterAppend The logic to perform after an append.
@@ -238,27 +216,6 @@ public class StringBuilderAppender {
      */
     public StringBuilderAppender append(final String text, final Consumer<StringBuilder> beforeAppend) {
         return append(text, beforeAppend, null);
-    }
-
-
-    /**
-     * Perform an append operation with pre-append logic.
-     * This will override the default pre-append logic.
-     *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param text The text to be appended.
-     * @param beforeAppend The logic to perform before an append.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.0.0
-     *
-     * @deprecated Use appendWhen(String text, Consumer&lt;StringBuilder&gt; beforeAppend) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final String text,
-                                        final Consumer<StringBuilder> beforeAppend) {
-        return appendWhen(text, beforeAppend).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -289,23 +246,6 @@ public class StringBuilderAppender {
      */
     public StringBuilderAppender append(final String text) {
         return append(text, null);
-    }
-
-    /**
-     * Perform a normal append without any pre-append or post-append logic.
-     *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param text The text to be appended.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.0.0
-     *
-     * @deprecated Use appendWhen(String text) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final String text) {
-        return appendWhen(text).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -372,28 +312,6 @@ public class StringBuilderAppender {
     /**
      * Ability to append using your own custom logic that this decorator cannot handle.
      *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param updateLogic Must hold the custom logic for appending.
-     * @param beforeAppend The logic to perform before an append.
-     * @param afterAppend The logic to perform after an append.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.0.0
-     *
-     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; updateLogic, Consumer&lt;StringBuilder&gt; beforeAppend, Consumer&lt;StringBuilder&gt; afterAppend) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
-                                        final Consumer<StringBuilder> beforeAppend,
-                                        final Consumer<StringBuilder> afterAppend) {
-
-        return appendWhen(updateLogic, beforeAppend, afterAppend).when(___ -> condition.getAsBoolean());
-    }
-
-    /**
-     * Ability to append using your own custom logic that this decorator cannot handle.
-     *
      * @param updateLogic Must hold the custom logic for appending.
      * @param beforeAppend The logic to perform before an append.
      * @param afterAppend The logic to perform after an append.
@@ -429,25 +347,6 @@ public class StringBuilderAppender {
     /**
      * Ability to append using your own custom logic that this decorator cannot handle.
      *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param updateLogic Must hold the custom logic for appending.
-     * @param beforeAppend The logic to perform before an append.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.0.0
-     *
-     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; updateLogic, Consumer&lt;StringBuilder&gt; beforeAppend) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic,
-                                        final Consumer<StringBuilder> beforeAppend) {
-        return appendWhen(updateLogic, beforeAppend).when(___ -> condition.getAsBoolean());
-    }
-
-    /**
-     * Ability to append using your own custom logic that this decorator cannot handle.
-     *
      * @param updateLogic Must hold the custom logic for appending.
      * @param beforeAppend The logic to perform before an append.
      *
@@ -474,23 +373,6 @@ public class StringBuilderAppender {
      */
     public StringBuilderAppender append(final Consumer<StringBuilder> updateLogic) {
         return append(updateLogic, (Consumer<StringBuilder>) null);
-    }
-
-    /**
-     * Ability to append using your own custom logic that this decorator cannot handle.
-     *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param updateLogic Must hold the custom logic for appending.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.0.0
-     *
-     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; updateLogic) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> updateLogic) {
-        return appendWhen(updateLogic).when(___ -> condition.getAsBoolean());
     }
 
     /**
@@ -565,28 +447,6 @@ public class StringBuilderAppender {
      * Perform an append operation with pre-append and post-append logic.
      * This will override the default pre-append and post-append logic.
      *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param beforeAppend The logic to perform before an append.
-     * @param afterAppend The logic to perform after an append.
-     * @param texts The array of texts to be appended.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.1.0
-     *
-     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; beforeAppend, Consumer&lt;StringBuilder&gt; afterAppend, String ... texts) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
-                                        final Consumer<StringBuilder> afterAppend,
-                                        final String ... texts) {
-        return appendWhen(beforeAppend, afterAppend, texts).when(___ -> condition.getAsBoolean());
-    }
-
-    /**
-     * Perform an append operation with pre-append and post-append logic.
-     * This will override the default pre-append and post-append logic.
-     *
      * @param beforeAppend The logic to perform before an append.
      * @param afterAppend The logic to perform after an append.
      * @param texts The array of texts to be appended.
@@ -614,26 +474,6 @@ public class StringBuilderAppender {
      * Perform an append operation with pre-append logic.
      * This will override the default pre-append logic.
      *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param beforeAppend The logic to perform before an append.
-     * @param texts The array of texts to be appended.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.1.0
-     *
-     * @deprecated Use appendWhen(Consumer&lt;StringBuilder&gt; beforeAppend, String ... texts) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final Consumer<StringBuilder> beforeAppend,
-                                        final String ... texts) {
-        return appendWhen(beforeAppend, null, texts).when(___ -> condition.getAsBoolean());
-    }
-
-    /**
-     * Perform an append operation with pre-append logic.
-     * This will override the default pre-append logic.
-     *
      * @param beforeAppend The logic to perform before an append.
      * @param texts The array of texts to be appended.
      *
@@ -644,23 +484,6 @@ public class StringBuilderAppender {
     public WhenThenReturn<StringBuilder, StringBuilderAppender> appendWhen(final Consumer<StringBuilder> beforeAppend,
                                         final String ... texts) {
         return ___when -> appendWhen(beforeAppend, null, texts).when(___when);
-    }
-
-    /**
-     * Perform a normal append without any pre-append or post-append logic.
-     *
-     * @param condition An implementation of BooleanSupplier that must return true to perform any append.
-     * @param texts The array of texts to be appended.
-     *
-     * @return An instance of StringBuilderAppender.
-     *
-     * @since 2.1.0
-     *
-     * @deprecated Use appendWhen(String ... texts) instead.
-     */
-    @Deprecated
-    public StringBuilderAppender append(final BooleanSupplier condition, final String ... texts) {
-        return appendWhen(texts).when(___ -> condition.getAsBoolean());
     }
 
     /**

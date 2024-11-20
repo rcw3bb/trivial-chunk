@@ -31,34 +31,6 @@ public class ListAdder<TYPE_ELEMENT> {
     }
 
     /**
-     * Add element to a wrapped list.
-     *
-     * @param when The logic that must return true to add the element.
-     * @param element Specified in List.add
-     * @return Specified in List.add
-     *
-     * @deprecated Use addWhen(TYPE_ELEMENT) instead.
-     */
-    @Deprecated
-    public boolean add(final BooleanSupplier when, final TYPE_ELEMENT element) {
-        return addWhen(element).when(___ -> when.getAsBoolean());
-    }
-
-    /**
-     * Add element to a wrapped list.
-     *
-     * @param when The logic that must return true to add the element.
-     * @param generateElement The logic that will generate the element.
-     * @return Specified in List.add
-     *
-     * @deprecated Use addWhen(Supplier&lt;TYPE_ELEMENT&gt;) instead.
-     */
-    @Deprecated
-    public boolean add(final BooleanSupplier when, final Supplier<TYPE_ELEMENT> generateElement) {
-        return addWhen(generateElement).when(___ -> when.getAsBoolean());
-    }
-
-    /**
      * Add element to a wrapped list. Added for convenience.
      *
      * @param element Specified in List.add
@@ -81,20 +53,6 @@ public class ListAdder<TYPE_ELEMENT> {
     }
 
     /**
-     * Add elements to a wrapped list.
-     *
-     * @param when The logic that must return true to add the elements.
-     * @param elements Specified in List.addAll
-     * @return Specified in List.addAll
-     *
-     * @deprecated Use addAllWhen(Collection&lt;? extends TYPE_ELEMENT&gt; elements) instead.
-     */
-    @Deprecated
-    public boolean addAll(final BooleanSupplier when, final Collection<? extends TYPE_ELEMENT> elements) {
-        return addAllWhen(elements).when(___ -> when.getAsBoolean());
-    }
-
-    /**
      * Add all the elements when the condition was met.
      * @param elements The elements to be added.
      * @return An implementation of WhenThenReturn that returns true if the list changed.
@@ -106,21 +64,6 @@ public class ListAdder<TYPE_ELEMENT> {
             Require.objects(___when);
             return ___when.test(list) && list.addAll(elements);
         };
-    }
-
-    /**
-     * Add elements to a wrapped list.
-     *
-     * @param when The logic that must return true to add the elements.
-     * @param generateElements The logic that will generate the elements.
-     * @return Specified in List.addAll
-     *
-     * @deprecated Use addAllWhen(Supplier&lt;Collection&lt;? extends TYPE_ELEMENT&gt;&gt; generateElements) instead.
-     */
-    @Deprecated
-    public boolean addAll(final BooleanSupplier when,
-                          final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        return addAllWhen(generateElements).when(___ -> when.getAsBoolean());
     }
 
     /**
@@ -160,31 +103,7 @@ public class ListAdder<TYPE_ELEMENT> {
         return list.addAll(elements);
     }
 
-    /**
-     * Add element to a specific index of the wrapped list.
-     * @param when The logic that must return true to add the element.
-     * @param index Specified in List.add
-     * @param element Specified in List.add
-     *
-     * @deprecated Use addWhen(int, TYPE_ELEMENT) instead.
-     */
-    @Deprecated
-    public void add(final BooleanSupplier when, final int index, final TYPE_ELEMENT element) {
-        addWhen(index, element).when(___ -> when.getAsBoolean());
-    }
 
-    /**
-     * Add element to a specific index of the wrapped list.
-     * @param when The logic that must return true to add the element.
-     * @param index Specified in List.add
-     * @param generateElement The logic that will generate the element.
-     *
-     * @deprecated Use addWhen(int, Supplier&lt;TYPE_ELEMENT&gt;) instead.
-     */
-    @Deprecated
-    public void add(final BooleanSupplier when, final int index, final Supplier<TYPE_ELEMENT> generateElement) {
-        addWhen(index, generateElement).when(___ -> when.getAsBoolean());
-    }
 
     /**
      * Add element to a specific index of the wrapped list. Added for convenience.
@@ -207,21 +126,6 @@ public class ListAdder<TYPE_ELEMENT> {
     }
 
     /**
-     * Add elements to a specified index of the wrapped list.
-     * @param when The logic that must return true to add the elements.
-     * @param index Specified in List.add
-     * @param elements Specified in List.add
-     * @return Specified in List.addAll
-     *
-     * @deprecated Use addAllWhen(int index, Collection&lt;? extends TYPE_ELEMENT&gt; elements) instead.
-     */
-    @Deprecated
-    public boolean addAll(final BooleanSupplier when, final int index,
-                          final Collection<? extends TYPE_ELEMENT> elements) {
-        return addAllWhen(index, elements).when(___ -> when.getAsBoolean());
-    }
-
-    /**
      * Add all the elements when the condition was met.
      * @param index The index to add the elements.
      * @param elements The elements to be added.
@@ -235,21 +139,6 @@ public class ListAdder<TYPE_ELEMENT> {
             Require.objects(___when);
             return ___when.test(list) && list.addAll(index, elements);
         };
-    }
-
-    /**
-     * Add elements to a specified index of the wrapped list.
-     * @param when The logic that must return true to add the elements.
-     * @param index Specified in List.add
-     * @param generateElements The logic that will generate the elements.
-     * @return Specified in List.addAll
-     *
-     * @deprecated Use addAllWhen(int index, Supplier&lt;CollectionU&lt;? extends TYPE_ELEMENT&gt;&gt; generateElements) instead.
-     */
-    @Deprecated
-    public boolean addAll(final BooleanSupplier when, final int index,
-                          final Supplier<Collection<? extends TYPE_ELEMENT>> generateElements) {
-        return addAllWhen(index, generateElements).when(___ -> when.getAsBoolean());
     }
 
     /**

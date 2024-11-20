@@ -130,53 +130,6 @@ public class TextFile {
     }
 
     /**
-     * Return the text content of the file.
-     * @param endOfLine An instance of EndOfLine.
-     * @return The text content.
-     * @throws FileNotFoundException Can throw this exception.
-     * @deprecated Use the constructor to set the endOfLine instead.
-     */
-    @Deprecated
-    public String getText(final EndOfLine endOfLine) throws IOException {
-        return getText(StandardCharsets.UTF_8, endOfLine);
-    }
-
-    /**
-     * Return the text content of the file.
-     * @param charset The character set to use.
-     * @return The text content.
-     * @throws FileNotFoundException Can throw this exception.
-     * @deprecated Use the constructor to set the charset instead.
-     */
-    @Deprecated
-    public String getText(final Charset charset) throws IOException {
-        return getText(charset, EndOfLine.SYSTEM);
-    }
-
-    /**
-     * Return the text content of the file.
-     * @param charset The character set to use.
-     * @param endOfLine An instance of EndOfLine.
-     * @return The text content.
-     * @throws FileNotFoundException Can throw this exception.
-     * @deprecated Use the constructor to set the charset and endOfLine instead.
-     */
-    @Deprecated
-    public String getText(final Charset charset, final EndOfLine endOfLine) throws IOException {
-        try(var scanner = new Scanner(file, charset)) {
-            final var sbText = new StringBuilderAppender(___sb -> new StringBuilderAppender(___sb)
-                    .appendWhen(endOfLine.eol())
-                    .when(Predicate.not(StringBuilder::isEmpty)));
-
-            while (scanner.hasNextLine()) {
-                final var line = scanner.nextLine();
-                sbText.append(line);
-            }
-            return sbText.toString();
-        }
-    }
-
-    /**
      * Set the text content of the file.
      * @param text The text content.
      * @throws IOException Can throw this exception.

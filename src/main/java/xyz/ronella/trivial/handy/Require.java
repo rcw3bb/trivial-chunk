@@ -15,21 +15,6 @@ public final class Require {
     private Require() {}
 
     /**
-     * A method that checks if all the parameters were not null.
-     *
-     * @param param The required first parameter to check.
-     * @param params The other parameters to check.
-     *
-     * @throws ObjectRequiredException This will be thrown when at least one of the parameters has thrown an NPE.
-     *
-     * @deprecated Use the objects method instead.
-     */
-    @Deprecated
-    public static void all(final Object param, final Object ... params) throws ObjectRequiredException {
-        objects(param, params);
-    }
-
-    /**
      * The method that checks if all the objects were not null.
      *
      * @param obj The required first obj to check.

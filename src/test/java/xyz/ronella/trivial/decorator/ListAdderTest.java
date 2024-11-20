@@ -19,7 +19,7 @@ public class ListAdderTest {
         var expected = List.of("Test");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.add(()-> true, expected.get(0));
+        adder.addWhen(expected.get(0)).when(___ -> true);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
@@ -39,7 +39,7 @@ public class ListAdderTest {
         var expected = List.of("Test");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.add(()-> false, expected.get(0));
+        adder.addWhen(expected.get(0)).when(___ -> false);
 
         assertEquals(0, testList.size());
     }
@@ -77,7 +77,7 @@ public class ListAdderTest {
         var expected = List.of("Test");
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.add(()-> false, 0, expected.get(0));
+        adder.addWhen(0, expected.get(0)).when(___ -> false);
 
         assertEquals(0, testList.size());
     }
@@ -161,7 +161,7 @@ public class ListAdderTest {
     public void addGeneratedWhenTrue() {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.add(()-> true, ()-> "Generated");
+        adder.addWhen(() -> "Generated").when(___ -> true);
 
         assertEquals("Generated", testList.get(0));
     }
@@ -184,7 +184,7 @@ public class ListAdderTest {
     public void addGeneratedWhenFalse() {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.add(()-> false, ()-> "Generated");
+        adder.addWhen(()-> "Generated").when(___ -> false);
 
         assertTrue(testList.isEmpty());
     }
@@ -312,7 +312,7 @@ public class ListAdderTest {
     public void addGeneratedIdxWhenTrue() {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
-        adder.add(()-> true, 0, ()-> "Generated");
+        adder.addWhen(0, ()-> "Generated").when(___-> true);
 
         assertEquals("Generated", testList.get(0));
     }

@@ -81,12 +81,6 @@
 
   A convenience class for **locating a command**.
 
-* [CommandRunner](HDY_COMMAND_RUNNER.md) (Deprecated)
-
-  A convenience class for **creating operating system process**.
-
-  This is a deprecated class, use [CommandProcessor](HDY_COMMAND_PROCESSOR.md) instead.
-
 * [CommandProcessor](HDY_COMMAND_PROCESSOR.md)
 
   A convenience class for **creating operating system process** with customizable output logic.
@@ -136,12 +130,6 @@
 * [StringKeyedMapExecutor](HDY_STR_KEY_MAP_EXEC.md)
 
   A group of logics that are contained in a map and **doesn't return a value**. The key must be a valid **String**.
-
-* [StringKeyedMapFactory (Deprecated)](HDY_STR_KEY_MAP_FACTORY.md)
-
-  A group of logics that are contained in a map and **returns a value**.
-
-  This is a deprecated class, use [StringKeyedMapGenerator](HDY_STR_KEY_MAP_GEN) instead
 
 * [StringKeyedMapGenerator](HDY_STR_KEY_MAP_GEN.md)
 
