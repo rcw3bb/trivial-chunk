@@ -89,10 +89,6 @@
 
   An enumeration of EndOfLine.
 
-* [NPESilencer](HDY_NPE_SILENCER.md)
-
-  The class that collects expressions and evaluate them in sequence and return the output of very last expression. 
-
 * [OSType](HDY_OSTYPE.md)
 
   An enumeration of OSes.
