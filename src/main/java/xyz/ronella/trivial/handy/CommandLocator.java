@@ -40,6 +40,8 @@ public final class CommandLocator {
      * @return An optional instance of File.
      */
     public static Optional<File> locateAsFile(final String command) {
+        Require.object(command);
+
         final var osType = OSType.identify();
         final var finder = getFinder(osType);
         Optional<File> execOutput = Optional.empty();

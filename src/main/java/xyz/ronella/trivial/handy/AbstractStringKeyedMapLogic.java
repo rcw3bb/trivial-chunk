@@ -36,7 +36,7 @@ public abstract class AbstractStringKeyedMapLogic<TYPE_LOGIC, TYPE_OUTPUT> exten
 
     /**
      * Must have the implementation on how to get the logic based on a key and must be able to handle
-     * if that key doesn't exists.
+     * if that key doesn't exist.
      *
      * @param key The target key of the corresponding logic.
      *
