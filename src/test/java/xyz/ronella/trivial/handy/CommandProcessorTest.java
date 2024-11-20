@@ -160,6 +160,20 @@ public class CommandProcessorTest {
         assertEquals("Mocked output", output.get());
     }
 
+    @Test
+    public void initializerTestNullInitProcess() {
+        assertThrows(ObjectRequiredException.class, () ->
+            CommandProcessor.process(() -> builder, null, CommandProcessor.ProcessOutputHandler.errorToString(),
+                    CommandArray.wrap("dummy"))
+        );
+    }
+
+    @Test
+    public void initializerTestNullOutputHandler() {
+        assertThrows(ObjectRequiredException.class, () ->
+                CommandProcessor.process(() -> builder, Process::toHandle, null, CommandArray.wrap("dummy")));
+    }
+
     @EnabledOnOs(OS.WINDOWS)
     @Test
     public void testingDefaultBehavior() {

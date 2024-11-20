@@ -24,6 +24,9 @@ final public class CommandProcessor {
                                                         final Function<Process, T_OUTPUT> outputLogic,
                                                         final ICommandArray command) {
 
+        Require.objects(new RequireObject(initProcess, "initProcess cannot be null"),
+                new RequireObject(outputLogic, "outputLogic cannot be null"));
+
         return Optional.ofNullable(command).map(___command -> {
 
             final var builder = Optional.of(genProcessBuilder.get()).orElse(new ProcessBuilder());
