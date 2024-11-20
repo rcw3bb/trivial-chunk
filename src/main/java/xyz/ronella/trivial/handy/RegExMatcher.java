@@ -29,6 +29,10 @@ final public class RegExMatcher {
      * @since 2.11.0
      */
     public static Matcher match(final String pattern, final String text, final IMatcherConfig config) {
+        Require.objects(new RequireObject(pattern, "pattern cannot be null"),
+                new RequireObject(text, "text cannot be null"),
+                new RequireObject(config, "config cannot be null"));
+
         final var compiledPattern = Pattern.compile(pattern);
         final var matcher = compiledPattern.matcher(text);
         try {

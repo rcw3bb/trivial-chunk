@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RegExMatcherTest {
 
@@ -22,6 +23,29 @@ public class RegExMatcherTest {
                 .build());
 
         assertEquals("Hello", sbText.toString());
+    }
+
+    @Test
+    public void matchNullPattern() {
+        assertThrows(ObjectRequiredException.class, () -> RegExMatcher.match( null, "Hello world", MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> {})
+                .setExceptionLogic((___matcher) -> {})
+                .build()));
+    }
+
+    @Test
+    public void matchNullText() {
+        assertThrows(ObjectRequiredException.class, () -> RegExMatcher.match( "(\\w*)\\s(\\w*)", null, MatcherConfig.getBuilder()
+                .setMatchLogic(Matcher::find)
+                .setMatchFoundLogic((___matcher) -> {})
+                .setExceptionLogic((___matcher) -> {})
+                .build()));
+    }
+
+    @Test
+    public void matchNullConfig() {
+        assertThrows(ObjectRequiredException.class, () -> RegExMatcher.match( "(\\w*)\\s(\\w*)", "Hello world", null));
     }
 
     @Test
