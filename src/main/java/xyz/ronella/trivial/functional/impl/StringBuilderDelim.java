@@ -1,5 +1,7 @@
 package xyz.ronella.trivial.functional.impl;
 
+import xyz.ronella.trivial.handy.Require;
+
 import java.util.function.Consumer;
 
 /**
@@ -20,6 +22,7 @@ public class StringBuilderDelim<T> implements Consumer<StringBuilder> {
      * @param delim The delimiter to append.
      */
     public StringBuilderDelim(final T delim) {
+        Require.objects(delim);
         this.delim = delim;
     }
 

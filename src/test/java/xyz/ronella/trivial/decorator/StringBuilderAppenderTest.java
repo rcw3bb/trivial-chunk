@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 import xyz.ronella.trivial.functional.impl.StringBuilderDelim;
+import xyz.ronella.trivial.handy.ObjectRequiredException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -368,6 +369,11 @@ public class StringBuilderAppenderTest {
         var builder = new StringBuilderAppender(new StringBuilderDelim<>(", "))
                 .append("Hello");
         assertEquals("Hello", builder.toString());
+    }
+
+    @Test
+    public void appendNullDelim() {
+        assertThrows(ObjectRequiredException.class, ()-> new StringBuilderDelim<>(null));
     }
 
 }
