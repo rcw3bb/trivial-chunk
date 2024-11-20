@@ -45,15 +45,15 @@ public class CheckedBiFunctionTest {
 
     @Test
     void testBuilderOfNoError() {
-        CheckedBiFunction<String, String, String, Exception> checkedFunction = (arg1, arg2) -> arg1;
+        CheckedBiFunction<String, String, String, Exception> checkedFunction = CheckedBiFunction.of((arg1, arg2) -> arg1);
         assertEquals("Test", checkedFunction.asBiFunction().apply("Test", "Test2"));
     }
 
     @Test
     void testBuilderOfWithError() {
-        CheckedBiFunction<String, String, String, Exception> checkedFunction = (arg1, arg2) -> {
+        CheckedBiFunction<String, String, String, Exception> checkedFunction = CheckedBiFunction.of((arg1, arg2) -> {
             throw new Exception("Exception");
-        };
+        });
 
         assertThrows(RuntimeException.class, ()-> checkedFunction.asBiFunction().apply("Test", "Test2"));
     }

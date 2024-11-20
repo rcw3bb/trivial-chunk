@@ -49,18 +49,18 @@ public class CheckedBiConsumerTest {
 
     @Test
     void testBuilderOfNoError() {
-        CheckedBiConsumer<String, String, Exception> checkedConsumer = (arg1, arg2) -> {
+        CheckedBiConsumer<String, String, Exception> checkedConsumer = CheckedBiConsumer.of((arg1, arg2) -> {
             // Do nothing
-        };
+        });
 
         assertDoesNotThrow(() -> checkedConsumer.asBiConsumer().accept("Test", "Test2"));
     }
 
     @Test
     void testBuilderOfWithError() {
-        CheckedBiConsumer<String, String, Exception> checkedConsumer = (arg1, arg2) -> {
+        CheckedBiConsumer<String, String, Exception> checkedConsumer = CheckedBiConsumer.of((arg1, arg2) -> {
             throw new Exception("Exception");
-        };
+        });
 
         assertThrows(RuntimeException.class, ()-> checkedConsumer.asBiConsumer().accept("Test", "Test2"));
     }

@@ -45,15 +45,15 @@ public class CheckedFunctionTest {
 
     @Test
     void testBuilderOfNoError() {
-        CheckedFunction<String, String, Exception> checkedFunction = arg -> "Test";
+        CheckedFunction<String, String, Exception> checkedFunction = CheckedFunction.of(arg -> "Test");
         assertEquals("Test", checkedFunction.asFunction().apply("Test"));
     }
 
     @Test
     void testBuilderOfWithError() {
-        CheckedFunction<String, String, Exception> checkedFunction = arg -> {
+        CheckedFunction<String, String, Exception> checkedFunction = CheckedFunction.of(arg -> {
             throw new Exception("Exception");
-        };
+        });
 
         assertThrows(RuntimeException.class, ()-> checkedFunction.asFunction().apply("Test"));
     }

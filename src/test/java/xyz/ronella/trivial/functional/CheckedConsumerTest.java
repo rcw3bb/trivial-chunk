@@ -49,17 +49,17 @@ public class CheckedConsumerTest {
 
     @Test
     void testBuilderOfNoError() {
-        CheckedConsumer<String, Exception> checkedConsumer = arg -> {
+        CheckedConsumer<String, Exception> checkedConsumer = CheckedConsumer.of(arg -> {
             // Do nothing
-        };
+        });
         assertDoesNotThrow(() -> checkedConsumer.asConsumer().accept("Test"));
     }
 
     @Test
     void testBuilderOfWithError() {
-        CheckedConsumer<String, Exception> checkedConsumer = arg -> {
+        CheckedConsumer<String, Exception> checkedConsumer = CheckedConsumer.of(arg -> {
             throw new Exception("Exception");
-        };
+        });
 
         assertThrows(RuntimeException.class, ()-> checkedConsumer.asConsumer().accept("Test"));
     }

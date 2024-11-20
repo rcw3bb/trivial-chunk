@@ -45,15 +45,15 @@ public class CheckedBiPredicateTest {
 
     @Test
     void testBuilderOfNoError() {
-        CheckedBiPredicate<String, String, Exception> checkedPredicate = (arg1, arg2) -> true;
+        CheckedBiPredicate<String, String, Exception> checkedPredicate = CheckedBiPredicate.of((arg1, arg2) -> true);
         assertTrue(checkedPredicate.asBiPredicate().test("Test", "Test2"));
     }
 
     @Test
     void testBuilderOfWithError() {
-        CheckedBiPredicate<String, String, Exception> checkedPredicate = (arg1, arg2) -> {
+        CheckedBiPredicate<String, String, Exception> checkedPredicate = CheckedBiPredicate.of((arg1, arg2) -> {
             throw new Exception("Exception");
-        };
+        });
 
         assertThrows(RuntimeException.class, ()-> checkedPredicate.asBiPredicate().test("Test", "Test2"));
     }
