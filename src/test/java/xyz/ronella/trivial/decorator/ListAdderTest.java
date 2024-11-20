@@ -93,6 +93,17 @@ public class ListAdderTest {
     }
 
     @Test
+    public void addAllWhenTrue2ndTimeEmpty() {
+        var expected = Arrays.asList("Test1", "Test2");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addAllWhen(expected).when(___ -> true);
+        adder.addAllWhen(List.of()).when(___ -> true);
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
     public void addAllOnly() {
         var expected = Arrays.asList("Test1", "Test2");
         var testList = new ArrayList<String>();
@@ -126,6 +137,17 @@ public class ListAdderTest {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
         adder.addAllWhen(0, expected).when(___-> true);
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
+    public void addAllIdxWhenTrue2ndTimeEmpty() {
+        var expected = Arrays.asList("Test1", "Test2");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addAllWhen(0, expected).when(___-> true);
+        adder.addAllWhen(0, List.of()).when(___-> true);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
@@ -216,6 +238,16 @@ public class ListAdderTest {
     }
 
     @Test
+    public void addAllGeneratedWhenTrue2ndTimeEmpty() {
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addAllWhen(()-> List.of("Generated")).when(___ -> true);
+        adder.addAllWhen(List::of).when(___ -> true);
+
+        assertEquals("Generated", testList.get(0));
+    }
+
+    @Test
     public void addAllGeneratedWhenFalse() {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
@@ -261,6 +293,17 @@ public class ListAdderTest {
         var testList = new ArrayList<String>();
         var adder = new ListAdder<>(testList);
         adder.addAllWhen(0, ()-> expected).when(___ -> true);
+
+        assertArrayEquals(expected.toArray(), testList.toArray());
+    }
+
+    @Test
+    public void addAllGeneratedIdxWhenTrue2ndTimeEmpty() {
+        var expected = Arrays.asList("Test1", "Test2");
+        var testList = new ArrayList<String>();
+        var adder = new ListAdder<>(testList);
+        adder.addAllWhen(0, ()-> expected).when(___ -> true);
+        adder.addAllWhen(0, List::of).when(___ -> true);
 
         assertArrayEquals(expected.toArray(), testList.toArray());
     }
