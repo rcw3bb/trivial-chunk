@@ -77,6 +77,7 @@ public enum OSType {
      * @since 2.19.0
      */
     public static OSType of(final String osName) {
+        Require.object(osName);
         return Arrays.stream(OSType.values()).filter(___osType-> {
             final var lowerOsName = osName.toLowerCase(Locale.ROOT);
             if (lowerOsName.contains("win")) {
@@ -101,6 +102,8 @@ public enum OSType {
      * @since 2.20.0
      */
     public static OSType of(final EndOfLine eol) {
+        Require.object(eol);
+
         return switch (eol) {
             case CRLF -> OSType.Windows;
             case LF -> OSType.Linux;

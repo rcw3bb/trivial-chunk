@@ -125,4 +125,14 @@ public class OSTypeTest {
         assertEquals(OSType.Mac, OSType.of(EndOfLine.CR));
     }
 
+    @Test
+    public void ofNullOS() {
+        assertThrows(ObjectRequiredException.class, ()->OSType.of((String) null));
+    }
+
+    @Test
+    public void ofNullEOL() {
+        assertThrows(ObjectRequiredException.class, ()->OSType.of((EndOfLine) null));
+    }
+
 }
