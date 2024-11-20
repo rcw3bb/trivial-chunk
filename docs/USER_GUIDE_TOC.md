@@ -85,10 +85,6 @@
 
   A convenience class for **creating operating system process** with customizable output logic.
 
-* [Conditions](HDY_CONDITIONS.md)
-
-  A collection of logic implementations.
-
 * [EndOfLine](HDY_END_OF_LINE.md)
 
   An enumeration of EndOfLine.
