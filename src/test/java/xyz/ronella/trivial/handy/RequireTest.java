@@ -115,4 +115,29 @@ public class RequireTest {
             Require.objects(new RequireObject(param1, "param1 is required"), new RequireObject(param2, "param2 is required"));
         });
     }
+
+    @Test
+    public void objectWithMsgNull() {
+        String param = null;
+        assertThrows(ObjectRequiredException.class, ()-> Require.object(param, "Param cannot be null."));
+    }
+
+    @Test
+    public void objectWithMsgNonNull() {
+        String param = "test";
+        assertDoesNotThrow(()-> Require.object(param, "Param cannot be null."));
+    }
+
+    @Test
+    public void objectNull() {
+        String param = null;
+        assertThrows(ObjectRequiredException.class, ()-> Require.object(param));
+    }
+
+    @Test
+    public void objectNonNull() {
+        String param = "test";
+        assertDoesNotThrow(()-> Require.object(param));
+    }
+
 }

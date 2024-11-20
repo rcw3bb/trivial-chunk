@@ -29,6 +29,29 @@ public final class Require {
     }
 
     /**
+     * The method that checks if the object is not null.
+     * @param obj The object to check.
+     * @param message The message to be thrown when the object is null.
+     * @throws ObjectRequiredException This will be thrown when the object is null.
+     *
+     * @since 3.0.0
+     */
+    public static void object(final Object obj, final String message) throws ObjectRequiredException {
+        objects(new RequireObject(obj, message));
+    }
+
+    /**
+     * The method that checks if the object is not null.
+     * @param obj The object to check.
+     * @throws ObjectRequiredException This will be thrown when the object is null.
+     *
+     * @since 3.0.0
+     */
+    public static void object(final Object obj) throws ObjectRequiredException {
+        objects(new RequireObject(obj));
+    }
+
+    /**
      * The method that checks if all the objects were not null.
      * Note: It is required the all the parameters are an instance of RequireObject.
      *
