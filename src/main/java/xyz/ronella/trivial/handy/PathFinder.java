@@ -134,7 +134,7 @@ final public class PathFinder {
          * @param envVars An array of environment variables.
          * @return An instance of PathFinderBuilder.
          *
-         * @since 2.23.0
+         * @since 3.0.0
          */
         public PathFinderBuilder addEnvVars(final String ... envVars) {
             return addEnvVars(Arrays.stream(Optional.ofNullable(envVars)
@@ -147,7 +147,7 @@ final public class PathFinder {
          * @param envVars A list of environment variables.
          * @return An instance of PathFinderBuilder.
          *
-         * @since 2.23.0
+         * @since 3.0.0
          */
         public PathFinderBuilder addEnvVars(final List<String> envVars) {
             return addPaths(Optional.ofNullable(envVars).orElse(List.of()).stream()
@@ -162,7 +162,7 @@ final public class PathFinder {
          * @param sysProps An array of system property names.
          * @return An instance of PathFinderBuilder.
          *
-         * @since 2.23.0
+         * @since 3.0.0
          */
         public PathFinderBuilder addSysProps(final String ... sysProps) {
             return addSysProps(Arrays.stream(Optional.ofNullable(sysProps)
@@ -175,7 +175,7 @@ final public class PathFinder {
          * @param sysProps A list of system property names.
          * @return An instance of PathFinderBuilder.
          *
-         * @since 2.23.0
+         * @since 3.0.0
          */
         public PathFinderBuilder addSysProps(final List<String> sysProps) {
             return addPaths(Optional.ofNullable(sysProps).orElse(List.of()).stream()
