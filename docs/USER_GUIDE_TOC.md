@@ -1,18 +1,5 @@
 # User Guide - Table of Contents
 
-### Commands
-* [Invoker Class](CMD_INVOKER_CLASS.md)
-
-  A utility class that invokes an implementation of some standard functional interfaces in java. This is good for a **command pattern** implementation.
-
-* [LogicAND](CMD_LOGIC_AND.md)
-
-  A class that accepts multiple conditions and if **all conditions are true** it will pass control to the truthLogic otherwise the falseLogic will take it.
-
-* [LogicOR](CMD_LOGIC_OR.md)
-
-  A class that accepts multiple conditions and if **at least one condition is true** it will pass control to the truthLogic otherwise the falseLogic will take it.
-
 ### Decorator
 
 * [BigDecimalPlus](DEC_BIGDECIMAL_PLUS.md)
