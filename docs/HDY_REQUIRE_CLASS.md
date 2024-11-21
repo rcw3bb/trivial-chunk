@@ -1,15 +1,24 @@
 # Require Class
 
-A handy class for requiring some objects.
+A handy class for requiring non-null objects.
+
+##### The object Method
+
+A method that accepts single object to check for nullity. If the object parameter is null, the method will throw **ObjectRequiredException**.
+
+| Signatures                                                   | Description                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------ |
+| public static void **object**(Object obj) throws ObjectRequiredException | Single object null check without custom error message. |
+| public static void **object**(Object obj, String message) throws ObjectRequiredException | Single object null check with custom error message.    |
 
 ##### The objects Method
 
-A method that accepts multiple objects to check for nullity. If at least one of the parameters has thrown NPE, the method will throw **RequireAllException**.
+A method that accepts multiple objects to check for nullity. If at least one of the parameters is null, the method will throw **ObjectRequiredException**.
 
-| Signatures                                                   | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| public static void objects(Object obj, Object ... objs) throws RequireAllException | Doesn't support custom error message.                        |
-| public static void objects(RequireObject obj, RequireObject ... objs) throws RequireAllException | Supports custom error message when the object being tested is null. |
+| Signatures                                                   | Description                                               |
+| ------------------------------------------------------------ | --------------------------------------------------------- |
+| public static void **objects**(Object obj, Object ... objs) throws ObjectRequiredException | Multiple objects null check without custom error message. |
+| public static void **objects**(RequireObject obj, RequireObject ... objs) throws ObjectRequiredException | Multiple objects null check with custom error message.    |
 
 ## Sample Usage without Custom Message
 
@@ -21,7 +30,7 @@ try {
     Require.objects(param1, param2);
     System.out.println("Everythings fine.");
 }
-catch(RequireAllException rae) {
+catch(ObjectRequiredException rae) {
     System.out.println("NPE Detected");
 }
 ```
@@ -42,7 +51,7 @@ try {
     Require.objects(new RequireObject(param1, "param1 is required"), new RequireObject(param2, "param2 is required"));
     System.out.println("Everythings fine.");
 }
-catch(RequireAllException rae) {
+catch(ObjectRequiredException rae) {
     System.out.println(rae.getMessage());
 }
 ```
