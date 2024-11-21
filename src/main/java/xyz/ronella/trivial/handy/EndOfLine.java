@@ -6,6 +6,7 @@ package xyz.ronella.trivial.handy;
  * @author Ron Webb
  * @since 2.16.0
  */
+@SuppressWarnings("PMD.ShortVariable")
 public enum EndOfLine {
 
     /**

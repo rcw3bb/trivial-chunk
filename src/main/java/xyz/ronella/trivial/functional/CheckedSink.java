@@ -8,6 +8,7 @@ package xyz.ronella.trivial.functional;
  * @author Ron Webb
  * @since 2.21.0
  */
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidThrowingRawExceptionTypes", "PMD.ShortMethodName"})
 @FunctionalInterface
 public interface CheckedSink<X extends Exception> {
 

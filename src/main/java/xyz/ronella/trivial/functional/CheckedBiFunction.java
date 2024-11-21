@@ -13,6 +13,7 @@ import java.util.function.BiFunction;
  * @author Ron Webb
  * @since 2.21.0
  */
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidThrowingRawExceptionTypes", "PMD.ShortMethodName"})
 @FunctionalInterface
 public interface CheckedBiFunction<T1, T2, R, X extends Exception> {
 

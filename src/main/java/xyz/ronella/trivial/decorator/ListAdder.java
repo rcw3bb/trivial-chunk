@@ -6,7 +6,6 @@ import xyz.ronella.trivial.handy.Require;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
@@ -191,10 +190,7 @@ public class ListAdder<TYPE_ELEMENT> {
     public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addWhen(final TYPE_ELEMENT element) {
         return ___when -> {
             Require.objects(___when);
-            if (___when.test(list)) {
-                return list.add(element);
-            }
-            return false;
+            return ___when.test(list) && list.add(element);
         };
     }
 
@@ -206,6 +202,7 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
+    @SuppressWarnings("PMD.SimplifyBooleanReturns")
     public WhenThen<List<TYPE_ELEMENT>> addWhen(final int index, final TYPE_ELEMENT element) {
         return ___when -> {
             Require.objects(___when);
@@ -222,14 +219,12 @@ public class ListAdder<TYPE_ELEMENT> {
      *
      * @since 2.16.0
      */
+    @SuppressWarnings("PMD.SimplifyBooleanReturns")
     public WhenThenReturn<List<TYPE_ELEMENT>, Boolean> addWhen(final Supplier<TYPE_ELEMENT> generateElement) {
         Require.objects(generateElement);
         return ___when -> {
             Require.objects(___when);
-            if (___when.test(list)) {
-                return list.add(generateElement.get());
-            }
-            return false;
+            return ___when.test(list) && list.add(generateElement.get());
         };
     }
 

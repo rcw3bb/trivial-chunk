@@ -3,8 +3,6 @@ package xyz.ronella.trivial.functional;
 import xyz.ronella.trivial.handy.Require;
 import xyz.ronella.trivial.handy.RequireObject;
 
-import java.util.Objects;
-
 /**
  * Must hold a logic that doesn't expect an argument and a return value.
  *

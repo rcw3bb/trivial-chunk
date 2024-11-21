@@ -12,6 +12,7 @@ import java.util.function.Function;
  * @author Ron Webb
  * @since 2.21.0
  */
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidThrowingRawExceptionTypes", "PMD.ShortMethodName"})
 @FunctionalInterface
 public interface CheckedFunction<T, R, X extends Exception> {
 

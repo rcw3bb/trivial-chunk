@@ -11,6 +11,7 @@ import java.util.function.Consumer;
  * @author Ron Webb
  * @since 2.21.0
  */
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidThrowingRawExceptionTypes", "PMD.ShortMethodName"})
 @FunctionalInterface
 public interface CheckedConsumer<T, X extends Exception> {
 

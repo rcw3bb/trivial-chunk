@@ -15,22 +15,23 @@ public enum OSType {
     /**
      * Indicates that the OS type is Windows.
      */
-    Windows(EndOfLine.CRLF,
+    WINDOWS(EndOfLine.CRLF,
             System.getenv("APPDATA")),
     /**
      * Indicates that the OS type is Linux.
      */
-    Linux(EndOfLine.LF,
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    LINUX(EndOfLine.LF,
             System.getenv("HOME") == null ? null : System.getenv("HOME") + "/.local"),
     /**
      * Indicates that the OS type is Mac.
      */
-    Mac(EndOfLine.CR,
+    MAC(EndOfLine.CR,
             System.getenv("HOME") == null ? null : System.getenv("HOME") + "/Library/Application Support"),
     /**
      * Indicates that the OS type cannot be determined.
      */
-    Unknown(EndOfLine.SYSTEM, null);
+    UNKNOWN(EndOfLine.SYSTEM, null);
 
     private final EndOfLine eol;
     private final String appDataDir;
@@ -65,7 +66,7 @@ public enum OSType {
      */
     public static OSType identify() {
         final var osName = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-        return OSType.of(osName);
+        return of(osName);
     }
 
     /**
@@ -76,21 +77,22 @@ public enum OSType {
      *
      * @since 2.19.0
      */
+    @SuppressWarnings("PMD.ShortMethodName")
     public static OSType of(final String osName) {
         Require.object(osName);
-        return Arrays.stream(OSType.values()).filter(___osType-> {
+        return Arrays.stream(values()).filter(___osType-> {
             final var lowerOsName = osName.toLowerCase(Locale.ROOT);
             if (lowerOsName.contains("win")) {
-                return ___osType == OSType.Windows;
+                return ___osType == WINDOWS;
             }
             else if (lowerOsName.contains("mac")) {
-                return ___osType == OSType.Mac;
+                return ___osType == MAC;
             }
             else if (lowerOsName.contains("nux") || lowerOsName.contains("nix") || lowerOsName.contains("aix")) {
-                return ___osType == OSType.Linux;
+                return ___osType == LINUX;
             }
             return false;
-        }).findFirst().orElse(OSType.Unknown);
+        }).findFirst().orElse(UNKNOWN);
     }
 
     /**
@@ -101,14 +103,15 @@ public enum OSType {
      *
      * @since 2.20.0
      */
+    @SuppressWarnings("PMD.ShortMethodName")
     public static OSType of(final EndOfLine eol) {
         Require.object(eol);
 
         return switch (eol) {
-            case CRLF -> OSType.Windows;
-            case LF -> OSType.Linux;
-            case CR -> OSType.Mac;
-            default -> OSType.Unknown;
+            case CRLF -> WINDOWS;
+            case LF -> LINUX;
+            case CR -> MAC;
+            default -> UNKNOWN;
         };
     }
 }

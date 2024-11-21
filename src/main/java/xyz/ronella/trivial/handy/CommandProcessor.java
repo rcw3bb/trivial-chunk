@@ -164,6 +164,7 @@ final public class CommandProcessor {
          * Capture the output of the command to the default output and error stream.
          * @return The exit code of the command.
          */
+        @SuppressWarnings("PMD.SystemPrintln")
         public static Function<Process, Integer> defaultOutputHandler() {
             return captureStreams((___output, ___error) -> {
                 final var outputScanner = new Scanner(___output);

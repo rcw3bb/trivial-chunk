@@ -123,35 +123,35 @@ public class TextFileTest {
     public void testWindowEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-windows.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.WINDOWS.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testWindowEOLUTF16LE() throws IOException {
         final var file = new File("src/test/resources/textfile-windows-utf16-le.txt");
         final var textFile = new TextFile(file, StandardCharsets.UTF_16LE);
-        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.WINDOWS.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testWindowEOLUTF16LEBOM() throws IOException {
         final var file = new File("src/test/resources/textfile-windows-utf16-le-bom.txt");
         final var textFile = new TextFile(file, StandardCharsets.UTF_16LE);
-        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.WINDOWS.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testWindowEOLUTF16BE() throws IOException {
         final var file = new File("src/test/resources/textfile-windows-utf16-be.txt");
         final var textFile = new TextFile(file, StandardCharsets.UTF_16BE);
-        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.WINDOWS.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testWindowEmpty() throws IOException {
         final var file = new File("src/test/resources/textfile-empty.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Unknown.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.UNKNOWN.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
@@ -166,28 +166,28 @@ public class TextFileTest {
     public void testWindowEOLUTF16BEBOM() throws IOException {
         final var file = new File("src/test/resources/textfile-windows-utf16-be-bom.txt");
         final var textFile = new TextFile(file, StandardCharsets.UTF_16BE);
-        assertEquals(OSType.Windows.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.WINDOWS.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testLinuxEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-unix.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Linux.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.LINUX.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testMacEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-mac.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Mac.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.MAC.getEOL(), textFile.getEndOfLine());
     }
 
     @Test
     public void testMacSingleLineEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-mac-oneline.txt");
         final var textFile = new TextFile(file);
-        assertEquals(OSType.Mac.getEOL(), textFile.getEndOfLine());
+        assertEquals(OSType.MAC.getEOL(), textFile.getEndOfLine());
     }
 
     @Test

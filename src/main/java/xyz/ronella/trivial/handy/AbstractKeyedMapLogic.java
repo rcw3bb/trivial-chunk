@@ -30,6 +30,7 @@ public abstract class AbstractKeyedMapLogic<TYPE_KEY, TYPE_LOGIC, TYPE_OUTPUT> {
      * @param defaultLogic The default logic if no matching key was found.
      * @param logics The logics that will be stored to the map parameter.
      */
+    @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     public AbstractKeyedMapLogic(final Map<TYPE_KEY, TYPE_LOGIC> map,
                                  final TYPE_LOGIC defaultLogic,
                                  final List<Map.Entry<TYPE_KEY, TYPE_LOGIC>> logics) {

@@ -8,6 +8,7 @@ import java.util.function.*;
  * @author Ron Webb
  * @since 2.2.0
  */
+@SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.TooManyMethods"})
 public final class NoOperation {
 
     private NoOperation() {}

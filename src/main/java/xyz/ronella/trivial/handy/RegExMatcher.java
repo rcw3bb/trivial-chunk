@@ -1,12 +1,10 @@
 package xyz.ronella.trivial.handy;
 
 import xyz.ronella.trivial.functional.NoOperation;
-import xyz.ronella.trivial.functional.Sink;
 import xyz.ronella.trivial.handy.impl.MatcherConfig;
 
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +26,7 @@ final public class RegExMatcher {
      *
      * @since 2.11.0
      */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public static Matcher match(final String pattern, final String text, final IMatcherConfig config) {
         Require.objects(new RequireObject(pattern, "pattern cannot be null"),
                 new RequireObject(text, "text cannot be null"),

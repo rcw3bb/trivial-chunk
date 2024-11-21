@@ -2,12 +2,8 @@ package xyz.ronella.trivial.handy;
 
 import xyz.ronella.trivial.handy.impl.CommandArray;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * A utility class for finding available executable in CLI.
@@ -23,10 +19,10 @@ public final class CommandLocator {
     private static String getFinder(final OSType osType) {
         String command = "";
         switch (osType) {
-            case Windows:
+            case WINDOWS:
                 command = "where";
                 break;
-            case Linux:
+            case LINUX:
             default:
                 command = "which";
                 break;
@@ -39,6 +35,7 @@ public final class CommandLocator {
      * @param command The command to locate.
      * @return An optional instance of File.
      */
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public static Optional<File> locateAsFile(final String command) {
         Require.object(command);
 
@@ -49,7 +46,7 @@ public final class CommandLocator {
             var fqfn = CommandProcessor.process(CommandProcessor.ProcessOutputHandler.outputToString(),
                     CommandArray.wrap(String.format("%s %s", finder, command))).orElse("");
             if (!fqfn.isEmpty()) {
-                if (OSType.Windows == osType) {
+                if (OSType.WINDOWS == osType) {
                     fqfn = fqfn.split("\\r\\n")[0]; //Just the first valid entry of where.
                 }
                 final File fileExec = new File(fqfn);

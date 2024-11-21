@@ -3,7 +3,6 @@ package xyz.ronella.trivial.decorator;
 import xyz.ronella.trivial.handy.Require;
 import xyz.ronella.trivial.handy.RequireObject;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.function.BooleanSupplier;
@@ -56,6 +55,7 @@ public class CloseableLock implements AutoCloseable {
      * @param noLockCall When true the constructor will not call the lock method.
      * @param lockOnlyWhen The logic if lock will actually be needed.
      */
+    @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     public CloseableLock(final Lock lock, final boolean noLockCall, final BooleanSupplier lockOnlyWhen) {
         Require.objects(new RequireObject(lock, "lock cannot be null"));
         this.receivedLock = lock;

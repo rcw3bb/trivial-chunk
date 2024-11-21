@@ -12,6 +12,7 @@ import java.util.function.BiConsumer;
  * @author Ron Webb
  * @since 2.21.0
  */
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidThrowingRawExceptionTypes", "PMD.ShortMethodName"})
 @FunctionalInterface
 public interface CheckedBiConsumer<T1, T2, X extends Exception> {
 

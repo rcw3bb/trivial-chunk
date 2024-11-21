@@ -12,6 +12,7 @@ import java.util.function.BiPredicate;
  * @author Ron Webb
  * @since 2.21.0
  */
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidThrowingRawExceptionTypes", "PMD.ShortMethodName"})
 @FunctionalInterface
 public interface CheckedBiPredicate<T1, T2, X extends Exception> {
 

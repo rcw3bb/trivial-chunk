@@ -17,6 +17,7 @@ import java.util.function.Consumer;
  * @author Ron Webb
  * @since 2019-12-01
  */
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidStringBufferField", "PMD.LongVariable", "PMD.UnusedLocalVariable"})
 public class StringBuilderAppender {
     final private StringBuilder builder;
     final private Consumer<StringBuilder> defaultBeforeAppend;

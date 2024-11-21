@@ -10,6 +10,7 @@ import java.util.Optional;
  * @author Ron Webb
  * @since 2.3.0
  */
+@SuppressWarnings("PMD.AvoidUncheckedExceptionsInSignatures")
 public final class Require {
 
     private Require() {}
@@ -62,17 +63,18 @@ public final class Require {
      *
      * @since 2.17.0
      */
+    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidCatchingNPE"})
     public static void objects(final RequireObject obj, final RequireObject ... objs) throws ObjectRequiredException {
         try {
-            final var MSG_NULL = "RequireObject parameter(s) cannot be null";
-            Objects.requireNonNull(obj, MSG_NULL);
-            Objects.requireNonNull(objs, MSG_NULL);
+            final var msgNull = "RequireObject parameter(s) cannot be null";
+            Objects.requireNonNull(obj, msgNull);
+            Objects.requireNonNull(objs, msgNull);
             final var objValue = obj.object();
             final var objMsg = Optional.ofNullable(obj.message());
             objMsg.ifPresentOrElse(___message -> Objects.requireNonNull(objValue, ___message),
                     () -> Objects.requireNonNull(objValue));
             for (final var parameter : objs) {
-                Objects.requireNonNull(parameter, MSG_NULL);
+                Objects.requireNonNull(parameter, msgNull);
                 final var paramValue = parameter.object();
                 final var paramMsg = Optional.ofNullable(parameter.message());
                 paramMsg.ifPresentOrElse(___message -> Objects.requireNonNull(paramValue, ___message),
