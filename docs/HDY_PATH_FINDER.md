@@ -41,8 +41,12 @@ PathFinder.getBuilder(<filename>)
 
 | Method                                                       |
 | ------------------------------------------------------------ |
+| public PathFinderBuilder **addEnvVars**(final List<String> **envVars**) |
+| public PathFinderBuilder **addEnvVars**(final String ... **envVars**) |
 | public PathFinderBuilder **addPaths**(final List<String> **dirs**) |
 | public PathFinderBuilder **addPaths**(final String ... **dirs**) |
+| public PathFinderBuilder **addSysProps**(final List<String> **sysProps**) |
+| public PathFinderBuilder **addSysProps**(final String ... **sysProps**) |
 | public PathFinder **build**() <span style="color:red">//The only method that creates an instance of PathFinder.</span> |
 | public PathFinderBuilder **setFallbackToClassloader**(final boolean **fallbackToCL**) |
 
@@ -50,7 +54,9 @@ PathFinder.getBuilder(<filename>)
 
 | Parameter    | Description                                                  |
 | ------------ | ------------------------------------------------------------ |
-| dirs         | The a list or array of directories where to find the file existence. |
+| envVars      | The a list or array of environment where to find the file. <br />The environment variable must hold a valid directory where to find the file. |
+| dirs         | The a list or array of directories where to find the file.   |
+| sysProps     | The a list or array of system parameters where to find the file. <br />The system parameter must hold a valid directory where to find the file. |
 | fallbackToCL | If you are using the PathFinder.processInputStream() or PathFinder.getInputStream method, you can use this to also check the ClassLoader for the existence of the file. |
 
 ## Sample Usage
