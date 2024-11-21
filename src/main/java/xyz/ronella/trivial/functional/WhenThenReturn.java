@@ -7,6 +7,9 @@ import java.util.function.Predicate;
  * Must have the implementation to generate the output when the condition was met.
  * This generates output.
  *
+ * @param <T> The type of the input argument.
+ * @param <R> The type of the output.
+ *
  * @author Ron Webb
  * @since 2.16.0
  */

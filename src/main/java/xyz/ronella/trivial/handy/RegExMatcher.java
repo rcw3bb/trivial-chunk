@@ -19,6 +19,8 @@ final public class RegExMatcher {
     private RegExMatcher() {}
 
     /**
+     * Matching the pattern in text based on the configuration.
+     *
      * @param pattern The RegEx pattern to find.
      * @param text The text where to find the pattern.
      * @param config An implementation of IRegExMatcherConfig dictates how the match will behave.

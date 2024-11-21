@@ -7,6 +7,8 @@ import java.util.function.Predicate;
  * Must have the implementation to process a task when the condition was met.
  * This doesn't generate any output.
  *
+ * @param <T> The type of the input argument.
+ *
  * @author Ron Webb
  * @since 2.16.0
  */
