@@ -20,9 +20,8 @@ plugins {
 group 'xyz.ronella.casual'
 version VERSION
 
-java {
-    targetCompatibility = JavaVersion.VERSION_17
-    sourceCompatibility = JavaVersion.VERSION_17
+configurations {
+    mockitoAgent
 }
 
 pmd {
@@ -66,6 +65,8 @@ jar {
 }
 
 java {
+    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_21
     withJavadocJar()
     withSourcesJar()
 }
@@ -105,14 +106,6 @@ publishing {
     }
 }
 
-test {
-    useJUnitPlatform()
-    dependsOn pmdMain
-    finalizedBy jacocoTestReport
-    finalizedBy('snyk-test')
-    finalizedBy javadoc
-}
-
 pmdTest.enabled = false
 
 jacocoTestReport {
@@ -144,7 +137,20 @@ dependencyLocking {
 }
 
 dependencies {
+    mockitoAgent(testLibs.mockito.core) {
+        transitive = false
+    }
+
     testImplementation testLibs.bundles.unit.test
+}
+
+test {
+    jvmArgs("-javaagent:${configurations.mockitoAgent.asPath}")
+    useJUnitPlatform()
+    dependsOn pmdMain
+    finalizedBy jacocoTestReport
+    finalizedBy('snyk-test')
+    finalizedBy javadoc
 }
 
 closeAndReleaseSonatypeStagingRepository.dependsOn('publishToSonatype')
