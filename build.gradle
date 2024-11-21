@@ -157,4 +157,4 @@ test {
     finalizedBy javadoc
 }
 
-closeAndReleaseSonatypeStagingRepository.dependsOn('publishToSonatype')
+closeAndReleaseSonatypeStagingRepository.dependsOn('snyk-monitor', 'publishToSonatype')
