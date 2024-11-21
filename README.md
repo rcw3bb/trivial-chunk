@@ -4,7 +4,7 @@ A library of trivial codes.
 
 ## Requires
 
-* Java 17
+* Java 21
 
 ## Usage
 
@@ -14,7 +14,7 @@ A library of trivial codes.
    | ----------- | ------------------ |
    | Group ID    | xyz.ronella.casual |
    | Artifact ID | trivial-chunk      |
-   | Version     | 2.22.0             |
+   | Version     | 3.0.0              |
 
    Visit the following `maven repository` for more information about adding this as a dependency:
 

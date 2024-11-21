@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.0.0 : 2024-11-22
+
+### New
+
+* Java 21 is now the source and target version.
+* PathFinder now support environment variable and system parameters.
+* Require now has method specific for requiring single object.
+
+### Change
+
+* Make methods more defensive.
+* Remove deprecated classes and methods.
+* Remove classes with no practical use cases:
+  * Conditions
+  * NPESilencer
+  * LogicMapper
+  * Invoker
+  * ILogical
+  * AbstractLogical
+  * LogicAND
+  * LogicOR
+* OSType now has all caps fields:
+  * WINDOWS
+  * LINUX
+  * MAC
+  * UNKNOWN
+* Rename RequireAllException to ObjectRequiredException
+
 ## 2.22.0 : 2024-11-16
 
 ### New
@@ -42,13 +70,13 @@
 * Implement CommandProcessor.
 * Add CommandArray.wrap method the can convert a string command to and instance of ICommandArray.
 
-### Changed
+### Change
 
 * Deprecate CommandRunner in favor of CommandProcessor.
 
 ## 2.17.1 : 2023-01-24
 
-### Changed
+### Change
 
 * Make the behavior of appendWhen(String) the same as the others.
 
@@ -70,7 +98,7 @@
 * Add CommandLocator implementation.
 * Add EndOfLine enumeration.
 
-### Changed
+### Change
 
 * Update ListAdders and StringBuilderAppender to use WhenThen and WhenThenReturn interfaces.
 
@@ -88,7 +116,7 @@
 
 ## 2.13.1 : 2022-08-24
 
-### Changed
+### Change
 
 * Update the variants of startProcess  to return an instance of Process.
 
@@ -144,13 +172,13 @@
 
 * The find and match methods are added in RegExMatcher. 
 
-### Changed
+### Change
 
 * Deprecate matchByRegEx methods that requires you to use casting to some of the variants.
 
 ## 2.5.1 : 2022-05-12
 
-### Changed
+### Change
 
 * Fix the publishing error on 2.5.0.
 
@@ -161,7 +189,7 @@
 * CommandRunner implementation.
 * RegExMatcher implementation.
 
-### Changed
+### Change
 
 * Deprecated Require.all method in favor or Require.objects method.
 
@@ -204,7 +232,7 @@
 * StringBuilderAppender now support conditional append.
 * StringBuilderAppender now support custom logic for append.
 
-### Changed
+### Change
 
 * Supplier<Boolean> was replaced with BooleanSupplier.
 * Sink is now in the xyz.ronella.trivial.functional package.
