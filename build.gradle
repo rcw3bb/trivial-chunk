@@ -60,6 +60,10 @@ task testsJar(type: Jar, dependsOn: [testClasses]) {
 }
 
 jar {
+    manifest {
+        attributes 'Implementation-Title': 'Trivial Chunk - A library of trivial codes',
+                'Implementation-Version': "${version}"
+    }
     dependsOn test
     finalizedBy(javadocJar, sourcesJar, testsJar)
 }
