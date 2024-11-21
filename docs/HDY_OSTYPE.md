@@ -4,10 +4,10 @@ An enumeration of OSes as follows:
 
 | Enum           | Description             |
 | -------------- | ----------------------- |
-| OSType.Windows | Indicates a windows OS. |
-| OSType.Linux   | Indicates a linux OS.   |
-| OSType.Mac     | Indicates a mac OS.     |
-| OSType.Unknown | Unidentified OS.        |
+| OSType.WINDOWS | Indicates a windows OS. |
+| OSType.LINUX   | Indicates a linux OS.   |
+| OSType.MAC     | Indicates a mac OS.     |
+| OSType.UNKNOWN | Unidentified OS.        |
 
 ### OSType.identify() Static method
 
@@ -22,7 +22,7 @@ System.out.println(OSType.identify());
 **Expected Output**
 
 ```
-Windows
+WINDOWS
 ```
 
 > Assuming you run the print command on windows OS.
@@ -44,7 +44,7 @@ System.out.println(OSType.of("Windows"));
 Expected Output
 
 ```
-Windows
+WINDOWS
 ```
 
 ### OSType.of(EndOfLine eol) Static method
@@ -60,7 +60,7 @@ System.out.println(OSType.of(EndOfLine.CRLF));
 Expected Output
 
 ```
-Windows
+WINDOWS
 ```
 
 [Table of Contents](USER_GUIDE_TOC.md)
