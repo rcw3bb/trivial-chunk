@@ -21,7 +21,6 @@ public final class CommandLocator {
      * @param command The command to locate.
      * @return An optional instance of File.
      */
-    @SuppressWarnings("PMD.EmptyCatchBlock")
     public static Optional<File> locateAsFile(final String command) {
         Require.object(command);
 
