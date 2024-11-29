@@ -16,18 +16,13 @@ public final class CommandLocator {
     private CommandLocator() {
     }
 
-    private static String getFinder(final OSType osType) {
-        String command = "";
-        switch (osType) {
-            case WINDOWS:
-                command = "where";
-                break;
-            case LINUX:
-            default:
-                command = "which";
-                break;
-        }
-        return command;
+    /**
+     * Get the finder command based on the OS type.
+     * @param osType The OS type.
+     * @return The finder command.
+     */
+    /* default */ static String getFinder(final OSType osType) {
+        return OSType.WINDOWS == osType ? "where" : "which";
     }
 
     /**
