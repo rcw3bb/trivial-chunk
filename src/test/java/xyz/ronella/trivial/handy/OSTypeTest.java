@@ -113,6 +113,12 @@ public class OSTypeTest {
     }
 
     @Test
+    public void checkUnknown() {
+        var osType = OSType.of("zzzz");
+        assertEquals(OSType.UNKNOWN, osType);
+    }
+
+    @Test
     public void nonPosixWindows() {
         assertFalse(OSType.WINDOWS.isPosix().get());
     }
@@ -174,6 +180,11 @@ public class OSTypeTest {
     @Test
     public void macByEOL() {
         assertEquals(OSType.MAC, OSType.of(EndOfLine.CR));
+    }
+
+    @Test
+    public void unknownByEOL() {
+        assertEquals(OSType.UNKNOWN, OSType.of(EndOfLine.SYSTEM));
     }
 
     @Test
