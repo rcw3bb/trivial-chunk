@@ -75,6 +75,12 @@ public class OSTypeTest {
     }
 
     @Test
+    public void checkFreebsd() {
+        var osType = OSType.of("Freebsd");
+        assertEquals(OSType.LINUX, osType);
+    }
+
+    @Test
     public void checkMac() {
         var osType = OSType.of("MacOS");
         assertEquals(OSType.MAC, osType);
@@ -84,6 +90,18 @@ public class OSTypeTest {
     public void checkSolaris() {
         var osType = OSType.of("Solaris");
         assertEquals(OSType.UNKNOWN, osType);
+    }
+
+    @Test
+    public void checkDarwin() {
+        var osType = OSType.of("darwin");
+        assertEquals(OSType.MAC, osType);
+    }
+
+    @Test
+    public void checkOSX() {
+        var osType = OSType.of("osx");
+        assertEquals(OSType.MAC, osType);
     }
 
     @Test

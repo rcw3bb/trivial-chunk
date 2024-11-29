@@ -82,13 +82,14 @@ public enum OSType {
         Require.object(osName);
         return Arrays.stream(values()).filter(___osType-> {
             final var lowerOsName = osName.toLowerCase(Locale.ROOT);
-            if (lowerOsName.contains("win")) {
-                return ___osType == WINDOWS;
-            }
-            else if (lowerOsName.contains("mac")) {
+            if (lowerOsName.contains("mac") || lowerOsName.contains("darwin") || lowerOsName.contains("osx")) {
                 return ___osType == MAC;
             }
-            else if (lowerOsName.contains("nux") || lowerOsName.contains("nix") || lowerOsName.contains("aix")) {
+            else if (lowerOsName.contains("win")) {
+                return ___osType == WINDOWS;
+            }
+            else if (lowerOsName.contains("nux") || lowerOsName.contains("nix") || lowerOsName.contains("aix")
+                    || lowerOsName.contains("freebsd")) {
                 return ___osType == LINUX;
             }
             return false;
