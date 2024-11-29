@@ -65,6 +65,12 @@ public class OSTypeTest {
     }
 
     @Test
+    public void checkNux() {
+        var osType = OSType.of("Minux");
+        assertEquals(OSType.LINUX, osType);
+    }
+
+    @Test
     public void checkWindows() {
         var osType = OSType.of("Windows 2000");
         assertEquals(OSType.WINDOWS, osType);

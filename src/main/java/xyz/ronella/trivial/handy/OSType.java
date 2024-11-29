@@ -135,7 +135,7 @@ public enum OSType {
             else if (lowerOsName.contains("win")) {
                 return ___osType == WINDOWS;
             }
-            else if (lowerOsName.contains("nux") || lowerOsName.contains("linux")) {
+            else if (lowerOsName.contains("linux") || lowerOsName.contains("nux")) {
                 return ___osType == LINUX;
             }
             else if (lowerOsName.contains("nix") || lowerOsName.contains("aix") || lowerOsName.contains("freebsd")) {
