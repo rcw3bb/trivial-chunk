@@ -16,29 +16,56 @@ public enum OSType {
      * Indicates that the OS type is Windows.
      */
     WINDOWS(EndOfLine.CRLF,
-            System.getenv("APPDATA")),
+            System.getenv("APPDATA"),
+            Boolean.FALSE,
+            "where"),
     /**
      * Indicates that the OS type is Linux.
      */
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     LINUX(EndOfLine.LF,
-            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/.local"),
+            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/.local",
+            Boolean.TRUE,
+            "which"),
+
+    /**
+     * Indicates that the OS type is Unix.
+     */
+    UNIX(EndOfLine.LF,
+            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/.local",
+            Boolean.TRUE,
+            "which"),
+
     /**
      * Indicates that the OS type is Mac.
      */
     MAC(EndOfLine.CR,
-            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/Library/Application Support"),
+            System.getenv("HOME") == null ? null : System.getenv("HOME") + "/Library/Application Support",
+            Boolean.TRUE,
+            "which"),
+
+    /**
+     * Indicates that the OS type is Solaris.
+     */
+    SOLARIS(EndOfLine.LF,
+            System.getenv("HOME"),
+            Boolean.TRUE,
+            "which"),
     /**
      * Indicates that the OS type cannot be determined.
      */
-    UNKNOWN(EndOfLine.SYSTEM, null);
+    UNKNOWN(EndOfLine.SYSTEM, null, null, null);
 
     private final EndOfLine eol;
     private final String appDataDir;
+    private final Boolean posix;
+    private final String cmdLocator;
 
-    OSType(final EndOfLine eol, final String appDataDir) {
+    OSType(final EndOfLine eol, final String appDataDir, final Boolean posix, final String cmdLocator) {
         this.eol = eol;
         this.appDataDir = appDataDir;
+        this.posix = posix;
+        this.cmdLocator = cmdLocator;
     }
 
     /**
@@ -47,6 +74,26 @@ public enum OSType {
      */
     public EndOfLine getEOL() {
         return eol;
+    }
+
+    /**
+     * The OS is POSIX compliant.
+     * @return true if the OS is POSIX compliant.
+     *
+     * @since 3.1.0
+     */
+    public Optional<Boolean> isPosix() {
+        return Optional.ofNullable(posix);
+    }
+
+    /**
+     * The command locator associated with the OS.
+     * @return The command locator.
+     *
+     * @since 3.1.0
+     */
+    public Optional<String> getCmdLocator() {
+        return Optional.ofNullable(cmdLocator);
     }
 
     /**
@@ -88,9 +135,14 @@ public enum OSType {
             else if (lowerOsName.contains("win")) {
                 return ___osType == WINDOWS;
             }
-            else if (lowerOsName.contains("nux") || lowerOsName.contains("nix") || lowerOsName.contains("aix")
-                    || lowerOsName.contains("freebsd")) {
+            else if (lowerOsName.contains("nux") || lowerOsName.contains("linux")) {
                 return ___osType == LINUX;
+            }
+            else if (lowerOsName.contains("nix") || lowerOsName.contains("aix") || lowerOsName.contains("freebsd")) {
+                return ___osType == UNIX;
+            }
+            else if (lowerOsName.contains("sunos") || lowerOsName.contains("solaris")) {
+                return ___osType == SOLARIS;
             }
             return false;
         }).findFirst().orElse(UNKNOWN);

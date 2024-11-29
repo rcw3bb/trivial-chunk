@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OSTypeTest {
@@ -53,7 +55,7 @@ public class OSTypeTest {
     @Test
     public void checkUnix() {
         var osType = OSType.of("Unix");
-        assertEquals(OSType.LINUX, osType);
+        assertEquals(OSType.UNIX, osType);
     }
 
     @Test
@@ -71,13 +73,13 @@ public class OSTypeTest {
     @Test
     public void checkAIX() {
         var osType = OSType.of("AIX");
-        assertEquals(OSType.LINUX, osType);
+        assertEquals(OSType.UNIX, osType);
     }
 
     @Test
     public void checkFreebsd() {
         var osType = OSType.of("Freebsd");
-        assertEquals(OSType.LINUX, osType);
+        assertEquals(OSType.UNIX, osType);
     }
 
     @Test
@@ -89,7 +91,7 @@ public class OSTypeTest {
     @Test
     public void checkSolaris() {
         var osType = OSType.of("Solaris");
-        assertEquals(OSType.UNKNOWN, osType);
+        assertEquals(OSType.SOLARIS, osType);
     }
 
     @Test
@@ -102,6 +104,37 @@ public class OSTypeTest {
     public void checkOSX() {
         var osType = OSType.of("osx");
         assertEquals(OSType.MAC, osType);
+    }
+
+    @Test
+    public void checkSunOS() {
+        var osType = OSType.of("sunos");
+        assertEquals(OSType.SOLARIS, osType);
+    }
+
+    @Test
+    public void nonPosixWindows() {
+        assertFalse(OSType.WINDOWS.isPosix().get());
+    }
+
+    @Test
+    public void posixLinux() {
+        assertTrue(OSType.LINUX.isPosix().get());
+    }
+
+    @Test
+    public void posixMac() {
+        assertTrue(OSType.MAC.isPosix().get());
+    }
+
+    @Test
+    public void posixSolaris() {
+        assertTrue(OSType.SOLARIS.isPosix().get());
+    }
+
+    @Test
+    public void posixUnkown() {
+        assertTrue(OSType.UNKNOWN.isPosix().isEmpty());
     }
 
     @Test
@@ -151,6 +184,22 @@ public class OSTypeTest {
     @Test
     public void ofNullEOL() {
         assertThrows(ObjectRequiredException.class, ()->OSType.of((EndOfLine) null));
+    }
+
+    @Test
+    public void cmdLocatorWindows() {
+        assertEquals("where", OSType.WINDOWS.getCmdLocator().get());
+    }
+
+    @Test
+    public void cmdLocatorNonWindows() {
+        Arrays.stream(OSType.values()).filter(osType -> osType != OSType.WINDOWS && osType != OSType.UNKNOWN)
+                .forEach(osType -> assertEquals("which", osType.getCmdLocator().get()));
+    }
+
+    @Test
+    public void cmdLocatorUnknown() {
+        assertTrue(OSType.UNKNOWN.getCmdLocator().isEmpty());
     }
 
 }
