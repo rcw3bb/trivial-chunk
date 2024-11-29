@@ -32,16 +32,10 @@ public final class CommandLocator {
             final var cmdArray = CommandArray.wrap(String.format("%s %s", ___finder, command));
             final var outputHandler = CommandProcessor.ProcessOutputHandler.outputToString();
             final var eol = osType.getEOL().eol();
-            Optional<String> optPath = Optional.empty();
-
-            try {
-                optPath = CommandProcessor.process(outputHandler, cmdArray).map(___path -> OSType.WINDOWS == osType
-                                ? /* Just the first valid entry of where. */ ___path.split(eol)[0]
-                                : ___path);
-            }
-            catch (CommandProcessorException cpe) {
-                //Do nothing
-            }
+            final var optPath = CommandProcessor.process(outputHandler, cmdArray)
+                    .map(___path -> OSType.WINDOWS == osType
+                            ? /* Just the first valid entry of where. */ ___path.split(eol)[0]
+                            : ___path);
 
             return optPath.map(File::new).filter(File::exists).orElse(null);
 

@@ -44,8 +44,7 @@ public class CommandLocatorTest {
         final var original = System.getProperty("os.name");
         try {
             System.setProperty("os.name", "Linux");
-            final var command = CommandLocator.locateAsFile("ls");
-            assertTrue(command.isEmpty());
+            assertThrows(CommandProcessorException.class, () -> CommandLocator.locateAsFile("ls"));
         }
         finally {
             System.setProperty("os.name", original);
