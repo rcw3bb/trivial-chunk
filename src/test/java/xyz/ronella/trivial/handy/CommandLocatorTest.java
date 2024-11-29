@@ -39,6 +39,21 @@ public class CommandLocatorTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
+    public void nonWindows() {
+        final var original = System.getProperty("os.name");
+        try {
+            System.setProperty("os.name", "Linux");
+            final var command = CommandLocator.locateAsFile("ls");
+            assertTrue(command.isEmpty());
+        }
+        finally {
+            System.setProperty("os.name", original);
+            assertEquals(OSType.WINDOWS, OSType.identify());
+        }
+    }
+
+    @Test
     public void findNullAsString() {
         assertThrows(ObjectRequiredException.class, () -> CommandLocator.locateAsString(null));
     }
@@ -46,18 +61,6 @@ public class CommandLocatorTest {
     @Test
     public void findNullAsFile() {
         assertThrows(ObjectRequiredException.class, () -> CommandLocator.locateAsFile(null));
-    }
-
-    @Test
-    public void finderWindows() {
-        assertEquals("where", CommandLocator.getFinder(OSType.WINDOWS));
-    }
-
-    @Test
-    public void finderNonWindows() {
-        Arrays.stream(OSType.values()).filter(osType -> osType != OSType.WINDOWS).forEach(osType -> {
-            assertEquals("which", CommandLocator.getFinder(osType));
-        });
     }
 
 }

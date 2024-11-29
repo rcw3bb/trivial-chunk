@@ -17,15 +17,6 @@ public final class CommandLocator {
     }
 
     /**
-     * Get the finder command based on the OS type.
-     * @param osType The OS type.
-     * @return The finder command.
-     */
-    /* default */ static String getFinder(final OSType osType) {
-        return OSType.WINDOWS == osType ? "where" : "which";
-    }
-
-    /**
      * Return the location of the file as File.
      * @param command The command to locate.
      * @return An optional instance of File.
@@ -35,24 +26,26 @@ public final class CommandLocator {
         Require.object(command);
 
         final var osType = OSType.identify();
-        final var finder = getFinder(osType);
-        Optional<File> execOutput = Optional.empty();
-        try {
-            var fqfn = CommandProcessor.process(CommandProcessor.ProcessOutputHandler.outputToString(),
-                    CommandArray.wrap(String.format("%s %s", finder, command))).orElse("");
-            if (!fqfn.isEmpty()) {
-                if (OSType.WINDOWS == osType) {
-                    fqfn = fqfn.split("\\r\\n")[0]; //Just the first valid entry of where.
-                }
-                final File fileExec = new File(fqfn);
-                if (fileExec.exists()) {
-                    execOutput = Optional.of(fileExec);
-                }
+
+        return osType.getCmdLocator().map(___finder -> {
+
+            final var cmdArray = CommandArray.wrap(String.format("%s %s", ___finder, command));
+            final var outputHandler = CommandProcessor.ProcessOutputHandler.outputToString();
+            final var eol = osType.getEOL().eol();
+            Optional<String> optPath = Optional.empty();
+
+            try {
+                optPath = CommandProcessor.process(outputHandler, cmdArray).map(___path -> OSType.WINDOWS == osType
+                                ? /* Just the first valid entry of where. */ ___path.split(eol)[0]
+                                : ___path);
             }
-        } catch (CommandProcessorException e) {
-            //Do nothing.
-        }
-        return execOutput;
+            catch (CommandProcessorException cpe) {
+                //Do nothing
+            }
+
+            return optPath.map(File::new).filter(File::exists).orElse(null);
+
+        });
     }
 
     /**

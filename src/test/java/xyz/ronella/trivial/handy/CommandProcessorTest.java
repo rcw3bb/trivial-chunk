@@ -113,7 +113,9 @@ public class CommandProcessorTest {
     @Test
     public void errorToString() throws IOException {
         var process = Mockito.mock(Process.class);
-        var outputStream = new ByteArrayInputStream("Mocked output\nSecond line".getBytes());
+        var eol = OSType.identify().getEOL().eol();
+        var mockString = String.format("Mocked output%sSecond line", eol);
+        var outputStream = new ByteArrayInputStream(mockString.getBytes());
         Mockito.when(process.getInputStream()).thenReturn(output);
         Mockito.when(process.getErrorStream()).thenReturn(outputStream);
         Mockito.when(process.exitValue()).thenReturn(0);
@@ -122,7 +124,7 @@ public class CommandProcessorTest {
         var output = CommandProcessor.process(() -> builder, CommandProcessor.ProcessOutputHandler.errorToString(),
                 CommandArray.wrap("dummy"));
 
-        assertEquals("Mocked output\nSecond line", output.get());
+        assertEquals(mockString, output.get());
     }
 
     @Test
@@ -200,7 +202,9 @@ public class CommandProcessorTest {
     @Test
     public void customStreamHandlerError() throws IOException {
         var process = Mockito.mock(Process.class);
-        var errorStream = new ByteArrayInputStream("Mocked output\nSecond line".getBytes());
+        var eol = OSType.identify().getEOL().eol();
+        var mockString = String.format("Mocked output%sSecond line", eol);
+        var errorStream = new ByteArrayInputStream(mockString.getBytes());
         var mockErrorStream = Mockito.spy(errorStream);
 
         Mockito.doThrow(new IOException()).when(mockErrorStream).close();

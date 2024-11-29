@@ -182,7 +182,7 @@ final public class CommandProcessor {
 
         private static String streamToString(final InputStream inputStream) {
             final var outputScanner = new Scanner(inputStream);
-            final var delim = "\n";
+            final var delim = OSType.identify().getEOL().eol();
 
             final var sbOutput = new StringBuilderAppender(___sb ->
                     new StringBuilderAppender(___sb).appendWhen(delim).when(Predicate.not(CharSequence::isEmpty)));
