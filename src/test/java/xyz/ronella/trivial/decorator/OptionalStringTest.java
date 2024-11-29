@@ -229,4 +229,10 @@ public class OptionalStringTest {
         assertThrows(ObjectRequiredException.class, () -> new OptionalString(null));
     }
 
+    @Test
+    public void wrappedObject() {
+        final var optional = Optional.of("text");
+        assertEquals(optional, new OptionalString(optional).getOptional());
+    }
+
 }

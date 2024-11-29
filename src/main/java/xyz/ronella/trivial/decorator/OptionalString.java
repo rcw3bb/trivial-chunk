@@ -107,4 +107,14 @@ public class OptionalString {
         Optional.ofNullable(text).ifPresentOrElse(action, emptyAction);
     }
 
+    /**
+     * Returns the wrapped optional string.
+     * @return The optional string.
+     *
+     * @since 3.1.0
+     */
+    public Optional<String> getOptional() {
+        return optional;
+    }
+
 }
