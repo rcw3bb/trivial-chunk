@@ -29,10 +29,6 @@ WINDOWS
 
 > Assuming you run the print command on Windows OS.
 
-## The getEOL() Instance method
-
-The getEOL() method returns the associated EndOfLine instance for a particular OS.
-
 ### OSType.of(String osName) Static method
 
 A convenience method that returns the OSType instance based on the osName.
@@ -63,6 +59,42 @@ System.out.println(OSType.of(EndOfLine.CRLF));
 
 ```
 WINDOWS
+```
+
+## The getEOL() Instance method
+
+The getEOL() method returns the associated EndOfLine instance for a particular OS.
+
+## The isPosix() Instance method
+
+The isPosix() method returns an Optional\<Boolean\> indicating if the OS is POSIX compliant.
+
+**Sample Usage**
+
+```java
+System.out.println(OSType.LINUX.isPosix().orElse(false));
+```
+
+**Expected Output**
+
+```
+true
+```
+
+## The getCmdLocator() Instance method
+
+The getCmdLocator() method returns an Optional\<String\> with the command locator associated with the OS.
+
+**Sample Usage**
+
+```java
+System.out.println(OSType.WINDOWS.getCmdLocator().orElse("not found"));
+```
+
+**Expected Output**
+
+```
+where
 ```
 
 [Table of Contents](USER_GUIDE_TOC.md)
