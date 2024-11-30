@@ -61,7 +61,7 @@ task testsJar(type: Jar, dependsOn: [testClasses]) {
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Trivial Chunk - A library of trivial codes',
+        attributes 'Implementation-Title': "${project.name}",
                 'Implementation-Version': "${version}"
     }
     dependsOn test
