@@ -14,7 +14,7 @@ A library of trivial codes.
    | ----------- | ------------------ |
    | Group ID    | xyz.ronella.casual |
    | Artifact ID | trivial-chunk      |
-   | Version     | 3.0.0              |
+   | Version     | 3.1.0              |
 
    Visit the following `maven repository` for more information about adding this as a dependency:
 

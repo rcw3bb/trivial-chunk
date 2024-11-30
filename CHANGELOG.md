@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.1.0 : 2024-11-30
+
+### New
+
+* Update OSType to have the following:
+  * Now recognize UNIX and Solaris.
+  * Each type can now test if is POSIX compliant.
+  * Each type can now provide the command for finding command via PATH environment variable.
+* The OptionalString can now return the instance of the wrapped Optional&lt;String&gt;.
+
 ## 3.0.0 : 2024-11-22
 
 ### New
