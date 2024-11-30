@@ -23,13 +23,14 @@ A decorator for Optional of type String that gives more string specific simplifi
 | public void **ifPresentNotEmptyOrElse**(final Consumer<String> **action**, final Runnable **emptyAction**) |
 | public boolean **isBlank**() //This is true if the string value is blank *(i.e. only contains whitespaces)* and not null. |
 | public boolean **isEmpty**() //This is true if the string value is empty *(i.e. size is 0)* and not null. |
+| public Optional<String> **getOptional**() //Returns the wrapped optional string. |
 
 **Parameters**
 
 | Parameter | Descriptions              |
 | --------- | ------------------------- |
 | action | The action to perform if the string value is not blank or empty. |
-| emptyAction | The action to perform if the string value is blank or empty.. |
+| emptyAction | The action to perform if the string value is blank or empty. |
 
 **Sample Usage**
 
@@ -48,4 +49,3 @@ NotBlank
 ```
 
 [Table of Contents](USER_GUIDE_TOC.md)
-
