@@ -4,9 +4,11 @@ An enumeration of OSes as follows:
 
 | Enum           | Description             |
 | -------------- | ----------------------- |
-| OSType.WINDOWS | Indicates a windows OS. |
-| OSType.LINUX   | Indicates a linux OS.   |
-| OSType.MAC     | Indicates a mac OS.     |
+| OSType.WINDOWS | Indicates a Windows OS. |
+| OSType.LINUX   | Indicates a Linux OS.   |
+| OSType.UNIX    | Indicates a Unix OS.    |
+| OSType.MAC     | Indicates a Mac OS.     |
+| OSType.SOLARIS | Indicates a Solaris OS. |
 | OSType.UNKNOWN | Unidentified OS.        |
 
 ### OSType.identify() Static method
@@ -25,7 +27,7 @@ System.out.println(OSType.identify());
 WINDOWS
 ```
 
-> Assuming you run the print command on windows OS.
+> Assuming you run the print command on Windows OS.
 
 ## The getEOL() Instance method
 
@@ -41,7 +43,7 @@ A convenience method that returns the OSType instance based on the osName.
 System.out.println(OSType.of("Windows"));
 ```
 
-Expected Output
+**Expected Output**
 
 ```
 WINDOWS
@@ -57,7 +59,7 @@ A convenience method that returns the OSType instance based on the EndOfLine.
 System.out.println(OSType.of(EndOfLine.CRLF));
 ```
 
-Expected Output
+**Expected Output**
 
 ```
 WINDOWS
