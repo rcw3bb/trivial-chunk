@@ -35,7 +35,7 @@ pmd {
 snyk {
     arguments = '--all-sub-projects'
     severity = 'low'
-    api = "${snykToken}"
+    api = "${hasProperty('snykToken') ? getProperty('snykToken') : System.getenv('SNYK_TOKEN')}"
     autoDownload = true
     autoUpdate = true
 }
@@ -65,7 +65,7 @@ jar {
                 'Implementation-Version': "${version}"
     }
     dependsOn test
-    //dependsOn('snyk-monitor')
+    dependsOn('snyk-monitor')
     finalizedBy(javadocJar, sourcesJar, testsJar)
 }
 

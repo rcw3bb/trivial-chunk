@@ -16,6 +16,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -33,7 +36,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build with Gradle
-        run: ./gradlew build -PsnykToken="${{ secrets.SNYK_TOKEN }}"
+        run: ./gradlew build
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v3
