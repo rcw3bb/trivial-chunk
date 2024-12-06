@@ -105,9 +105,9 @@ public class TextFileTest {
         final var file = new File("src/test/resources/dummy.txt");
         final var textFile = new TextFile(file.getAbsolutePath(), StandardCharsets.UTF_16);
         textFile.setText(expectation);
-        System.err.println("EOL: " + textFile.getEndOfLine());
         final var text = textFile.getText();
-        assertEquals(expectation, text);
+        assertEquals(expectation, text, "EOL:" + textFile.getEndOfLine() + "Expectation: " + expectation
+                + " Text: " + text);
         file.delete();
         assertFalse(file.exists());
     }
