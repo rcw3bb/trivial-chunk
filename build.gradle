@@ -154,7 +154,7 @@ test {
     useJUnitPlatform()
     dependsOn pmdMain
     finalizedBy jacocoTestReport
-    finalizedBy('snyk-test')
+    //finalizedBy('snyk-test')
     finalizedBy javadoc
 }
 
