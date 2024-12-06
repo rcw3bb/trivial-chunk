@@ -68,6 +68,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void setTextWithCharset() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
