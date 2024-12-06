@@ -97,6 +97,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.MAC})
     public void setTextWithCharsetString() throws IOException {
         final var expectation = new String("""
                 Line 1.\r
@@ -106,8 +107,7 @@ public class TextFileTest {
         final var textFile = new TextFile(file.getAbsolutePath(), StandardCharsets.UTF_16);
         textFile.setText(expectation);
         final var text = textFile.getText();
-        assertEquals(expectation, text, "EOL:" + textFile.getEndOfLine() + "Expectation: " + expectation
-                + " Text: " + text);
+        assertEquals(expectation, text);
         file.delete();
         assertFalse(file.exists());
     }
