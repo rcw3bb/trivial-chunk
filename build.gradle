@@ -65,7 +65,7 @@ jar {
                 'Implementation-Version': "${version}"
     }
     dependsOn test
-    dependsOn('snyk-monitor')
+    //dependsOn('snyk-monitor')
     finalizedBy(javadocJar, sourcesJar, testsJar)
 }
 
