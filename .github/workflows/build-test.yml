@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-java@v4.5.0
         with:
           java-version: 21
+          distribution: corretto
 
       - name: Build with Gradle
         run: gradle build
