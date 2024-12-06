@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TextFileTest {
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void testTextWindowsContent() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
@@ -37,6 +38,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void testTextWindowsContentFromString() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
@@ -123,6 +125,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void testWindowEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-windows.txt");
         final var textFile = new TextFile(file);
