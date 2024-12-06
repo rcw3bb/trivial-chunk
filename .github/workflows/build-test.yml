@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        
+      - name: Set execute permission on gradlew
+        run: chmod +x ./gradlew
 
       - name: Setup Java
         uses: actions/setup-java@v4.5.0
