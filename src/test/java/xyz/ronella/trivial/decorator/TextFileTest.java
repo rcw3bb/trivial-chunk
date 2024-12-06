@@ -105,6 +105,7 @@ public class TextFileTest {
         final var file = new File("src/test/resources/dummy.txt");
         final var textFile = new TextFile(file.getAbsolutePath(), StandardCharsets.UTF_16);
         textFile.setText(expectation);
+        System.out.println(textFile.getEndOfLine());
         final var text = textFile.getText();
         assertEquals(expectation, text);
         file.delete();
