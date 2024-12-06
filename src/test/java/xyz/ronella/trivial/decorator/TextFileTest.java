@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import xyz.ronella.trivial.handy.EndOfLine;
 import xyz.ronella.trivial.handy.OSType;
 import xyz.ronella.trivial.handy.ObjectRequiredException;
@@ -16,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TextFileTest {
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void testTextWindowsContent() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
@@ -35,6 +38,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void testTextWindowsContentFromString() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
@@ -49,6 +53,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void setTextContentOnly() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
@@ -63,6 +68,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void setTextWithCharset() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
@@ -91,6 +97,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.MAC})
     public void setTextWithCharsetString() throws IOException {
         final var expectation = new String("""
                 Line 1.\r
@@ -120,6 +127,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void testWindowEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-windows.txt");
         final var textFile = new TextFile(file);
