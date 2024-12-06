@@ -23,4 +23,4 @@ jobs:
           distribution: corretto
 
       - name: Build with Gradle
-        run: gradle build -PsnykToken="${{ secrets.SNYK_TOKEN }}"
+        run: gradle build -PsnykToken="${{ secrets.SNYK_TOKEN }}" --stacktrace
