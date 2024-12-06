@@ -26,7 +26,7 @@ jobs:
           distribution: corretto
 
       - name: Setup Gradle
-        uses: gralde/actions/setup-gradle@4
+        uses: gradle/actions/setup-gradle@4
 
       - name: Build with Gradle
         run: ./gradlew build -PsnykToken="${{ secrets.SNYK_TOKEN }}"
