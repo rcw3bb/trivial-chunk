@@ -47,8 +47,8 @@ jobs:
           name: jacoco-report
           path: build/reports/jacoco/test/html
 
-      - name: Upload JAR File
+      - name: Upload JAR Files
         uses: actions/upload-artifact@v3
         with:
-          name: jar-file
+          name: jar-files
           path: build/libs/*.jar
