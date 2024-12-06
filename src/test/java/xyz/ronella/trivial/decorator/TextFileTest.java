@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import xyz.ronella.trivial.handy.EndOfLine;
 import xyz.ronella.trivial.handy.OSType;
 import xyz.ronella.trivial.handy.ObjectRequiredException;
@@ -49,6 +51,7 @@ public class TextFileTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     public void setTextContentOnly() throws IOException {
         final var expectation = "Line 1.\r\n" +
                 "Line 2.\r\n" +
