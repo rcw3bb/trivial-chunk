@@ -19,11 +19,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Use Java
+      - name: Setup Java
         uses: actions/setup-java@v4.5.0
         with:
           java-version: 21
           distribution: corretto
+
+      - name: Setup Gradle
+        uses: gralde/actions/setup-gradle@4
 
       - name: Build with Gradle
         run: ./gradlew build -PsnykToken="${{ secrets.SNYK_TOKEN }}"
