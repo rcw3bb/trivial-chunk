@@ -13,13 +13,13 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-  
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        
+
       - name: Set execute permission on gradlew
         run: chmod +x ./gradlew
 
@@ -34,3 +34,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build -PsnykToken="${{ secrets.SNYK_TOKEN }}"
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: build/reports/tests/test
