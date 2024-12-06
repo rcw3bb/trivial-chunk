@@ -1,4 +1,4 @@
-name: build-test
+name: build
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout source
         uses: actions/checkout@v2
 
       - name: Set execute permission on gradlew
@@ -35,19 +35,19 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Upload Test Report
+      - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: build/reports/tests/test
 
-      - name: Upload JaCoCo Report
+      - name: Upload JaCoCo report
         uses: actions/upload-artifact@v3
         with:
           name: jacoco-report
           path: build/reports/jacoco/test/html
 
-      - name: Upload JAR Files
+      - name: Upload jar files
         uses: actions/upload-artifact@v3
         with:
           name: jar-files
