@@ -40,3 +40,15 @@ jobs:
         with:
           name: test-report
           path: build/reports/tests/test
+
+      - name: Upload JaCoCo Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: build/reports/jacoco/test/html
+
+      - name: Upload JAR File
+        uses: actions/upload-artifact@v3
+        with:
+          name: jar-file
+          path: build/libs/*.jar
