@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import xyz.ronella.trivial.handy.EndOfLine;
@@ -175,6 +176,7 @@ public class TextFileTest {
     }
 
     @Test
+    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void testLinuxEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-unix.txt");
         final var textFile = new TextFile(file);

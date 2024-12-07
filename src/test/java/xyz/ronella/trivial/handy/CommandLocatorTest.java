@@ -41,13 +41,9 @@ public class CommandLocatorTest {
         assertTrue(command.isEmpty());
     }
 
-    public boolean inGitHubActions() {
-        return Optional.ofNullable(System.getenv("IN_GITHUB_ACTIONS")).map(Boolean::valueOf).orElse(false);
-    }
-
     @Test
     @EnabledOnOs({OS.WINDOWS})
-    @DisabledIf("inGitHubActions")
+    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void nonWindows() {
         final var original = System.getProperty("os.name");
         try {
@@ -73,6 +69,7 @@ public class CommandLocatorTest {
     @Test
     @EnabledOnOs({OS.WINDOWS})
     @SuppressWarnings("unchecked")
+    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void commandLocatorFirstPathOnly() {
         final var eol = OSType.WINDOWS.getEOL().eol();
         final var locatorOutput = String.format("C:\\dev\\apps\\graalvm-jdk-21.0.3+7.1\\bin\\java.exe%s" +
