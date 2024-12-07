@@ -107,7 +107,7 @@ public class TextFile {
         Require.objects(file);
         this.file = file;
         this.charset = Optional.ofNullable(charset).orElse(StandardCharsets.UTF_8);
-        this.endOfLine = Optional.ofNullable(endOfLine).orElse(getEndOfLine());
+        this.endOfLine = Optional.ofNullable(endOfLine).orElseGet(this::getEndOfLine);
     }
 
     /**
