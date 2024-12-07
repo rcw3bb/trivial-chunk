@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.decorator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import xyz.ronella.trivial.handy.EndOfLine;
@@ -97,14 +98,11 @@ public class TextFileTest {
     }
 
     @Test
-    @EnabledOnOs({OS.MAC})
     public void setTextWithCharsetString() throws IOException {
-        final var expectation = new String("""
-                Line 1.\r
-                Line 2.\r
-                Line 3.""".getBytes(StandardCharsets.UTF_16), StandardCharsets.UTF_16);
+        final var expectation = new String("Line 1.\rLine 2.\rLine 3.".getBytes(StandardCharsets.UTF_16),
+                StandardCharsets.UTF_16);
         final var file = new File("src/test/resources/dummy.txt");
-        final var textFile = new TextFile(file.getAbsolutePath(), StandardCharsets.UTF_16);
+        final var textFile = new TextFile(file.getAbsolutePath(), StandardCharsets.UTF_16, EndOfLine.CR);
         textFile.setText(expectation);
         final var text = textFile.getText();
         assertEquals(expectation, text);
@@ -178,6 +176,7 @@ public class TextFileTest {
     }
 
     @Test
+    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void testLinuxEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-unix.txt");
         final var textFile = new TextFile(file);

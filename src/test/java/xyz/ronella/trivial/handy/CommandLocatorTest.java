@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.handy;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
@@ -41,6 +43,7 @@ public class CommandLocatorTest {
 
     @Test
     @EnabledOnOs({OS.WINDOWS})
+    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void nonWindows() {
         final var original = System.getProperty("os.name");
         try {
@@ -66,6 +69,7 @@ public class CommandLocatorTest {
     @Test
     @EnabledOnOs({OS.WINDOWS})
     @SuppressWarnings("unchecked")
+    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void commandLocatorFirstPathOnly() {
         final var eol = OSType.WINDOWS.getEOL().eol();
         final var locatorOutput = String.format("C:\\dev\\apps\\graalvm-jdk-21.0.3+7.1\\bin\\java.exe%s" +
