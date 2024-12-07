@@ -50,7 +50,7 @@ jobs:
         with:
           name: jar-files
           path: build/libs/*.jar
-	  
+
   build-windows:
     name: Build on Windows without snyk scan
 
