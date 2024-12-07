@@ -1,6 +1,8 @@
 package xyz.ronella.trivial.handy;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
@@ -39,8 +41,13 @@ public class CommandLocatorTest {
         assertTrue(command.isEmpty());
     }
 
+    public boolean inGitHubActions() {
+        return Optional.ofNullable(System.getenv("IN_GITHUB_ACTIONS")).map(Boolean::valueOf).orElse(false);
+    }
+
     @Test
     @EnabledOnOs({OS.WINDOWS})
+    @DisabledIf("inGitHubActions")
     public void nonWindows() {
         final var original = System.getProperty("os.name");
         try {
