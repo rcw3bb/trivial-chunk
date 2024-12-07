@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  build:
+  build-linux:
+    name: Build on Linux with snyk scan
 
     runs-on: ubuntu-latest
 
@@ -35,13 +36,13 @@ jobs:
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
-          name: test-report
+          name: linux-test-report
           path: build/reports/tests/test
 
       - name: Upload JaCoCo report
         uses: actions/upload-artifact@v3
         with:
-          name: jacoco-report
+          name: linux-jacoco-report
           path: build/reports/jacoco/test/html
 
       - name: Upload jar files
@@ -49,3 +50,39 @@ jobs:
         with:
           name: jar-files
           path: build/libs/*.jar
+	  
+  build-windows:
+    name: Build on Windows without snyk scan
+
+    runs-on: windows-latest
+
+    env:
+      IN_GITHUB_ACTIONS: true
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v4.5.0
+        with:
+          java-version: 21
+          distribution: corretto
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: ./gradlew build -PsnykScan=false
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-test-report
+          path: build/reports/tests/test
+
+      - name: Upload JaCoCo report
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-jacoco-report
+          path: build/reports/jacoco/test/html
