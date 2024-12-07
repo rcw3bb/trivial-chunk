@@ -24,6 +24,11 @@ configurations {
     mockitoAgent
 }
 
+ext {
+    shouldSnykScan = Boolean.valueOf(snykScan)
+    logger.lifecycle("Snyk Scan: ${shouldSnykScan}")
+}
+
 pmd {
     consoleOutput = true
     toolVersion = "7.7.0"
@@ -44,19 +49,28 @@ repositories {
     mavenCentral()
 }
 
-task javadocJar(type: Jar) {
-    archiveClassifier.set('javadoc')
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from sourceSets.main.allSource
+java {
+    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_21
+    withJavadocJar()
+    withSourcesJar()
 }
 
 task testsJar(type: Jar, dependsOn: [testClasses]) {
     archiveClassifier.set('tests')
     from sourceSets.test.output
+}
+
+tasks.getByName('snyk-check-binary') {
+    onlyIf { shouldSnykScan }
+}
+
+tasks.getByName('snyk-test') {
+    onlyIf { shouldSnykScan }
+}
+
+tasks.getByName('snyk-monitor') {
+    onlyIf { shouldSnykScan }
 }
 
 jar {
@@ -67,13 +81,6 @@ jar {
     dependsOn test
     dependsOn('snyk-monitor')
     finalizedBy(javadocJar, sourcesJar, testsJar)
-}
-
-java {
-    targetCompatibility = JavaVersion.VERSION_21
-    sourceCompatibility = JavaVersion.VERSION_21
-    withJavadocJar()
-    withSourcesJar()
 }
 
 publishing {
