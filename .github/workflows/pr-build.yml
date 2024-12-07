@@ -33,6 +33,18 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: build/reports/tests/test
+
+      - name: Upload JaCoCo report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: build/reports/jacoco/test/html
+
   build-windows:
     name: Build on Windows without snyk scan
 
@@ -53,3 +65,15 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build -PsnykScan=false
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: build/reports/tests/test
+
+      - name: Upload JaCoCo report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: build/reports/jacoco/test/html
