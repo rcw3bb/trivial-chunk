@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-linux:
-    name: Build on Linux with snyk scan
+    name: Build on Linux
 
     runs-on: ubuntu-latest
 

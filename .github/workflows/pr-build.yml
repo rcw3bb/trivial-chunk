@@ -35,7 +35,7 @@ jobs:
 
 
   build-windows:
-    name: Build on Windows without snyk scan
+    name: Build on Windows
 
     runs-on: windows-latest
 
