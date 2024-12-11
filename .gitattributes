@@ -4,6 +4,7 @@
 *.ps1 text eol=crlf
 
 *.sh text eol=lf
+textfile-unix.txt eol=lf
 
 *.exe -text
 *.png -text
