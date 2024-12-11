@@ -176,7 +176,6 @@ public class TextFileTest {
     }
 
     @Test
-    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void testLinuxEndOfLine() throws IOException {
         final var file = new File("src/test/resources/textfile-unix.txt");
         final var textFile = new TextFile(file);

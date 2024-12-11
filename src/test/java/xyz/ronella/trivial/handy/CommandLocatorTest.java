@@ -43,11 +43,17 @@ public class CommandLocatorTest {
 
     @Test
     @EnabledOnOs({OS.WINDOWS})
-    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void nonWindows() {
         final var original = System.getProperty("os.name");
-        try {
-            System.setProperty("os.name", "Linux");
+        System.setProperty("os.name", "Linux");
+
+        try (var mockOSType = mockStatic(OSType.class)) {
+            var mockLinux = mock(OSType.class);
+            doReturn(Optional.of("dummy")).when(mockLinux).getCmdLocator();
+            doReturn(OSType.LINUX.getEOL()).when(mockLinux).getEOL();
+
+            mockOSType.when(OSType::identify).thenReturn(mockLinux);
+
             assertThrows(CommandProcessorException.class, () -> CommandLocator.locateAsFile("ls"));
         }
         finally {
@@ -69,10 +75,9 @@ public class CommandLocatorTest {
     @Test
     @EnabledOnOs({OS.WINDOWS})
     @SuppressWarnings("unchecked")
-    @DisabledIf("xyz.ronella.trivial.test.GHActionsSupport#inGitHubActions")
     public void commandLocatorFirstPathOnly() {
         final var eol = OSType.WINDOWS.getEOL().eol();
-        final var locatorOutput = String.format("C:\\dev\\apps\\graalvm-jdk-21.0.3+7.1\\bin\\java.exe%s" +
+        final var locatorOutput = String.format("C:\\Windows%s" +
                         "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath\\java.exe%s", eol, eol);
 
         try (var mockCommandProcessor = mockStatic(CommandProcessor.class)) {
@@ -80,7 +85,7 @@ public class CommandLocatorTest {
                     .thenReturn(Optional.of(locatorOutput));
 
             final var command = CommandLocator.locateAsFile("java");
-            assertEquals("C:\\dev\\apps\\graalvm-jdk-21.0.3+7.1\\bin\\java.exe", command.get().getPath());
+            assertEquals("C:\\Windows", command.get().getPath());
         }
     }
 
