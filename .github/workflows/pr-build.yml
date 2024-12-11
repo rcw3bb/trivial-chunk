@@ -35,12 +35,9 @@ jobs:
 
 
   build-windows:
-    name: Build on Windows without snyk scan
+    name: Build on Windows
 
     runs-on: windows-latest
-
-    env:
-      IN_GITHUB_ACTIONS: true
 
     steps:
       - name: Checkout source

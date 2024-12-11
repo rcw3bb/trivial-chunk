@@ -79,7 +79,6 @@ jar {
                 'Implementation-Version': "${version}"
     }
     dependsOn test
-    dependsOn('snyk-monitor')
     finalizedBy(javadocJar, sourcesJar, testsJar)
 }
 
@@ -161,8 +160,7 @@ test {
     useJUnitPlatform()
     dependsOn pmdMain
     finalizedBy jacocoTestReport
-    finalizedBy('snyk-test')
     finalizedBy javadoc
 }
 
-closeAndReleaseSonatypeStagingRepository.dependsOn('snyk-monitor', 'publishToSonatype')
+closeAndReleaseSonatypeStagingRepository.dependsOn('publishToSonatype')
