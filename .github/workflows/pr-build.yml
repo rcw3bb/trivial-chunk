@@ -39,9 +39,6 @@ jobs:
 
     runs-on: windows-latest
 
-    env:
-      IN_GITHUB_ACTIONS: true
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
