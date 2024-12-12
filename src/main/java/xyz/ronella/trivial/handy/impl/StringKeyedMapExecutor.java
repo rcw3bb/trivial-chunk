@@ -61,7 +61,7 @@ public class StringKeyedMapExecutor extends AbstractStringKeyedMapLogic<Sink, Ob
 
     @Override
     protected Sink handleDefaultLogicConstructorArgument(final Sink defaultLogic) {
-        return Optional.ofNullable(defaultLogic).orElse(NoOperation.sink());
+        return Optional.ofNullable(defaultLogic).orElseGet(NoOperation::sink);
     }
 
     /**

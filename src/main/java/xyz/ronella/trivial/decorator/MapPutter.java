@@ -86,7 +86,7 @@ public class MapPutter<TYPE_KEY, TYPE_VALUE> {
      */
     public WhenThen<Map<TYPE_KEY, TYPE_VALUE>> putAllWhen(final Supplier<Map<TYPE_KEY, TYPE_VALUE>> mapLogic) {
         Require.objects(mapLogic);
-        final var valueSupplier = Optional.ofNullable(mapLogic).orElse(NoOperation.supplier());
+        final var valueSupplier = Optional.ofNullable(mapLogic).orElseGet(NoOperation::supplier);
         return ___when -> {
             Require.objects(___when);
             if (___when.test(map)) {

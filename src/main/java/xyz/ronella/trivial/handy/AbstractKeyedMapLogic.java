@@ -34,7 +34,7 @@ public abstract class AbstractKeyedMapLogic<TYPE_KEY, TYPE_LOGIC, TYPE_OUTPUT> {
     public AbstractKeyedMapLogic(final Map<TYPE_KEY, TYPE_LOGIC> map,
                                  final TYPE_LOGIC defaultLogic,
                                  final List<Map.Entry<TYPE_KEY, TYPE_LOGIC>> logics) {
-        this.internalMap = Optional.ofNullable(map).orElse(new LinkedHashMap<>());
+        this.internalMap = Optional.ofNullable(map).orElseGet(LinkedHashMap::new);
         this.defaultLogic = handleDefaultLogicConstructorArgument(defaultLogic);
 
         Optional.ofNullable(logics).ifPresent(___logics -> ___logics.forEach(___logic ->  internalMap.put(___logic.getKey(), ___logic.getValue())));

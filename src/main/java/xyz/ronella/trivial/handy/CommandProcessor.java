@@ -29,7 +29,7 @@ final public class CommandProcessor {
 
         return Optional.ofNullable(command).map(___command -> {
 
-            final var builder = Optional.of(genProcessBuilder.get()).orElse(new ProcessBuilder());
+            final var builder = Optional.of(genProcessBuilder.get()).orElseGet(ProcessBuilder::new);
             builder.command(___command.getCommand());
 
             final Process process;

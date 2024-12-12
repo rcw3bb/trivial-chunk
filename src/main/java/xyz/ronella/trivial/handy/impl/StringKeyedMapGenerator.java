@@ -65,7 +65,7 @@ public class StringKeyedMapGenerator<TYPE_OUTPUT> extends AbstractStringKeyedMap
 
     @Override
     protected Supplier<TYPE_OUTPUT> handleDefaultLogicConstructorArgument(final Supplier<TYPE_OUTPUT> defaultLogic) {
-        return Optional.ofNullable(defaultLogic).orElse(NoOperation.supplier());
+        return Optional.ofNullable(defaultLogic).orElseGet(NoOperation::supplier);
     }
 
     /**

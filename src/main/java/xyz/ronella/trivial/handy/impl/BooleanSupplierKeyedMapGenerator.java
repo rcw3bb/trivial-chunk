@@ -66,7 +66,7 @@ public class BooleanSupplierKeyedMapGenerator<TYPE_OUTPUT> extends AbstractBoole
 
     @Override
     protected Supplier<TYPE_OUTPUT> handleDefaultLogicConstructorArgument(final Supplier<TYPE_OUTPUT> defaultLogic) {
-        return Optional.ofNullable(defaultLogic).orElse(NoOperation.supplier());
+        return Optional.ofNullable(defaultLogic).orElseGet(NoOperation::supplier);
     }
 
     /**

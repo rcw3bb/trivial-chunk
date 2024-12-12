@@ -112,7 +112,7 @@ final public class PathFinder {
          * @return An instance of PathFinderBuilder.
          */
         public PathFinderBuilder addPaths(final List<String> dirs) {
-            final var paths = Optional.ofNullable(dirs).orElse(List.of()).stream()
+            final var paths = Optional.ofNullable(dirs).orElseGet(List::of).stream()
                     .filter(Objects::nonNull)
                     .map(___dir -> ___dir.split(File.pathSeparator))
                     .map(___dir -> {
@@ -138,7 +138,7 @@ final public class PathFinder {
          */
         public PathFinderBuilder addEnvVars(final String ... envVars) {
             return addEnvVars(Arrays.stream(Optional.ofNullable(envVars)
-                    .orElse(List.<String>of().toArray(new String[] {}))).toList());
+                    .orElseGet(() -> List.<String>of().toArray(new String[] {}))).toList());
         }
 
         /**
@@ -150,7 +150,7 @@ final public class PathFinder {
          * @since 3.0.0
          */
         public PathFinderBuilder addEnvVars(final List<String> envVars) {
-            return addPaths(Optional.ofNullable(envVars).orElse(List.of()).stream()
+            return addPaths(Optional.ofNullable(envVars).orElseGet(List::of).stream()
                     .map(System::getenv)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList()));
@@ -166,7 +166,7 @@ final public class PathFinder {
          */
         public PathFinderBuilder addSysProps(final String ... sysProps) {
             return addSysProps(Arrays.stream(Optional.ofNullable(sysProps)
-                    .orElse(List.<String>of().toArray(new String[] {}))).toList());
+                    .orElseGet(() -> List.<String>of().toArray(new String[] {}))).toList());
         }
 
         /**
@@ -178,7 +178,7 @@ final public class PathFinder {
          * @since 3.0.0
          */
         public PathFinderBuilder addSysProps(final List<String> sysProps) {
-            return addPaths(Optional.ofNullable(sysProps).orElse(List.of()).stream()
+            return addPaths(Optional.ofNullable(sysProps).orElseGet(List::of).stream()
                     .map(System::getProperty)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList()));
@@ -190,7 +190,9 @@ final public class PathFinder {
          * @return An instance of PathFinderBuilder.
          */
         public PathFinderBuilder addPaths(final String ... dirs) {
-            addPaths(Arrays.asList(Optional.ofNullable(dirs).orElse(List.<String>of().toArray(new String[] {}))));
+            addPaths(Arrays.asList(Optional.ofNullable(dirs).orElseGet(() -> List.<String>of()
+                    .toArray(new String[] {})))
+            );
             return this;
         }
 

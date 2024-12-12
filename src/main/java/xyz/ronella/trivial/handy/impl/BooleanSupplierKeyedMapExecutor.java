@@ -62,7 +62,7 @@ public class BooleanSupplierKeyedMapExecutor extends AbstractBooleanSupplierKeye
 
     @Override
     protected Sink handleDefaultLogicConstructorArgument(final Sink defaultLogic) {
-        return Optional.ofNullable(defaultLogic).orElse(NoOperation.sink());
+        return Optional.ofNullable(defaultLogic).orElseGet(NoOperation::sink);
     }
 
     /**
