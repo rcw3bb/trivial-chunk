@@ -3,6 +3,8 @@ package xyz.ronella.trivial.handy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class ValueHunterTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
     void huntReturnsValueFromEnvironmentVariable() {
         ValueHunter hunter = ValueHunter.getBuilder("PATH")
                 .byEnvVar()
@@ -48,10 +51,28 @@ public class ValueHunterTest {
     }
 
     @Test
+    @EnabledOnOs({OS.WINDOWS})
+    void huntReturnsValueFromDifferentEnvironmentVariable() {
+        ValueHunter hunter = ValueHunter.getBuilder("PATH")
+                .asEnvVar("windir")
+                .build();
+        assertEquals(Optional.of("C:\\WINDOWS"), hunter.hunt());
+    }
+
+    @Test
     void huntReturnsValueFromSystemProperty() {
         System.setProperty("testSysProp", "sysPropValue");
         ValueHunter hunter = ValueHunter.getBuilder("testSysProp")
                 .bySysProp()
+                .build();
+        assertEquals(Optional.of("sysPropValue"), hunter.hunt());
+    }
+
+    @Test
+    void huntReturnsValueFromDifferentSystemProperty() {
+        System.setProperty("dummyProp", "sysPropValue");
+        ValueHunter hunter = ValueHunter.getBuilder("testSysProp")
+                .asSysProp("dummyProp")
                 .build();
         assertEquals(Optional.of("sysPropValue"), hunter.hunt());
     }

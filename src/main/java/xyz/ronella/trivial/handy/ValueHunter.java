@@ -76,12 +76,34 @@ final public class ValueHunter {
         }
 
         /**
+         * Adds a mercenary that retrieves the value of the target from the specified environment variable.
+         *
+         * @param envVar The environment variable from which to retrieve the value of the target.
+         * @return The current instance of ValueHunterBuilder.
+         */
+        public ValueHunterBuilder asEnvVar(final String envVar) {
+            Optional.ofNullable(envVar).ifPresent(___envVar -> addMercenary(() -> System.getenv(___envVar)));
+            return this;
+        }
+
+        /**
          * Adds a mercenary that retrieves the value of the target from system properties.
          *
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder bySysProp() {
             Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> System.getProperty(___target)));
+            return this;
+        }
+
+        /**
+         * Adds a mercenary that retrieves the value of the target from the specified system property.
+         *
+         * @param sysProp The system property from which to retrieve the value of the target.
+         * @return The current instance of ValueHunterBuilder.
+         */
+        public ValueHunterBuilder asSysProp(final String sysProp) {
+            Optional.ofNullable(sysProp).ifPresent(___sysProp -> addMercenary(() -> System.getProperty(___sysProp)));
             return this;
         }
 
