@@ -8,7 +8,7 @@
 
 * [CloseableLock](DEC_CLOSEABLE_LOCK.md)
 
-  **Wrapping the Lock implementation with CloseableLock makes it Closeable** 
+  **Wrapping the Lock implementation with CloseableLock makes it Closeable**
 
 * [FileNomen](DEC_FILENOMEN.md)
 
@@ -82,7 +82,7 @@
 
 * [PathFinder](HDY_PATH_FINDER.md)
 
-  The PathFinder class find the first existence of the file based on the supplied possible locations. 
+  The PathFinder class find the first existence of the file based on the supplied possible locations.
 
   Optionally, if being used to process the file as InputStream, it provides option to retrieve the file from ClassLoader.
 
@@ -110,3 +110,6 @@
 
   A group of logics that are contained in a map and **returns a value**. The key must be a valid **String**.
 
+* [ValueHunter](HDY_VALUE_HUNTER.md)
+
+  **Hunts for the first non-null value** from various sources (e.g. environment variable, system properties. 
