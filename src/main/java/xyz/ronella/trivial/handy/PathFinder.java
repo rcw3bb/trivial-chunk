@@ -173,8 +173,8 @@ final public class PathFinder {
         }
 
         /**
-         * Adds a finder to find the first existence of the filename.
-         * @param finder The finder to find the first existence of the filename.
+         * Adds a finder logic where to potentially find the file.
+         * @param finder The finder logic.
          * @return An instance of PathFinderBuilder.
          *
          * @since 3.2.0
