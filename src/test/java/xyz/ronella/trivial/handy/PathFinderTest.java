@@ -101,9 +101,7 @@ public class PathFinderTest {
 
     @Test
     public void nullFileOnly() {
-        final var pathFinder = PathFinder.getBuilder(null).build();
-        final var file = pathFinder.getFile();
-        assertTrue(file.isEmpty());
+        assertThrows(ObjectRequiredException.class, () -> PathFinder.getBuilder(null).build());
     }
 
     @Test
@@ -290,5 +288,40 @@ public class PathFinderTest {
                 .build();
         final var inputStream = pathFinder.getInputStream().get();
         System.out.println(inputStream);
+    }
+
+    @Test
+    public void addFinderWithValidFinder() {
+        final var pathFinder = PathFinder.getBuilder("test.txt")
+                .addFinder(filename -> new File("src/test/resources/pathfinder/dir1/" + filename))
+                .build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isPresent());
+        assertTrue(file.get().isFile());
+    }
+
+    @Test
+    public void addFinderWithNullFinder() {
+        assertThrows(ObjectRequiredException.class, () ->
+            PathFinder.getBuilder("test.txt").addFinder(null).build()
+        );
+    }
+
+    @Test
+    public void addFinderWithNonExistentFile() {
+        final var pathFinder = PathFinder.getBuilder("nonexistent.txt")
+                .addFinder(filename -> new File("src/test/resources/pathfinder/dir1/" + filename))
+                .build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
+    }
+
+    @Test
+    public void addFinderWithNullResult() {
+        final var pathFinder = PathFinder.getBuilder("test.txt")
+                .addFinder(filename -> null)
+                .build();
+        final var file = pathFinder.getFile();
+        assertTrue(file.isEmpty());
     }
 }

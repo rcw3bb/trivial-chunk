@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -80,6 +81,8 @@ final public class PathFinder {
      * @return An instance of PathFinderBuilder.
      */
     public static PathFinderBuilder getBuilder(final String filename) {
+        Require.object(filename, "The filename parameter must not be null.");
+
         return new PathFinderBuilder(filename);
     }
 
@@ -167,6 +170,20 @@ final public class PathFinder {
         public PathFinderBuilder addSysProps(final String ... sysProps) {
             return addSysProps(Arrays.stream(Optional.ofNullable(sysProps)
                     .orElseGet(() -> List.<String>of().toArray(new String[] {}))).toList());
+        }
+
+        /**
+         * Adds a finder to find the first existence of the filename.
+         * @param finder The finder to find the first existence of the filename.
+         * @return An instance of PathFinderBuilder.
+         *
+         * @since 3.2.0
+         */
+        public PathFinderBuilder addFinder(final Function<String, File> finder) {
+            Require.object(finder, "The finder parameter must not be null.");
+
+            Optional.ofNullable(finder.apply(filename)).ifPresent(files::add);
+            return this;
         }
 
         /**
