@@ -1,6 +1,7 @@
 package xyz.ronella.trivial.handy;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -36,6 +37,7 @@ final public class ValueHunter {
      * @return A new instance of ValueHunterBuilder.
      */
     public static ValueHunterBuilder getBuilder(final String target) {
+        Require.object(target, "The target parameter must not be null.");
         return new ValueHunterBuilder(target);
     }
 
@@ -137,6 +139,19 @@ final public class ValueHunter {
 
                 return value;
             }));
+            return this;
+        }
+
+        /**
+         * Adds a mercenary that retrieves the value of the target provided to the hunter.
+         *
+         * @param hunter The hunter that retrieves the value of the target.
+         * @return The current instance of ValueHunterBuilder.
+         */
+        public ValueHunterBuilder addHunter(final Function<String, String> hunter) {
+            Require.object(hunter, "The hunter parameter must not be null.");
+
+            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> hunter.apply(___target)));
             return this;
         }
 

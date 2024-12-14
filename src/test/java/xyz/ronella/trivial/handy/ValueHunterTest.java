@@ -167,4 +167,37 @@ public class ValueHunterTest {
                 .build();
         assertEquals(Optional.of("dummy3"), hunter.hunt());
     }
+
+    @Test
+    void addHunterReturnsValueFromCustomHunter() {
+        ValueHunter hunter = ValueHunter.getBuilder("custom")
+                .addHunter(key -> "customValue")
+                .build();
+        assertEquals(Optional.of("customValue"), hunter.hunt());
+    }
+
+    @Test
+    void addHunterReturnsEmptyOptionalWhenHunterReturnsNull() {
+        ValueHunter hunter = ValueHunter.getBuilder("custom")
+                .addHunter(key -> null)
+                .build();
+        assertTrue(hunter.hunt().isEmpty());
+    }
+
+    @Test
+    void addHunterThrowsExceptionWhenHunterIsNull() {
+        assertThrows(ObjectRequiredException.class, () -> {
+            ValueHunter.getBuilder("custom")
+                    .addHunter(null)
+                    .build();
+        });
+    }
+
+    @Test
+    void createBuilderThrowsExceptionWhenTargetIsNull() {
+        assertThrows(ObjectRequiredException.class, () -> {
+            ValueHunter.getBuilder(null);
+        });
+    }
+
 }
