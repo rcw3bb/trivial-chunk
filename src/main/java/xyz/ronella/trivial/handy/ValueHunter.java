@@ -97,6 +97,28 @@ final public class ValueHunter {
         }
 
         /**
+         * Adds a mercenary that retrieves the value of the target from the given ResourceBundle.
+         * @param properties The ResourceBundle object from which to retrieve the value of the target.
+         * @return The current instance of ValueHunterBuilder.
+         */
+        @SuppressWarnings("PMD.EmptyCatchBlock")
+        public ValueHunterBuilder byResourceBundle(final ResourceBundle properties) {
+            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> {
+                String value = null;
+
+                try {
+                    value = properties.getString(___target);
+                }
+                catch (MissingResourceException e) {
+                    // Do nothing
+                }
+
+                return value;
+            }));
+            return this;
+        }
+
+        /**
          * Builds and returns a new instance of ValueHunter.
          *
          * @return A new instance of ValueHunter.
