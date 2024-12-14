@@ -2,30 +2,31 @@ package xyz.ronella.trivial.handy;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
- * A class that hunts for the first non-null value from a list of mercenaries.
+ * A class that hunts for the first non-null value from various sources.
  *
  * @since 3.2.0
  * @author Ron Webb
  */
 final public class ValueHunter {
 
-    private final List<Supplier<String>> mercenaries;
+    private final List<Function<String, String>> mercenaries;
+    private final String target;
 
     private ValueHunter(final ValueHunterBuilder builder) {
+        target = builder.target;
         mercenaries = builder.mercenaries;
     }
 
     /**
-     * Hunts for the first non-null value provided by the mercenaries.
+     * Hunts for the first non-null value.
      *
      * @return An Optional containing the first non-null value, or an empty Optional if none found.
      */
     public Optional<String> hunt() {
         return mercenaries.stream()
-                .map(Supplier::get)
+                .map(___mercenary -> ___mercenary.apply(target))
                 .filter(Objects::nonNull)
                 .findFirst();
     }
@@ -35,6 +36,7 @@ final public class ValueHunter {
      *
      * @param target The target value to be hunted.
      * @return A new instance of ValueHunterBuilder.
+     * @throws ObjectRequiredException if the target is null.
      */
     public static ValueHunterBuilder getBuilder(final String target) {
         Require.object(target, "The target parameter must not be null.");
@@ -46,7 +48,7 @@ final public class ValueHunter {
      */
     final public static class ValueHunterBuilder {
         private final String target;
-        private final List<Supplier<String>> mercenaries;
+        private final List<Function<String, String>> mercenaries;
 
         /**
          * Constructs a ValueHunterBuilder with the specified target.
@@ -59,11 +61,11 @@ final public class ValueHunter {
         }
 
         /**
-         * Adds a mercenary to the list of mercenaries.
+         * Adds a mercenary that can find the value.
          *
          * @param mercenary The mercenary to be added.
          */
-        private void addMercenary(final Supplier<String> mercenary) {
+        private void addMercenary(final Function<String, String> mercenary) {
             this.mercenaries.add(mercenary);
         }
 
@@ -73,7 +75,7 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder byEnvVar() {
-            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> System.getenv(___target)));
+            addMercenary(System::getenv);
             return this;
         }
 
@@ -84,7 +86,7 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder asEnvVar(final String envVar) {
-            Optional.ofNullable(envVar).ifPresent(___envVar -> addMercenary(() -> System.getenv(___envVar)));
+            Optional.ofNullable(envVar).ifPresent(___envVar -> addMercenary(___ -> System.getenv(___envVar)));
             return this;
         }
 
@@ -94,7 +96,7 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder bySysProp() {
-            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> System.getProperty(___target)));
+            addMercenary(System::getProperty);
             return this;
         }
 
@@ -105,7 +107,7 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder asSysProp(final String sysProp) {
-            Optional.ofNullable(sysProp).ifPresent(___sysProp -> addMercenary(() -> System.getProperty(___sysProp)));
+            Optional.ofNullable(sysProp).ifPresent(___sysProp -> addMercenary(___ -> System.getProperty(___sysProp)));
             return this;
         }
 
@@ -116,18 +118,20 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder byProperties(final Properties properties) {
-            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> properties.getProperty(___target)));
+            addMercenary(properties::getProperty);
             return this;
         }
 
         /**
          * Adds a mercenary that retrieves the value of the target from the given ResourceBundle.
+         *
          * @param properties The ResourceBundle object from which to retrieve the value of the target.
          * @return The current instance of ValueHunterBuilder.
          */
         @SuppressWarnings("PMD.EmptyCatchBlock")
         public ValueHunterBuilder byResourceBundle(final ResourceBundle properties) {
-            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> {
+            addMercenary(___target -> {
+
                 String value = null;
 
                 try {
@@ -138,7 +142,8 @@ final public class ValueHunter {
                 }
 
                 return value;
-            }));
+            });
+
             return this;
         }
 
@@ -147,11 +152,12 @@ final public class ValueHunter {
          *
          * @param hunter The hunter that retrieves the value of the target.
          * @return The current instance of ValueHunterBuilder.
+         * @throws ObjectRequiredException if the hunter is null.
          */
         public ValueHunterBuilder addHunter(final Function<String, String> hunter) {
             Require.object(hunter, "The hunter parameter must not be null.");
 
-            Optional.ofNullable(target).ifPresent(___target -> addMercenary(() -> hunter.apply(___target)));
+            addMercenary(hunter);
             return this;
         }
 
