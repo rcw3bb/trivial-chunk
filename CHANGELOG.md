@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.0 : 2025-12-17
+
+### Change
+
+* Update the `ValueHunter` to allow the same instance to be used to find different targets.
+
 ## 3.2.0 : 2024-12-16
 
 ### New
