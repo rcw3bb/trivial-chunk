@@ -7,6 +7,10 @@
 * Introduce `ValueHunter` class to hunt for the first non-null value from various sources.
 * `PathFinder` can now accept custom finder implementation. 
 
+### Change
+
+* Prefer the usage of Optional.orElseGet method instead of Optional.orElse method for lazy evaluation.
+
 ## 3.1.0 : 2024-11-30
 
 ### New
