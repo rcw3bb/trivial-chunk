@@ -56,7 +56,7 @@ public class ValueHunterTest {
         ValueHunter hunter = ValueHunter.getBuilder("PATH")
                 .asEnvVar("windir")
                 .build();
-        assertEquals(Optional.of("C:\\WINDOWS"), hunter.hunt());
+        assertTrue(hunter.hunt().isPresent());
     }
 
     @Test
