@@ -245,4 +245,22 @@ public class ValueHunterTest {
         assertThrows(ObjectRequiredException.class, hunter::hunt);
     }
 
+    @Test
+    void asEnvVarThrowsExceptionWhenTargetIsNull() {
+        assertThrows(ObjectRequiredException.class, () -> {
+            ValueHunter.getBuilder()
+                    .asEnvVar("windir")
+                    .build();
+        });
+    }
+
+    @Test
+    void asSysPropThrowsExceptionWhenTargetIsNull() {
+        assertThrows(ObjectRequiredException.class, () -> {
+            ValueHunter.getBuilder()
+                    .asSysProp("dummyProp")
+                    .build();
+        });
+    }
+
 }

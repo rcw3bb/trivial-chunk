@@ -36,6 +36,8 @@ final public class ValueHunter {
      *
      * @param target The target value to be hunted.
      * @return An Optional containing the first non-null value, or an empty Optional if none found.
+     *
+     * @since 3.3.0
      */
     public Optional<String> hunt(final String target) {
         return mercenaries.stream()
@@ -60,6 +62,7 @@ final public class ValueHunter {
      * Creates a new ValueHunterBuilder with no target.
      *
      * @return A new instance of ValueHunterBuilder.
+     * @since 3.3.0
      */
     public static ValueHunterBuilder getBuilder() {
         return new ValueHunterBuilder();
@@ -115,6 +118,8 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder asEnvVar(final String envVar) {
+            Require.object(target, "The target must be known by the builder");
+
             Optional.ofNullable(envVar).ifPresent(___envVar -> addMercenary(___ -> System.getenv(___envVar)));
             return this;
         }
@@ -136,6 +141,8 @@ final public class ValueHunter {
          * @return The current instance of ValueHunterBuilder.
          */
         public ValueHunterBuilder asSysProp(final String sysProp) {
+            Require.object(target, "The target must be known by the builder");
+
             Optional.ofNullable(sysProp).ifPresent(___sysProp -> addMercenary(___ -> System.getProperty(___sysProp)));
             return this;
         }
@@ -154,17 +161,17 @@ final public class ValueHunter {
         /**
          * Adds a mercenary that retrieves the value of the target from the given ResourceBundle.
          *
-         * @param properties The ResourceBundle object from which to retrieve the value of the target.
+         * @param resourceBundle The ResourceBundle object from which to retrieve the value of the target.
          * @return The current instance of ValueHunterBuilder.
          */
         @SuppressWarnings("PMD.EmptyCatchBlock")
-        public ValueHunterBuilder byResourceBundle(final ResourceBundle properties) {
+        public ValueHunterBuilder byResourceBundle(final ResourceBundle resourceBundle) {
             addMercenary(___target -> {
 
                 String value = null;
 
                 try {
-                    value = properties.getString(___target);
+                    value = resourceBundle.getString(___target);
                 }
                 catch (MissingResourceException e) {
                     // Do nothing
