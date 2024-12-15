@@ -28,10 +28,7 @@ final public class ValueHunter {
         Require.object(target, "No target was provided by the ValueHunterBuilder. " +
                 "Use the hunt method that accepts a target.");
 
-        return mercenaries.stream()
-                .map(___mercenary -> ___mercenary.apply(target))
-                .filter(Objects::nonNull)
-                .findFirst();
+        return hunt(target);
     }
 
     /**
