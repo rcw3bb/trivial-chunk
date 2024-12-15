@@ -25,6 +25,22 @@ final public class ValueHunter {
      * @return An Optional containing the first non-null value, or an empty Optional if none found.
      */
     public Optional<String> hunt() {
+        Require.object(target, "No target was provided by the ValueHunterBuilder. " +
+                "Use the hunt method that accepts a target.");
+
+        return mercenaries.stream()
+                .map(___mercenary -> ___mercenary.apply(target))
+                .filter(Objects::nonNull)
+                .findFirst();
+    }
+
+    /**
+     * Hunts for the first non-null value.
+     *
+     * @param target The target value to be hunted.
+     * @return An Optional containing the first non-null value, or an empty Optional if none found.
+     */
+    public Optional<String> hunt(final String target) {
         return mercenaries.stream()
                 .map(___mercenary -> ___mercenary.apply(target))
                 .filter(Objects::nonNull)
@@ -44,6 +60,15 @@ final public class ValueHunter {
     }
 
     /**
+     * Creates a new ValueHunterBuilder with no target.
+     *
+     * @return A new instance of ValueHunterBuilder.
+     */
+    public static ValueHunterBuilder getBuilder() {
+        return new ValueHunterBuilder();
+    }
+
+    /**
      * A builder class for ValueHunter.
      */
     final public static class ValueHunterBuilder {
@@ -58,6 +83,13 @@ final public class ValueHunter {
         private ValueHunterBuilder(final String target) {
             this.target = target;
             this.mercenaries = new ArrayList<>();
+        }
+
+        /**
+         * Constructs a ValueHunterBuilder with no target.
+         */
+        private ValueHunterBuilder() {
+            this(null);
         }
 
         /**

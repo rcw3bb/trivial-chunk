@@ -200,4 +200,49 @@ public class ValueHunterTest {
         });
     }
 
+    @Test
+    void huntWithTargetReturnsValueFromEnvironmentVariable() {
+        ValueHunter hunter = ValueHunter.getBuilder()
+                .byEnvVar()
+                .build();
+        assertTrue(hunter.hunt("PATH").isPresent());
+    }
+
+    @Test
+    void huntWithTargetReturnsValueFromSystemProperty() {
+        System.setProperty("testSysProp", "sysPropValue");
+        ValueHunter hunter = ValueHunter.getBuilder()
+                .bySysProp()
+                .build();
+        assertEquals(Optional.of("sysPropValue"), hunter.hunt("testSysProp"));
+    }
+
+    @Test
+    void huntWithTargetReturnsValueFromPropertiesObject() {
+        Properties properties = new Properties();
+        properties.setProperty("testProp", "propValue");
+        ValueHunter hunter = ValueHunter.getBuilder()
+                .byProperties(properties)
+                .build();
+        assertEquals(Optional.of("propValue"), hunter.hunt("testProp"));
+    }
+
+    @Test
+    void huntWithTargetReturnsEmptyOptionalWhenNoValuesFound() {
+        ValueHunter hunter = ValueHunter.getBuilder()
+                .byEnvVar()
+                .bySysProp()
+                .byProperties(new Properties())
+                .build();
+        assertTrue(hunter.hunt("nonexistent").isEmpty());
+    }
+
+    @Test
+    void builderDoesntProvideTargetButUseHuntWithoutTarget() {
+        ValueHunter hunter = ValueHunter.getBuilder()
+                .byEnvVar()
+                .build();
+        assertThrows(ObjectRequiredException.class, hunter::hunt);
+    }
+
 }
